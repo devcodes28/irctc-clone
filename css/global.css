@@ -1,0 +1,58 @@
+/* css/global.css */
+
+:root {
+  /* IRCTC Brand Colors */
+  --color-primary: #213d77;   /* IRCTC Dark Blue */
+  --color-secondary: #fb792b; /* IRCTC Orange */
+  --color-bg-light: #f4f4f4;
+  --color-text-main: #333333;
+  --color-text-muted: #666666;
+  --color-danger: #d9534f;
+  --color-success: #5cb85c;
+  --color-white: #ffffff;
+
+  /* Typography */
+  --font-base: 'Open Sans', Arial, sans-serif;
+  
+  /* Spacing & Borders */
+  --border-radius: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+}
+
+/* Base Resets */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-base);
+  color: var(--color-text-main);
+  background-color: var(--color-bg-light);
+  line-height: 1.6;
+}
+
+/* Global Utility Classes */
+.container {
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.btn-primary {
+  background-color: var(--color-secondary);
+  color: var(--color-white);
+  padding: 10px 20px;
+  border: none;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.btn-primary:hover {
+  background-color: #e66b22;
+}
