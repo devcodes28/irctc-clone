@@ -1,0 +1,26 @@
+{
+  "name": "irctc-clone",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+"scripts": {
+  "watch": "npx @tailwindcss/cli -i ./assets/css/global.css -o ./assets/css/output.css --watch"
+},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/devcodes28/irctc-clone.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/devcodes28/irctc-clone/issues"
+  },
+  "homepage": "https://github.com/devcodes28/irctc-clone#readme",
+  "devDependencies": {
+    "@tailwindcss/cli": "^4.3.3",
+    "autoprefixer": "^10.5.4",
+    "postcss": "^8.5.21",
+    "tailwindcss": "^4.3.3"
+  }
+}
