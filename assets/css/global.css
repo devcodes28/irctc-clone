@@ -5,3 +5,24 @@
   --color-irctc-orange: #fb792b;
   --color-irctc-light: #f4f4f4;
 }
+
+@keyframes pan-background {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.moving-bg {
+    background-size: 200% 200%; 
+    animation: pan-background 15s ease infinite; 
+}
+
+/* Add this to your main input.css file */
+@keyframes drive-train {
+    0% { transform: translateX(100vw); }
+    100% { transform: translateX(-150px); }
+}
+
+.animate-train {
+    animation: drive-train 12s linear infinite;
+}

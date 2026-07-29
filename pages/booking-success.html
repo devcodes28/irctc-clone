@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IRCTC Clone - Ticket Booking</title>
+    <link rel="stylesheet" href="../assets/css/output.css">
+    
+</head>
+<body class="bg-linear-to-r from-blue-50 via-blue-200 to-blue-50 moving-bg text-gray-800 font-sans p-4 md:p-8"><div class="max-w-4xl mx-auto p-2 md:p-6 mt-4 md:mt-10">
+    
+    <!-- Premium Success Message -->
+    <div class="bg-green-50 border-l-4 border-green-500 text-green-800 p-5 mb-8 rounded shadow-sm flex items-start">
+        <!-- Checkmark Icon -->
+        <svg class="w-6 h-6 mr-3 text-green-500 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+        <div>
+            <h2 class="text-xl font-bold">Transaction Successful!</h2>
+            <p class="text-sm mt-1 text-green-700">Your e-ticket has been generated. An email and SMS confirmation have been sent to your registered contact details.</p>
+        </div>
+    </div>
+
+    <!-- Ticket Display Card -->
+    <div class="bg-white rounded-xl shadow-2xl border border-gray-200 overflow-hidden relative">
+        
+        <!-- Header (PNR & Status) -->
+        <div class="bg-irctc-blue text-white px-6 py-5 flex justify-between items-center">
+            <div>
+                <span class="text-xs uppercase tracking-widest text-blue-200 font-semibold">PNR Number</span>
+                <div class="text-3xl font-black tracking-wider" id="ui-pnr">Loading...</div>
+            </div>
+            <div class="bg-green-500 px-4 py-1.5 rounded text-sm font-bold shadow-inner">
+                <span id="ui-status">---</span>
+            </div>
+        </div>
+
+        <!-- Train Details Grid -->
+        <div class="p-6">
+            <h3 class="text-sm font-bold text-gray-400 uppercase tracking-wide mb-4">Journey Details</h3>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                <div class="col-span-2">
+                    <p class="text-xs text-gray-500 uppercase">Train</p>
+                    <p class="font-bold text-gray-900 text-lg" id="ui-train">Loading...</p>
+                </div>
+                <div>
+                    <p class="text-xs text-gray-500 uppercase">Class & Quota</p>
+                    <p class="font-bold text-gray-900" id="ui-class">Loading...</p>
+                </div>
+                <div>
+                    <p class="text-xs text-gray-500 uppercase">Date</p>
+                    <p class="font-bold text-gray-900" id="ui-date">Loading...</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dashed Divider (Ticket look) -->
+        <div class="relative flex items-center px-6 py-2">
+            <div class="grow border-t-2 border-dashed border-gray-300"></div>
+            <div class="absolute left-0 w-4 h-8 bg-gray-100 rounded-r-full -ml-1 border-r border-gray-200"></div>
+            <div class="absolute right-0 w-4 h-8 bg-gray-100 rounded-l-full -mr-1 border-l border-gray-200"></div>
+        </div>
+
+        <!-- Passenger Details -->
+        <div class="p-6 bg-gray-50 flex flex-col md:flex-row justify-between items-center gap-6">
+            <div class="grow w-full">
+                <h3 class="text-sm font-bold text-gray-400 uppercase tracking-wide mb-4">Passenger Info</h3>
+                <div class="bg-white border border-gray-200 rounded-lg p-4 flex justify-between items-center shadow-sm">
+                    <div>
+                        <p class="font-bold text-gray-900 text-lg" id="ui-passenger-name">Loading...</p>
+                        <p class="text-sm text-gray-500" id="ui-passenger-demo">Loading...</p>
+                    </div>
+                    <div class="text-right border-l-2 border-gray-100 pl-4">
+                        <p class="text-xs text-gray-500 uppercase">Coach / Seat</p>
+                        <p class="font-black text-irctc-orange text-xl" id="ui-seat">Loading...</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Mock QR Code -->
+            <div class="shrink-0 bg-white p-2 border border-gray-200 rounded shadow-sm">
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=IRCTC-8493028491" alt="Ticket QR" class="w-24 h-24 opacity-80">
+                <p class="text-[10px] text-center text-gray-400 mt-1">Scan for E-Ticket</p>
+            </div>
+        </div>
+        
+    </div>
+</div>
+
+<!-- ========================================== -->
+<!-- DYNAMIC JAVASCRIPT (DATABASE SIMULATION)   -->
+<!-- ========================================== -->
+<script>
+    // Phase 1: We mock the database response. 
+    // In Phase 2 (MERN), you will replace this object with a fetch() call to your backend API.
+    const mockDatabaseResponse = {
+        pnr: "8493028491",
+        status: "CONFIRMED",
+        train: "12625 / KERALA EXPRESS",
+        classQuota: "3A | General (GN)",
+        date: "15 Aug 2026",
+        passenger: {
+            name: "Sreedev Suresh",
+            age: 20,
+            gender: "Male"
+        },
+        seat: "B4 / 32"
+    };
+
+    // This function runs immediately when the HTML loads
+    document.addEventListener("DOMContentLoaded", () => {
+        
+        // Simulating a slight network delay so you can see the "Loading..." state
+        setTimeout(() => {
+            // Injecting the "database" data into the HTML elements using their IDs
+            document.getElementById("ui-pnr").innerText = mockDatabaseResponse.pnr;
+            document.getElementById("ui-status").innerText = mockDatabaseResponse.status;
+            document.getElementById("ui-train").innerText = mockDatabaseResponse.train;
+            document.getElementById("ui-class").innerText = mockDatabaseResponse.classQuota;
+            document.getElementById("ui-date").innerText = mockDatabaseResponse.date;
+            
+            document.getElementById("ui-passenger-name").innerText = mockDatabaseResponse.passenger.name;
+            document.getElementById("ui-passenger-demo").innerText = `${mockDatabaseResponse.passenger.age} Yrs | ${mockDatabaseResponse.passenger.gender}`;
+            document.getElementById("ui-seat").innerText = mockDatabaseResponse.seat;
+        }, 500); // 500ms delay
+
+    });
+</script>
+<script src="../js/train-animation.js"></script>
+</body>
+</html>
