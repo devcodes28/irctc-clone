@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile | IRCTC Clone</title>
+    <!-- CRITICAL: The ../ is needed because this file is inside the /pages folder -->
+    <link rel="stylesheet" href="../assets/css/output.css">
+</head>
+<body class="bg-linear-to-r from-blue-50 via-gray-100 to-blue-100 moving-bg text-gray-800 font-sans">
+    <div class="max-w-4xl mx-auto p-6 mt-8">
+        <h2 class="text-2xl font-bold text-irctc-blue mb-6">User Profile</h2>
+        
+        <div class="bg-white rounded-lg shadow border border-gray-200 overflow-hidden">
+            <!-- Profile Banner -->
+            <div class="bg-blue-800 p-6 text-white flex items-center space-x-4">
+                <div class="w-16 h-16 bg-white text-blue-800 rounded-full flex items-center justify-center text-2xl font-bold shadow-inner">
+                    SS
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold">Sreedev Suresh</h3>
+                    <p class="text-blue-200 text-sm">IRCTC User ID: sreedev_28</p>
+                </div>
+            </div>
+
+            <!-- Profile Details Form -->
+            <div class="p-6">
+                <h4 class="text-gray-700 font-bold mb-4 border-b pb-2">Personal Details</h4>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-600 mb-1">Full Name</label>
+                        <!-- Disabled input for info that shouldn't change -->
+                        <input type="text" value="Sreedev Suresh" class="w-full border border-gray-300 rounded p-2 bg-gray-100 text-gray-500 focus:outline-none" disabled>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-600 mb-1">Date of Birth</label>
+                        <input type="date" value="2005-09-15" class="w-full border border-gray-300 rounded p-2 bg-gray-100 text-gray-500 focus:outline-none" disabled>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-600 mb-1">Email Address</label>
+                        <input type="email" value="sreedev@example.com" class="w-full border border-gray-300 rounded p-2 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:outline-none transition">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-600 mb-1">Mobile Number</label>
+                        <input type="tel" value="+91 9876543210" class="w-full border border-gray-300 rounded p-2 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:outline-none transition">
+                    </div>
+                </div>
+
+                <div class="mt-8 flex justify-end">
+                    <button class="bg-orange-500 hover:bg-orange-600 text-white px-8 py-2 rounded font-bold transition shadow">
+                        Save Changes
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+<script src="../js/train-animation.js"></script>
+</body>
+</html>
