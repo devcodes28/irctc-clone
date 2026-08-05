@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IRCTC Clone - Ticket Booking</title>
+    <link rel="stylesheet" href="../assets/css/output.css">
+</head>
+<body class="bg-irctc-light text-gray-800 font-sans p-8">
+    <div class="max-w-7xl mx-auto">
+        
+        <!-- Train Search Form Section -->
+        <div class="bg-white p-6 shadow-md rounded-md mb-6 border-t-4 border-irctc-blue">
+            <h2 class="text-2xl font-bold text-irctc-blue mb-6">Book Ticket</h2>
+            
+            <form class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- From -->
+                <div class="flex flex-col">
+                    <label class="text-gray-700 font-semibold mb-1">From</label>
+                    <input type="text" placeholder="Leaving from..." class="border border-gray-300 rounded p-2 focus:outline-none focus:ring-2 focus:ring-irctc-blue">
+                </div>
+                
+                <!-- To -->
+                <div class="flex flex-col">
+                    <label class="text-gray-700 font-semibold mb-1">To</label>
+                    <input type="text" placeholder="Going to..." class="border border-gray-300 rounded p-2 focus:outline-none focus:ring-2 focus:ring-irctc-blue">
+                </div>
+                
+                <!-- Date -->
+                <div class="flex flex-col">
+                    <label class="text-gray-700 font-semibold mb-1">Date</label>
+                    <input type="date" class="border border-gray-300 rounded p-2 focus:outline-none focus:ring-2 focus:ring-irctc-blue">
+                </div>
+                
+                <!-- Class -->
+                <div class="flex flex-col">
+                    <label class="text-gray-700 font-semibold mb-1">Class</label>
+                    <select class="border border-gray-300 rounded p-2 focus:outline-none focus:ring-2 focus:ring-irctc-blue bg-white">
+                        <option>All Classes</option>
+                        <option>Sleeper (SL)</option>
+                        <option>AC 3 Tier (3A)</option>
+                        <option>AC 2 Tier (2A)</option>
+                        <option>AC First Class (1A)</option>
+                    </select>
+                </div>
+                
+                <!-- Quota -->
+                <div class="flex flex-col">
+                    <label class="text-gray-700 font-semibold mb-1">Quota</label>
+                    <select class="border border-gray-300 rounded p-2 focus:outline-none focus:ring-2 focus:ring-irctc-blue bg-white">
+                        <option>General</option>
+                        <option>Ladies</option>
+                        <option>Tatkal</option>
+                        <option>Senior Citizen</option>
+                    </select>
+                </div>
+                
+                <!-- Submit Button -->
+                <div class="flex items-end mt-2 lg:mt-0">
+                    <button type="submit" class="w-full bg-irctc-orange hover:bg-orange-600 text-white font-bold py-2.5 px-4 rounded shadow transition-colors">
+                        Search Trains
+                    </button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+
+    <script src="../js/train-animation.js"></script>
+</body>
+</html>
