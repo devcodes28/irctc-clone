@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard | IRCTC Clone</title>
+    <link rel="stylesheet" href="../assets/css/output.css">
+</head>
+<body class="text-gray-800 font-sans bg-gray-50 m-0 min-h-screen flex flex-col">
+
+    <!-- STANDARDIZED HEADER -->
+    <header class="w-full relative z-20 px-4 md:px-8 pt-4 md:pt-8 shrink-0">
+        <div class="max-w-300 mx-auto bg-white rounded-lg shadow-sm">
+            <nav class="flex items-center justify-between p-4 mb-0">
+                <div class="flex items-center cursor-pointer" onclick="window.location.href='home.html'">
+                    <span class="text-3xl font-bold text-irctc-blue">IRCTC</span>
+                </div>
+                
+                <div class="hidden md:flex space-x-6 items-center">
+                    <a href="home.html" class="text-gray-700 hover:text-irctc-orange font-semibold transition-colors">Home</a>
+                    <a href="TrainSearch.html" class="text-gray-700 hover:text-irctc-orange font-semibold transition-colors">Trains</a>
+                    <a href="holidays.html" class="text-gray-700 hover:text-irctc-orange font-semibold transition-colors">Holidays</a>
+                    <a href="e-wallet.html" class="text-gray-700 hover:text-irctc-orange font-semibold transition-colors">E-wallet</a>
+                    <a href="alerts.html" class="text-gray-700 hover:text-irctc-orange font-semibold transition-colors flex items-center">Alerts <span class="bg-red-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full ml-1.5 shadow-sm">2</span></a>
+                    <a href="contact-us.html" class="text-gray-700 hover:text-irctc-orange font-semibold transition-colors">Contact Us</a>
+                </div>
+
+                <div class="flex items-center space-x-3">
+                    <button onclick="window.location.href='my-bookings.html'" class="border-2 border-irctc-blue text-irctc-blue hover:bg-blue-50 font-bold py-2 px-4 rounded transition-colors text-sm">
+                        My Bookings
+                    </button>
+                    <button onclick="window.location.href='home.html'" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded transition-colors text-sm">
+                        Logout
+                    </button>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- CONTENT AREA -->
+    <main class="w-full relative z-10 px-4 md:px-8 py-6 md:py-10 grow">
+        <div class="max-w-300 mx-auto">
+            
+            <!-- Welcome Banner (Fixed Layout & Color) -->
+<div class="relative bg-linear-to-r from-blue-950 via-slate-900 to-blue-900 text-white rounded-2xl shadow-xl overflow-hidden mb-8 border-b-4 border-irctc-orange p-6 md:p-8 flex flex-col md:flex-row justify-between items-start md:items-center gap-6">                <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#fff_1px,transparent_1px)] [bg-size:16px_16px]"></div>
+                
+                <div class="relative z-10">
+                    <span class="text-irctc-orange text-xs font-bold tracking-widest uppercase">Passenger Dashboard</span>
+                    <h1 class="text-2xl md:text-3xl font-black mt-1">Welcome back, Traveler</h1>
+                    <p class="text-blue-100 text-sm mt-1">Manage your train tickets, check live PNR status, and view wallet balance.</p>
+                </div>
+
+                <div class="relative z-10 bg-white/10 backdrop-blur-md px-5 py-3 rounded-xl border border-white/20 text-right shrink-0">
+                    <p class="text-xs text-blue-200">E-Wallet Balance</p>
+                    <p class="text-xl font-black text-white">₹4,500.00</p>
+                </div>
+            </div>
+
+            <!-- Quick Action Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                
+                <div onclick="window.location.href='TrainSearch.html'" class="bg-white p-6 rounded-2xl shadow-sm border border-gray-200 hover:border-irctc-orange cursor-pointer transition group">
+                    <div class="w-10 h-10 rounded-xl bg-orange-50 text-irctc-orange flex items-center justify-center font-bold mb-4 group-hover:scale-110 transition-transform">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+                    </div>
+                    <h3 class="font-bold text-gray-900 text-base mb-1">Book a Train</h3>
+                    <p class="text-xs text-gray-500">Search routes and reserve seats instantly.</p>
+                </div>
+
+                <div onclick="window.location.href='my-bookings.html'" class="bg-white p-6 rounded-2xl shadow-sm border border-gray-200 hover:border-irctc-blue cursor-pointer transition group">
+                    <div class="w-10 h-10 rounded-xl bg-blue-50 text-irctc-blue flex items-center justify-center font-bold mb-4 group-hover:scale-110 transition-transform">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"/></svg>
+                    </div>
+                    <h3 class="font-bold text-gray-900 text-base mb-1">My Bookings</h3>
+                    <p class="text-xs text-gray-500">View active tickets and travel history.</p>
+                </div>
+
+                <div onclick="window.location.href='e-wallet.html'" class="bg-white p-6 rounded-2xl shadow-sm border border-gray-200 hover:border-irctc-orange cursor-pointer transition group">
+                    <div class="w-10 h-10 rounded-xl bg-orange-50 text-irctc-orange flex items-center justify-center font-bold mb-4 group-hover:scale-110 transition-transform">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/></svg>
+                    </div>
+                    <h3 class="font-bold text-gray-900 text-base mb-1">E-Wallet</h3>
+                    <p class="text-xs text-gray-500">Top-up wallet and view statements.</p>
+                </div>
+
+                <div onclick="window.location.href='alerts.html'" class="bg-white p-6 rounded-2xl shadow-sm border border-gray-200 hover:border-irctc-blue cursor-pointer transition group">
+                    <div class="w-10 h-10 rounded-xl bg-blue-50 text-irctc-blue flex items-center justify-center font-bold mb-4 group-hover:scale-110 transition-transform">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/></svg>
+                    </div>
+                    <h3 class="font-bold text-gray-900 text-base mb-1">Alerts & Status</h3>
+                    <p class="text-xs text-gray-500">Check train delays and schedule updates.</p>
+                </div>
+
+            </div>
+
+            <!-- Recent Upcoming Journey Summary -->
+            <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="font-bold text-gray-900 text-lg">Upcoming Journey</h3>
+                    <span class="text-xs font-bold text-green-600 bg-green-50 px-2.5 py-1 rounded-full border border-green-200">Confirmed</span>
+                </div>
+                
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center bg-gray-50 p-4 rounded-xl border border-gray-100 gap-4">
+                    <div>
+                        <p class="text-xs text-gray-500 uppercase tracking-wide font-semibold">12625 · KERALA EXPRESS</p>
+                        <h4 class="text-base font-bold text-gray-900 mt-1">NEW DELHI (NDLS) → TRIVANDRUM (TVC)</h4>
+                        <p class="text-xs text-gray-600 mt-1">Date: <strong>15 Aug 2026</strong> | Coach: <strong>B4</strong> | Seat: <strong>32 (Berth)</strong></p>
+                    </div>
+                    <button onclick="window.location.href='my-bookings.html'" class="bg-irctc-blue hover:bg-blue-900 text-white font-bold py-2 px-5 rounded-lg text-xs transition-colors shadow-sm">
+                        View Ticket
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer style="background-color:  #071936 !important;" class="text-white pt-10 pb-6 border-t-4 border-irctc-orange relative z-30 w-full shadow-xl shrink-0 mt-auto">
+        <div class="max-w-300 mx-auto px-4 md:px-8 text-center text-xs text-gray-300">
+            <p class="font-medium">Copyright © 2026 - www.irctc.co.in. All Rights Reserved</p>
+            <p class="mt-1 text-gray-400 text-[11px]">Designed and Hosted by CRIS</p>
+        </div>
+    </footer>
+
+    <script src="../js/train-animation.js"></script>
+</body>
+</html>
