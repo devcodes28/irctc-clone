@@ -1,43 +1,76 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const trainHTML = `
-    <!-- Injecting the CSS directly so we don't rely on the Tailwind compiler -->
-    <style>
-        @keyframes drive-train {
-            0% { transform: translateX(100vw); }
-            100% { transform: translateX(-150px); }
+    // 1. Inject the CSS for the professional parallax pattern
+    const style = document.createElement('style');
+    style.innerHTML = `
+        /* Main container holding the moving background */
+        .professional-parallax-grid {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none; /* Crucial: clicks pass through to your UI */
+            z-index: -1; /* Behind all content, cards, and even your Tailwind bg */
+            overflow: hidden;
+            
+            /* Sreedev Suresh: The base background color for the page */
+            background-color: #f8fafc; /* Tailwind slade-50 (very light blue) */
         }
-        .animate-train {
-            animation: drive-train 12s linear infinite;
+
+        /* This pseudo-element contains the moving 'check' pattern */
+        .professional-parallax-grid::before {
+            content: "";
+            position: absolute;
+            top: -100px; /* Overscan to hide edges during animation */
+            left: -100px;
+            width: 120%; /* wider than screen */
+            height: 120%; /* taller than screen */
+            
+            /* Creating the 'check' pattern using gradients:
+               Grid line color: Tailwind slade-200 (#e2e8f0)
+            */
+            background-image: 
+                linear-gradient(to right, #e2e8f0 1px, transparent 1px),
+                linear-gradient(to bottom, #e2e8f0 1px, transparent 1px);
+            background-size: 80px 80px; /* Your requested 'check' pattern size */
+            
+            /* Add professional 3D perspective to simulate motion */
+            transform: perspective(300px) rotateX(15deg); 
+            transform-origin: center top;
+            
+            /* Run the vertical animation: very slow, linear infinite loop */
+            animation: subtleVerticalScroll 8s linear infinite;
         }
-    </style>
 
-    <div class="fixed bottom-0 left-0 w-full h-32 pointer-events-none z-0 overflow-hidden">
-        <!-- The Railway Track -->
-        <div class="absolute bottom-6 left-0 w-full h-1 bg-gray-300"></div>
-        <div class="absolute bottom-4 left-0 w-full border-b-2 border-dashed border-gray-400 opacity-50"></div>
+        /* The vertical animation moves the background from top to bottom */
+        @keyframes subtleVerticalScroll {
+            0% { background-position: 0px 0px; }
+            100% { background-position: 0px 80px; } /* Must match the tiled check height (80px) */
+        }
 
-        <!-- The Moving Train SVG -->
-        <div class="absolute bottom-6 animate-train flex items-end">
-            <svg width="180" height="60" viewBox="0 0 180 60" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M140 25 H 170 Q 180 25 180 50 H 140 Z" fill="#1e40af"/>
-                <rect x="20" y="20" width="125" height="30" rx="4" fill="#1e40af"/>
-                <rect x="30" y="25" width="20" height="12" rx="2" fill="#bfdbfe"/>
-                <rect x="60" y="25" width="20" height="12" rx="2" fill="#bfdbfe"/>
-                <rect x="90" y="25" width="20" height="12" rx="2" fill="#bfdbfe"/>
-                <rect x="120" y="25" width="20" height="12" rx="2" fill="#bfdbfe"/>
-                <circle cx="155" cy="31" r="6" fill="#bfdbfe"/>
-                <circle cx="35" cy="50" r="8" fill="#1f2937"/>
-                <circle cx="70" cy="50" r="8" fill="#1f2937"/>
-                <circle cx="105" cy="50" r="8" fill="#1f2937"/>
-                <circle cx="150" cy="50" r="8" fill="#1f2937"/>
-                <rect x="160" y="10" width="8" height="15" fill="#4b5563"/>
-                <circle cx="164" cy="5" r="5" fill="#9ca3af" opacity="0.6"/>
-                <circle cx="154" cy="2" r="7" fill="#9ca3af" opacity="0.4"/>
-                <circle cx="140" cy="-2" r="9" fill="#9ca3af" opacity="0.2"/>
-            </svg>
-        </div>
-    </div>
+        /* The fade effect (The Gradient Overlay) */
+        .professional-parallax-grid::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            
+            /* Fades from solid background color (top) to clear (bottom)
+                letting the pattern shine through with high opacity at the base.
+            */
+            background: linear-gradient(to bottom, 
+                #f8fafc 0%, 
+                #f8fafc 40%, 
+                transparent 100%);
+            z-index: 1; /* Sits on top of the moving pattern */
+        }
     `;
+    document.head.appendChild(style);
 
-    document.body.insertAdjacentHTML('beforeend', trainHTML);
+    // 2. Inject the full-screen grid container into the body
+    const gridDiv = document.createElement('div');
+    gridDiv.className = 'professional-parallax-grid';
+    document.body.appendChild(gridDiv);
 });

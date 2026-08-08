@@ -7,9 +7,34 @@
     <link rel="stylesheet" href="../assets/css/output.css">
     
 </head>
-<body class="bg-linear-to-r from-blue-50 via-blue-200 to-blue-50 moving-bg text-gray-800 font-sans p-4 md:p-8"><div class="max-w-4xl mx-auto p-2 md:p-6 mt-4 md:mt-10">
-    
-    <!-- Premium Success Message -->
+<body class="text-gray-800 font-sans relative min-h-screen"><div class="max-w-4xl mx-auto p-2 md:p-6 mt-4 md:mt-10">
+        
+    <!-- Navigation Bar (Always Visible) -->
+        <nav class="flex items-center justify-between bg-white p-4 shadow-md rounded-md mb-6">
+            <div class="flex items-center cursor-pointer" onclick="showHome()">
+                <span class="text-3xl font-bold text-irctc-blue">IRCTC</span>
+            </div>
+            
+            <!-- Desktop Menu -->
+            <div class="hidden md:flex space-x-6 items-center">
+                <a href="#" id="navHome" class="text-gray-700 hover:text-irctc-orange font-semibold transition-colors">Home</a>
+                <a href="#" id="navTrains" class="text-gray-700 hover:text-irctc-orange font-semibold transition-colors">Trains</a>
+                <a href="#" class="text-gray-700 hover:text-irctc-orange font-semibold transition-colors">Holidays</a>
+                <a href="#" class="text-gray-700 hover:text-irctc-orange font-semibold transition-colors">Contact Us</a>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="flex items-center space-x-3">
+                <button id="myBookingsNavBtn" class="border-2 border-irctc-blue text-irctc-blue hover:bg-blue-50 font-bold py-2 px-4 rounded transition-colors">
+                    My Bookings
+                </button>
+                <button class="bg-irctc-orange hover:bg-orange-600 text-white font-bold py-2 px-4 rounded transition-colors">
+                    Login / Register
+                </button>
+            </div>
+        </nav>
+  
+        <!-- Premium Success Message -->
     <div class="bg-green-50 border-l-4 border-green-500 text-green-800 p-5 mb-8 rounded shadow-sm flex items-start">
         <!-- Checkmark Icon -->
         <svg class="w-6 h-6 mr-3 text-green-500 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
