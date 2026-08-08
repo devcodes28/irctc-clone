@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IRCTC Clone - Login</title>
+    <link rel="stylesheet" href="./assets/css/output.css">
+    <style>
+    @keyframes trackMove {
+        0% { left: 0%; opacity: 1; }
+        95% { left: calc(100% - 16px); opacity: 1; }
+        100% { left: 0%; opacity: 0; }
+    }
+    #trackTrain {
+        animation: trackMove 60s linear infinite;
+    }
+    </style>
+</head>
+<body class="bg-irctc-light text-gray-800 font-sans min-h-screen">
+
+    <div class="min-h-screen flex">
+
+        <!-- Left branding panel -->
+        <div class="hidden lg:flex lg:w-2/5 bg-irctc-blue flex-col justify-between p-12">
+
+            <div class="flex items-center gap-2">
+                <svg class="w-7 h-7 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M4 15V6a2 2 0 012-2h12a2 2 0 012 2v9a4 4 0 01-4 4H8a4 4 0 01-4-4z"/>
+                    <path d="M4 11h16"/>
+                    <circle cx="8.5" cy="17.5" r=".6" fill="currentColor"/>
+                    <circle cx="15.5" cy="17.5" r=".6" fill="currentColor"/>
+                    <path d="M8 22l-2-3M16 22l2-3"/>
+                </svg>
+                <span class="text-white font-bold text-lg">IRCTC <span class="text-irctc-orange"></span></span>
+            </div>
+
+            <div class="text-white">
+                <span class="text-irctc-orange text-xs font-bold tracking-widest uppercase">Ready for your next journey?</span>
+                <h1 class="text-3xl font-bold mt-3 mb-4 leading-snug">Your journey, sorted.</h1>
+                <p class="text-blue-100/80 text-sm leading-relaxed max-w-sm">
+                    Sign in to pick up where you left off and keep track of your upcoming trips.
+                </p>
+
+                <!-- rail track -->
+                <div class="mt-10">
+                    <div class="relative h-px bg-white/25">
+                        <span class="absolute -top-1 left-0 w-2 h-2 rounded-full bg-irctc-orange"></span>
+                        <span class="absolute -top-1 left-1/2 -translate-x-1/2 w-2 h-2 rounded-full bg-white/60"></span>
+                        <span class="absolute -top-1 right-0 w-2 h-2 rounded-full bg-irctc-orange"></span>
+
+                        <div id="trackTrain" class="absolute -top-2 left-0">
+                            <svg class="w-4 h-4 text-irctc-orange" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M4 15V6a2 2 0 012-2h12a2 2 0 012 2v9a4 4 0 01-4 4H8a4 4 0 01-4-4z"/>
+                                <path d="M4 11h16"/>
+                                <circle cx="8.5" cy="17.5" r=".6" fill="currentColor"/>
+                                <circle cx="15.5" cy="17.5" r=".6" fill="currentColor"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="flex justify-between text-[10px] tracking-widest text-blue-100/60 uppercase mt-2">
+                        <span>Origin</span>
+                        <span>En route</span>
+                        <span>Destination</span>
+                    </div>
+                </div>
+            </div>
+
+            <p class="text-blue-100/50 text-xs">From booking to boarding, we've got you covered.</p>
+        </div>
+
+        <!-- Right panel: ticket-styled login card -->
+        <div class="w-full lg:w-3/5 flex items-center justify-center p-6 sm:p-12">
+            <div class="w-full max-w-sm bg-white rounded-2xl shadow-lg overflow-visible relative">
+
+                <!-- ticket stub header -->
+                <div class="flex items-center justify-between px-6 pt-5 pb-4">
+                    <div>
+                        <p class="text-[11px] text-gray-400 uppercase tracking-wide">Boarding pass · Auth</p>
+                        <p class="text-lg font-bold text-irctc-blue">Sign In</p>
+                    </div>
+                    <span class="text-[11px] font-bold text-irctc-orange border border-irctc-orange/40 bg-orange-50 px-2.5 py-1 rounded-full">WELCOME ABOARD</span>
+                </div>
+
+                <!-- perforation -->
+                <div class="relative">
+                    <div class="border-t-2 border-dashed border-gray-200"></div>
+                    <span class="absolute -left-3 top-1/2 -translate-y-1/2 w-6 h-6 rounded-full bg-irctc-light"></span>
+                    <span class="absolute -right-3 top-1/2 -translate-y-1/2 w-6 h-6 rounded-full bg-irctc-light"></span>
+                </div>
+
+                <div class="px-6 pt-6 pb-7">
+
+                    <p class="text-sm text-gray-500 mb-6">Enter your credentials to access your bookings and dashboard.</p>
+
+                    <form id="loginForm" novalidate class="space-y-4">
+
+                        <div>
+                            <label for="loginId" class="block text-sm font-medium text-gray-700 mb-1.5">Email or mobile number</label>
+                            <div class="relative">
+                                <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400">
+                                    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+                                </span>
+                                <input type="text" id="loginId" name="loginId" placeholder="you@example.com or 9XXXXXXXXX"
+                                    class="w-full border border-gray-300 rounded-lg pl-10 pr-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-irctc-blue">
+                            </div>
+                            <p id="loginIdError" class="text-red-500 text-xs mt-1.5 hidden">Please enter a valid email or mobile number.</p>
+                        </div>
+
+                        <div>
+                            <label for="password" class="block text-sm font-medium text-gray-700 mb-1.5">Password</label>
+                            <div class="relative">
+                                <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400">
+                                    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+                                </span>
+                                <input type="password" id="password" name="password" placeholder="Enter your password"
+                                    class="w-full border border-gray-300 rounded-lg pl-10 pr-9 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-irctc-blue">
+                                <button type="button" id="togglePassword" aria-label="Show password"
+                                    class="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-400 hover:text-irctc-blue">
+                                    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                                </button>
+                            </div>
+                            <p id="passwordError" class="text-red-500 text-xs mt-1.5 hidden">Password must be at least 6 characters.</p>
+                        </div>
+
+                        <div class="flex items-center justify-between text-sm">
+                            <label class="flex items-center gap-2 text-gray-500">
+                                <input type="checkbox" name="remember" class="accent-irctc-blue w-4 h-4">
+                                Keep me signed in
+                            </label>
+                            <a href="forgot-password.html" class="text-irctc-blue hover:underline">Forgot password?</a>
+                        </div>
+
+                        <button type="submit"
+                            class="w-full bg-irctc-orange hover:bg-orange-600 text-white font-bold py-2.5 rounded-lg transition-colors">
+                            Sign In &amp; Board
+                        </button>
+
+                    </form>
+
+                    <p class="text-center text-sm text-gray-500 mt-6">
+                        New to IRCTC?
+                        <a href="signup.html" class="text-irctc-blue font-medium hover:underline">Create an account</a>
+                    </p>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        const form = document.getElementById('loginForm');
+        const loginId = document.getElementById('loginId');
+        const password = document.getElementById('password');
+        const loginIdError = document.getElementById('loginIdError');
+        const passwordError = document.getElementById('passwordError');
+        const toggleBtn = document.getElementById('togglePassword');
+
+        toggleBtn.addEventListener('click', function () {
+            const isHidden = password.type === 'password';
+            password.type = isHidden ? 'text' : 'password';
+            toggleBtn.setAttribute('aria-label', isHidden ? 'Hide password' : 'Show password');
+        });
+
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+            let isValid = true;
+
+            if (loginId.value.trim().length < 3) {
+                loginIdError.classList.remove('hidden');
+                loginId.classList.add('border-red-500');
+                isValid = false;
+            } else {
+                loginIdError.classList.add('hidden');
+                loginId.classList.remove('border-red-500');
+            }
+
+            if (password.value.length < 6) {
+                passwordError.classList.remove('hidden');
+                password.classList.add('border-red-500');
+                isValid = false;
+            } else {
+                passwordError.classList.add('hidden');
+                password.classList.remove('border-red-500');
+            }
+
+            if (isValid) {
+                alert('Login successful! (UI demo only, no backend yet)');
+                form.reset();
+            }
+        });
+    </script>
+
+</body>
+</html>
