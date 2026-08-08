@@ -3,29 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IRCTC Clone - Ticket Booking</title>
-    
-    <!-- This links to the CSS file Tailwind is generating -->
-    <link rel="stylesheet" href="./assets/css/output.css">
+    <title>New Page | IRCTC Clone</title>
+    <!-- Adjust path depending on folder location -->
+    <link rel="stylesheet" href="../assets/css/output.css">
 </head>
+<body class="text-gray-800 font-sans relative min-h-screen">
 
-<!-- We apply the IRCTC background and basic font styles directly to the body -->
-<body class="bg-irctc-light text-gray-800 font-sans p-8">
+    <!-- STANDARDIZED HEADER -->
+    <header class="w-full relative z-20 px-4 md:px-8 pt-4 md:pt-8">
+        <div class="max-w-300 mx-auto bg-white rounded-lg shadow-sm">
+            <nav class="flex items-center justify-between p-4">
+                <div class="flex items-center cursor-pointer" onclick="window.location.href='index.html'">
+                    <span class="text-3xl font-bold text-irctc-blue">IRCTC</span>
+                </div>
+                <div class="hidden md:flex space-x-6 items-center">
+                    <a href="index.html" class="text-gray-700 hover:text-irctc-orange font-semibold transition-colors">Home</a>
+                    <a href="TrainSearch.html" class="text-gray-700 hover:text-irctc-orange font-semibold transition-colors">Trains</a>
+                    <a href="#" class="text-gray-700 hover:text-irctc-orange font-semibold transition-colors">Holidays</a>
+                    <a href="#" class="text-gray-700 hover:text-irctc-orange font-semibold transition-colors">Contact Us</a>
+                </div>
+                <div class="flex items-center space-x-3">
+                    <button onclick="window.location.href='my-bookings.html'" class="border-2 border-irctc-blue text-irctc-blue hover:bg-blue-50 font-bold py-2 px-4 rounded transition-colors">
+                        My Bookings
+                    </button>
+                    <button onclick="window.location.href='login.html'" class="bg-irctc-orange hover:bg-orange-600 text-white font-bold py-2 px-4 rounded transition-colors">
+                        Login / Register
+                    </button>
+                </div>
+            </nav>
+        </div>
+    </header>
 
-    <!-- Tailwind's version of a container -->
-    <div class="max-w-7xl mx-auto">
-        
-        <!-- Styling the heading with our custom IRCTC blue -->
-        <h1 class="text-3xl font-bold text-irctc-blue mb-4">IRCTC Clone Setup Complete</h1>
-        
-        <p class="mb-6 text-gray-600">This is the starting point for the Home Page.</p>
-        
-        <!-- Tailwind's version of our btn-primary using the IRCTC orange -->
-        <button class="bg-irctc-orange hover:bg-orange-600 text-white font-bold py-2 px-4 rounded transition-colors">
-            Test Button
-        </button>
-        
-    </div>
+    <!-- STANDARDIZED CONTENT AREA -->
+    <main class="w-full relative z-10 px-4 md:px-8 py-6 md:py-10">
+        <div class="max-w-300 mx-auto">
+            
+            <!-- NEW MEMBERS PASTE THEIR UI CARDS HERE -->
+            
+        </div>
+    </main>
 
+    <!-- GLOBAL ANIMATION -->
+    <script src="../js/train-animation.js"></script>
 </body>
 </html>

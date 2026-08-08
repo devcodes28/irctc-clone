@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Holidays & Tour Packages | IRCTC Clone</title>
+    <!-- CRITICAL: Ensure this path correctly points to your CSS file -->
+    <link rel="stylesheet" href="../assets/css/output.css">
+</head>
+<body class="text-gray-800 font-sans relative min-h-screen">
+
+    <!-- ========================================== -->
+    <!-- 1. STANDARDIZED HEADER                     -->
+    <!-- ========================================== -->
+    <header class="w-full relative z-20 px-4 md:px-8 pt-4 md:pt-8">
+        <div class="max-w-300 mx-auto bg-white rounded-lg shadow-sm">
+        <nav class="flex items-center justify-between p-4 mb-0">
+            <!-- Logo -->
+            <div class="flex items-center cursor-pointer" onclick="window.location.href='home.html'">
+                <span class="text-3xl font-bold text-irctc-blue">IRCTC</span>
+            </div>
+            
+            <!-- Desktop Menu -->
+            <div class="hidden md:flex space-x-6 items-center">
+                <a href="home.html" class="text-gray-700 hover:text-irctc-orange font-semibold transition-colors">Home</a>
+                <a href="TrainSearch.html" class="text-gray-700 hover:text-irctc-orange font-semibold transition-colors">Trains</a>
+                <a href="holidays.html" class="text-gray-700 hover:text-irctc-orange font-semibold transition-colors">Holidays</a>
+                <!-- NEW LINKS -->
+                <a href="e-wallet.html" class="text-gray-700 hover:text-irctc-orange font-semibold transition-colors">E-wallet</a>
+                <a href="alerts.html" class="text-gray-700 hover:text-irctc-orange font-semibold transition-colors flex items-center">
+                    Alerts 
+                    <span class="bg-red-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full ml-1.5 shadow-sm">2</span>
+                </a>
+                <a href="contact-us.html" class="text-gray-700 hover:text-irctc-orange font-semibold transition-colors">Contact Us</a>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="flex items-center space-x-3">
+                <button onclick="window.location.href='my-bookings.html'" class="border-2 border-irctc-blue text-irctc-blue hover:bg-blue-50 font-bold py-2 px-4 rounded transition-colors">
+                    My Bookings
+                </button>
+                <button onclick="window.location.href='login.html'" class="bg-irctc-orange hover:bg-orange-600 text-white font-bold py-2 px-4 rounded transition-colors">
+                    Login / Register
+                </button>
+            </div>
+        </nav>
+        </div>
+    </header>
+
+    <!-- ========================================== -->
+    <!-- 2. STANDARDIZED CONTENT AREA               -->
+    <!-- ========================================== -->
+    <main class="w-full relative z-10 px-4 md:px-8 py-6 md:py-10">
+        <div class="max-w-300 mx-auto">
+            
+            <!-- Holidays Header -->
+            <div class="mb-8 text-center md:text-left">
+                <h2 class="text-3xl font-extrabold text-irctc-blue tracking-tight">Explore Incredible India</h2>
+                <p class="text-gray-600 mt-2 text-lg">Book premium rail tour packages, Bharat Gaurav trains, and spiritual yatras.</p>
+            </div>
+
+            <!-- Categories Tabs -->
+            <div class="flex gap-4 overflow-x-auto border-b border-gray-300 text-sm font-semibold text-gray-600 mb-8 pb-2">
+                <button class="shrink-0 text-irctc-blue border-b-4 border-irctc-orange pb-2 px-2">Bharat Gaurav Trains</button>
+                <button class="shrink-0 hover:text-irctc-blue transition pb-2 px-2">Rail Tour Packages</button>
+                <button class="shrink-0 hover:text-irctc-blue transition pb-2 px-2">Domestic Air Packages</button>
+                <button class="shrink-0 hover:text-irctc-blue transition pb-2 px-2">International Tours</button>
+            </div>
+
+            <!-- Tour Packages Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                
+                <!-- Package Card 1 -->
+                <div class="bg-white rounded-xl shadow-md border border-gray-200 overflow-hidden hover:shadow-xl transition-shadow duration-300">
+                    <div class="h-48 bg-gray-200 relative">
+                        <img src="C:\Users\Sreedev Suresh\OneDrive\Documents\Projects\irctc-clone\assets\images\kerala backwaters.jpg" alt="Kerala Backwaters" class="w-full h-full object-cover">
+                        <div class="absolute top-3 right-3 bg-irctc-orange text-white text-xs font-bold px-3 py-1 rounded-full shadow">
+                            5 Nights / 6 Days
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-900 mb-1">Dakshin Bharat Yatra</h3>
+                        <p class="text-sm text-gray-500 mb-4">Trivandrum - Kanyakumari - Madurai - Rameshwaram</p>
+                        <div class="flex justify-between items-center mt-4">
+                            <div>
+                                <p class="text-xs text-gray-400 uppercase tracking-wide">Starting from</p>
+                                <p class="text-2xl font-black text-irctc-blue">₹9,450</p>
+                            </div>
+                            <button class="bg-blue-600 hover:bg-blue-800 text-white font-bold py-2 px-5 rounded transition">
+                                Book Now
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Package Card 2 -->
+                <div class="bg-white rounded-xl shadow-md border border-gray-200 overflow-hidden hover:shadow-xl transition-shadow duration-300">
+                    <div class="h-48 bg-gray-200 relative">
+                        <img src="C:\Users\Sreedev Suresh\OneDrive\Documents\Projects\irctc-clone\assets\images\Vaishno Devi.jpg" alt="Vaishno Devi Shrine" class="w-full h-full object-cover">
+                        <div class="absolute top-3 right-3 bg-irctc-orange text-white text-xs font-bold px-3 py-1 rounded-full shadow">
+                            3 Nights / 4 Days
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-900 mb-1">Vaishno Devi Economy</h3>
+                        <p class="text-sm text-gray-500 mb-4">New Delhi - Katra - Mata Vaishno Devi Shrine</p>
+                        <div class="flex justify-between items-center mt-4">
+                            <div>
+                                <p class="text-xs text-gray-400 uppercase tracking-wide">Starting from</p>
+                                <p class="text-2xl font-black text-irctc-blue">₹2,490</p>
+                            </div>
+                            <button class="bg-blue-600 hover:bg-blue-800 text-white font-bold py-2 px-5 rounded transition">
+                                Book Now
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Package Card 3 -->
+                <div class="bg-white rounded-xl shadow-md border border-gray-200 overflow-hidden hover:shadow-xl transition-shadow duration-300">
+                    <div class="h-48 bg-gray-200 relative">
+                        <img src="C:\Users\Sreedev Suresh\OneDrive\Documents\Projects\irctc-clone\assets\images\Golden Temple.jpg" alt="Golden Temple" class="w-full h-full object-cover">
+                        <div class="absolute top-3 right-3 bg-irctc-orange text-white text-xs font-bold px-3 py-1 rounded-full shadow">
+                            1 Night / 2 Days
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-900 mb-1">Amritsar Rail Tour</h3>
+                        <p class="text-sm text-gray-500 mb-4">Swarna Shatabdi Express - Golden Temple - Wagah Border</p>
+                        <div class="flex justify-between items-center mt-4">
+                            <div>
+                                <p class="text-xs text-gray-400 uppercase tracking-wide">Starting from</p>
+                                <p class="text-2xl font-black text-irctc-blue">₹5,545</p>
+                            </div>
+                            <button class="bg-blue-600 hover:bg-blue-800 text-white font-bold py-2 px-5 rounded transition">
+                                Book Now
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <footer style="background-color: #071936 !important;" class="text-white pt-10 pb-6 border-t-4 border-irctc-orange relative z-30 w-full shadow-xl shrink-0 mt-auto">
+        <div class="max-w-300 mx-auto px-4 md:px-8 text-center text-xs text-gray-300">
+            <p class="font-medium">Copyright © 2026 - www.irctc.co.in. All Rights Reserved</p>
+            <p class="mt-1 text-gray-400 text-[11px]">Designed and Hosted by CRIS</p>
+        </div>
+    </footer>
+
+    <!-- ========================================== -->
+    <!-- 3. THE GLOBAL BACKGROUND ANIMATION         -->
+    <!-- ========================================== -->
+    <script src="../js/train-animation.js"></script>
+
+</body>
+</html>

@@ -4,86 +4,87 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Bookings | IRCTC Clone</title>
-    <!-- CRITICAL: The ../ is needed because this file is inside the /pages folder -->
     <link rel="stylesheet" href="../assets/css/output.css">
 </head>
 <body class="text-gray-800 font-sans relative min-h-screen">    
-<!-- 1. The Header Wrapper restores the top and side padding we removed from the body -->
-<header class="w-full relative z-20 px-4 md:px-8 pt-4 md:pt-8">
-    
-    <!-- 2. The Container limits the width so it doesn't stretch forever on big screens -->
-    <div class="max-w-300 mx-auto bg-white rounded-lg shadow-sm">
-        <nav class="flex items-center justify-between bg-white p-4 shadow-md rounded-md mb-6">
-            <div class="flex items-center cursor-pointer" onclick="showHome()">
+
+    <!-- STANDARDIZED HEADER -->
+    <header class="w-full relative z-20 px-4 md:px-8 pt-4 md:pt-8">
+        <div class="max-w-300 mx-auto bg-white rounded-lg shadow-sm">
+        <nav class="flex items-center justify-between p-4 mb-0">
+            <!-- Logo -->
+            <div class="flex items-center cursor-pointer" onclick="window.location.href='home.html'">
                 <span class="text-3xl font-bold text-irctc-blue">IRCTC</span>
             </div>
             
             <!-- Desktop Menu -->
             <div class="hidden md:flex space-x-6 items-center">
-                <a href="#" id="navHome" class="text-gray-700 hover:text-irctc-orange font-semibold transition-colors">Home</a>
-                <a href="#" id="navTrains" class="text-gray-700 hover:text-irctc-orange font-semibold transition-colors">Trains</a>
-                <a href="#" class="text-gray-700 hover:text-irctc-orange font-semibold transition-colors">Holidays</a>
-                <a href="#" class="text-gray-700 hover:text-irctc-orange font-semibold transition-colors">Contact Us</a>
+                <a href="home.html" class="text-gray-700 hover:text-irctc-orange font-semibold transition-colors">Home</a>
+                <a href="TrainSearch.html" class="text-gray-700 hover:text-irctc-orange font-semibold transition-colors">Trains</a>
+                <a href="holidays.html" class="text-gray-700 hover:text-irctc-orange font-semibold transition-colors">Holidays</a>
+                <!-- NEW LINKS -->
+                <a href="e-wallet.html" class="text-gray-700 hover:text-irctc-orange font-semibold transition-colors">E-wallet</a>
+                <a href="alerts.html" class="text-gray-700 hover:text-irctc-orange font-semibold transition-colors flex items-center">
+                    Alerts 
+                    <span class="bg-red-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full ml-1.5 shadow-sm">2</span>
+                </a>
+                <a href="contact-us.html" class="text-gray-700 hover:text-irctc-orange font-semibold transition-colors">Contact Us</a>
             </div>
 
             <!-- Action Buttons -->
             <div class="flex items-center space-x-3">
-                <button id="myBookingsNavBtn" class="border-2 border-irctc-blue text-irctc-blue hover:bg-blue-50 font-bold py-2 px-4 rounded transition-colors">
+                <button onclick="window.location.href='my-bookings.html'" class="border-2 border-irctc-blue text-irctc-blue hover:bg-blue-50 font-bold py-2 px-4 rounded transition-colors">
                     My Bookings
                 </button>
-                <button class="bg-irctc-orange hover:bg-orange-600 text-white font-bold py-2 px-4 rounded transition-colors">
+                <button onclick="window.location.href='login.html'" class="bg-irctc-orange hover:bg-orange-600 text-white font-bold py-2 px-4 rounded transition-colors">
                     Login / Register
                 </button>
             </div>
         </nav>
-    
-        
-    </div>
-</header>
-    <div class="max-w-5xl mx-auto p-6 mt-8">
-        <h2 class="text-2xl font-bold text-irctc-blue mb-6">My Bookings</h2>
-        
-        <!-- Booking Card -->
-        <div class="bg-white rounded-lg shadow border border-gray-200 mb-4 overflow-hidden">
-            <!-- Card Header -->
-            <div class="bg-gray-50 border-b border-gray-200 px-6 py-3 flex justify-between items-center">
-                <div class="font-semibold text-gray-700">PNR: 8493028491</div>
-                <span class="px-3 py-1 bg-green-100 text-green-700 text-sm font-bold rounded-full">CONFIRMED</span>
-            </div>
+        </div>
+    </header>
+
+    <!-- STANDARDIZED CONTENT AREA -->
+    <main class="w-full relative z-10 px-4 md:px-8 py-6 md:py-10">
+        <div class="max-w-300 mx-auto">
+            <h2 class="text-2xl font-bold text-irctc-blue mb-6">My Bookings</h2>
             
-            <!-- Card Body -->
-            <div class="p-6 flex flex-col md:flex-row justify-between items-center gap-4">
-                <div class="flex-1">
-                    <h3 class="text-lg font-bold text-gray-900">12625 / KERALA EXPRESS</h3>
-                    <p class="text-gray-500 text-sm mt-1">15 Aug 2026 • 3A • General (GN)</p>
-                    
-                    <!-- Station to Station -->
-                    <div class="mt-4 flex items-center space-x-4">
-                        <div>
-                            <p class="font-bold text-lg">TVC</p>
-                            <p class="text-xs text-gray-500">11:15</p>
-                        </div>
-                        <div class="text-gray-400 font-bold">⟶</div>
-                        <div>
-                            <p class="font-bold text-lg">NDLS</p>
-                            <p class="text-xs text-gray-500">13:30 (+2)</p>
-                        </div>
-                    </div>
+            <div class="bg-white rounded-lg shadow border border-gray-200 overflow-hidden">
+                <div class="bg-gray-50 border-b border-gray-200 px-6 py-3 flex justify-between items-center">
+                    <div class="font-semibold text-gray-700">PNR: 8493028491</div>
+                    <span class="px-3 py-1 bg-green-100 text-green-700 text-sm font-bold rounded-full">CONFIRMED</span>
                 </div>
                 
-                <!-- Action Buttons (Including Cancel Ticket UI) -->
-                <div class="flex flex-col space-y-3 w-full md:w-auto">
-                    <button class="bg-blue-600 hover:bg-blue-800 text-white px-6 py-2 rounded transition shadow-sm font-semibold">
-                        View Details
-                    </button>
-                    <button class="border-2 border-red-500 text-red-500 hover:bg-red-50 px-6 py-2 rounded transition font-semibold">
-                        Cancel Ticket
-                    </button>
+                <div class="p-6 flex flex-col md:flex-row justify-between items-center gap-4">
+                    <div class="flex-1">
+                        <h3 class="text-lg font-bold text-gray-900">12625 / KERALA EXPRESS</h3>
+                        <p class="text-gray-500 text-sm mt-1">15 Aug 2026 • 3A • General (GN)</p>
+                        <div class="mt-4 flex items-center space-x-4">
+                            <div>
+                                <p class="font-bold text-lg">TVC</p>
+                                <p class="text-xs text-gray-500">11:15</p>
+                            </div>
+                            <div class="text-gray-400 font-bold">⟶</div>
+                            <div>
+                                <p class="font-bold text-lg">NDLS</p>
+                                <p class="text-xs text-gray-500">13:30 (+2)</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="flex flex-col space-y-3 w-full md:w-auto">
+                        <button class="bg-blue-600 hover:bg-blue-800 text-white px-6 py-2 rounded transition shadow-sm font-semibold">
+                            View Details
+                        </button>
+                        <button class="border-2 border-red-500 text-red-500 hover:bg-red-50 px-6 py-2 rounded transition font-semibold">
+                            Cancel Ticket
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
-        
-    </div>
-<script src="../js/train-animation.js"></script>
+    </main>
+
+    <script src="../js/train-animation.js"></script>
 </body>
 </html>
