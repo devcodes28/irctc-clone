@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         <!-- The Moving Train SVG -->
         <div class="absolute bottom-6 animate-train flex items-end">
-            <svg width="180" height="60" viewBox="0 0 180 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <svg width="180" height="60" viewBox="0 0 180 60" fill="none" xmlns="http://www.w3.org/2000/svg" style="transform: scaleX(-1);">
                 <path d="M140 25 H 170 Q 180 25 180 50 H 140 Z" fill="#1e40af"/>
                 <rect x="20" y="20" width="125" height="30" rx="4" fill="#1e40af"/>
                 <rect x="30" y="25" width="20" height="12" rx="2" fill="#bfdbfe"/>
@@ -33,9 +33,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 <rect x="160" y="10" width="8" height="15" fill="#4b5563"/>
                 <circle cx="164" cy="5" r="5" fill="#9ca3af" opacity="0.6"/>
                 <circle cx="154" cy="2" r="7" fill="#9ca3af" opacity="0.4"/>
-                <circle cx="140" cy="-2" r="9" fill="#9ca3af" opacity="0.2"/>
-            </svg>
-        </div>
+               <circle cx="140" cy="-2" r="9" fill="#9ca3af" opacity="0.2"/>
+        </svg>
+    </div>
     </div>
     `;
 
