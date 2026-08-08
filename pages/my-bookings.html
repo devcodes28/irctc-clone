@@ -7,8 +7,39 @@
     <!-- CRITICAL: The ../ is needed because this file is inside the /pages folder -->
     <link rel="stylesheet" href="../assets/css/output.css">
 </head>
-<body class="bg-linear-to-r from-blue-50 via-gray-100 to-blue-100 moving-bg text-gray-800 font-sans">
+<body class="text-gray-800 font-sans relative min-h-screen">    
+<!-- 1. The Header Wrapper restores the top and side padding we removed from the body -->
+<header class="w-full relative z-20 px-4 md:px-8 pt-4 md:pt-8">
     
+    <!-- 2. The Container limits the width so it doesn't stretch forever on big screens -->
+    <div class="max-w-300 mx-auto bg-white rounded-lg shadow-sm">
+        <nav class="flex items-center justify-between bg-white p-4 shadow-md rounded-md mb-6">
+            <div class="flex items-center cursor-pointer" onclick="showHome()">
+                <span class="text-3xl font-bold text-irctc-blue">IRCTC</span>
+            </div>
+            
+            <!-- Desktop Menu -->
+            <div class="hidden md:flex space-x-6 items-center">
+                <a href="#" id="navHome" class="text-gray-700 hover:text-irctc-orange font-semibold transition-colors">Home</a>
+                <a href="#" id="navTrains" class="text-gray-700 hover:text-irctc-orange font-semibold transition-colors">Trains</a>
+                <a href="#" class="text-gray-700 hover:text-irctc-orange font-semibold transition-colors">Holidays</a>
+                <a href="#" class="text-gray-700 hover:text-irctc-orange font-semibold transition-colors">Contact Us</a>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="flex items-center space-x-3">
+                <button id="myBookingsNavBtn" class="border-2 border-irctc-blue text-irctc-blue hover:bg-blue-50 font-bold py-2 px-4 rounded transition-colors">
+                    My Bookings
+                </button>
+                <button class="bg-irctc-orange hover:bg-orange-600 text-white font-bold py-2 px-4 rounded transition-colors">
+                    Login / Register
+                </button>
+            </div>
+        </nav>
+    
+        
+    </div>
+</header>
     <div class="max-w-5xl mx-auto p-6 mt-8">
         <h2 class="text-2xl font-bold text-irctc-blue mb-6">My Bookings</h2>
         
