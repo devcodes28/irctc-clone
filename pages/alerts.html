@@ -3,80 +3,91 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Alerts | IRCTC Clone</title>
+    <title>Travel Alerts | IRCTC Clone</title>
     <link rel="stylesheet" href="../assets/css/output.css">
 </head>
-<body class="text-gray-800 font-sans bg-gray-50 m-0 min-h-screen flex flex-col">
+<body class="text-gray-800 font-sans bg-gray-50 m-0 min-h-screen flex flex-col overflow-x-hidden">
 
-    <!-- HEADER -->
-    <header class="w-full relative z-20 px-4 md:px-8 pt-4 md:pt-8 shrink-0">
-        <div class="max-w-300 mx-auto bg-white rounded-lg shadow-sm">
+    <!-- STANDARDIZED HEADER -->
+    <header class="w-full relative z-20 px-4 md:px-6 pt-4 md:pt-8 shrink-0">
+        <div class="max-w-300 w-full mx-auto bg-white rounded-lg shadow-sm">
             <nav class="flex items-center justify-between p-4 mb-0">
                 <div class="flex items-center cursor-pointer" onclick="window.location.href='home.html'">
                     <span class="text-3xl font-bold text-irctc-blue">IRCTC</span>
                 </div>
+                
                 <div class="hidden md:flex space-x-6 items-center">
                     <a href="home.html" class="text-gray-700 hover:text-irctc-orange font-semibold transition-colors">Home</a>
                     <a href="TrainSearch.html" class="text-gray-700 hover:text-irctc-orange font-semibold transition-colors">Trains</a>
                     <a href="holidays.html" class="text-gray-700 hover:text-irctc-orange font-semibold transition-colors">Holidays</a>
-                    <a href="e-wallet.html" class="text-gray-700 hover:text-irctc-orange font-semibold transition-colors">E-wallet</a>
+                    <a href="e-wallet.html" id="navEwallet" class="hidden text-gray-700 hover:text-irctc-orange font-semibold transition-colors">E-wallet</a>
                     <a href="alerts.html" class="text-irctc-orange font-bold border-b-2 border-irctc-orange pb-1 transition-colors flex items-center">Alerts <span class="bg-red-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full ml-1.5 shadow-sm">2</span></a>
                     <a href="contact-us.html" class="text-gray-700 hover:text-irctc-orange font-semibold transition-colors">Contact Us</a>
                 </div>
+
                 <div class="flex items-center space-x-3">
-                    <button onclick="window.location.href='my-bookings.html'" class="border-2 border-irctc-blue text-irctc-blue hover:bg-blue-50 font-bold py-2 px-4 rounded transition-colors">My Bookings</button>
-                    <button onclick="window.location.href='login.html'" class="bg-irctc-orange hover:bg-orange-600 text-white font-bold py-2 px-4 rounded transition-colors">Login / Register</button>
+                    <button onclick="window.location.href='my-bookings.html'" class="border-2 border-irctc-blue text-irctc-blue hover:bg-blue-50 font-bold py-2 px-4 rounded transition-colors text-sm">
+                        My Bookings
+                    </button>
+                    <button class="bg-irctc-orange hover:bg-orange-600 text-white font-bold py-2 px-4 rounded transition-colors text-sm" onclick="window.location.href='login.html'">
+                        Login / Register
+                    </button>
                 </div>
             </nav>
         </div>
     </header>
 
     <!-- CONTENT -->
-    <main class="w-full relative z-10 px-4 md:px-8 py-6 md:py-10 grow">
-        <div class="max-w-200 mx-auto">
-            
-            <div class="flex items-center justify-between mb-6">
-                <h2 class="text-2xl font-bold text-irctc-blue">Alerts & Notifications</h2>
-                <button class="text-sm font-semibold text-gray-500 hover:text-irctc-orange transition-colors">Mark all as read</button>
-            </div>
-            
-            <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden flex flex-col">
-                
-                <!-- High Priority Alert -->
-                <div class="p-5 border-b border-gray-100 bg-red-50 border-l-4 border-l-red-500 flex gap-4 items-start relative">
-                    <div class="w-2 h-2 bg-red-500 rounded-full absolute top-6 right-5"></div>
-                    <div class="bg-white text-red-500 rounded-full w-10 h-10 flex items-center justify-center shrink-0 shadow-sm mt-0.5">⚠️</div>
-                    <div class="pr-6">
-                        <h4 class="font-bold text-red-900">Train Rescheduled</h4>
-                        <p class="text-sm text-red-700 mt-1">Train <strong>12625 (KERALA EXPRESS)</strong> scheduled for 15 Aug 2026 has been rescheduled. It will now depart at <strong>13:00 hrs</strong>.</p>
-                        <p class="text-xs text-red-500 mt-2 font-medium">2 hours ago</p>
-                    </div>
-                </div>
-
-                <!-- Info Alert -->
-                <div class="p-5 border-b border-gray-100 bg-blue-50 border-l-4 border-l-blue-500 flex gap-4 items-start relative">
-                    <div class="w-2 h-2 bg-blue-500 rounded-full absolute top-6 right-5"></div>
-                    <div class="bg-white text-blue-500 rounded-full w-10 h-10 flex items-center justify-center shrink-0 shadow-sm mt-0.5">🎫</div>
-                    <div class="pr-6">
-                        <h4 class="font-bold text-blue-900">Chart Prepared</h4>
-                        <p class="text-sm text-blue-700 mt-1">The reservation chart for PNR <strong>8493028491</strong> has been prepared. Your seat is confirmed in Coach B4, Seat 32.</p>
-                        <p class="text-xs text-blue-500 mt-2 font-medium">4 hours ago</p>
-                    </div>
-                </div>
-
+    <main class="w-full relative z-10 px-4 md:px-6 py-6 md:py-10 grow">
+        <div class="max-w-200 w-full mx-auto">
+            <div class="flex items-center gap-3 mb-8 border-b-4 border-irctc-blue pb-4">
+                <svg class="w-8 h-8 text-irctc-orange" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/></svg>
+                <h1 class="text-3xl font-black text-gray-900">Live Travel Alerts</h1>
             </div>
 
+            <div class="space-y-4">
+                <!-- Alert 1: Cancelled -->
+                <div class="bg-red-50 border-l-4 border-red-500 p-5 rounded-r-lg shadow-sm">
+                    <div class="flex items-center gap-2 mb-2">
+                        <span class="bg-red-500 text-white text-[10px] font-bold px-2 py-0.5 rounded uppercase tracking-wider">Cancelled</span>
+                        <span class="text-xs text-red-400 font-semibold">Today, 08:30 AM</span>
+                    </div>
+                    <h3 class="text-lg font-bold text-red-900">Train No. 16345 (Netravati Exp) Cancelled</h3>
+                    <p class="text-sm text-red-700 mt-1">Due to heavy waterlogging on the tracks near Mangaluru, Train No. 16345 stands fully cancelled for today. Full refunds will be processed automatically.</p>
+                </div>
+
+                <!-- Alert 2: Rescheduled -->
+                <div class="bg-yellow-50 border-l-4 border-yellow-500 p-5 rounded-r-lg shadow-sm">
+                    <div class="flex items-center gap-2 mb-2">
+                        <span class="bg-yellow-500 text-white text-[10px] font-bold px-2 py-0.5 rounded uppercase tracking-wider">Rescheduled</span>
+                        <span class="text-xs text-yellow-600 font-semibold">Yesterday, 14:15 PM</span>
+                    </div>
+                    <h3 class="text-lg font-bold text-yellow-900">Train No. 12625 (Kerala Exp) Delayed</h3>
+                    <p class="text-sm text-yellow-800 mt-1">Train No. 12625 is running late by 2 hours and 30 minutes due to fog conditions in North India. Revised departure from TVC is 13:45 Hrs.</p>
+                </div>
+
+                <!-- Alert 3: Info -->
+                <div class="bg-blue-50 border-l-4 border-blue-500 p-5 rounded-r-lg shadow-sm">
+                    <div class="flex items-center gap-2 mb-2">
+                        <span class="bg-blue-500 text-white text-[10px] font-bold px-2 py-0.5 rounded uppercase tracking-wider">General Info</span>
+                        <span class="text-xs text-blue-400 font-semibold">Aug 05, 2026</span>
+                    </div>
+                    <h3 class="text-lg font-bold text-blue-900">New Vande Bharat Express Introduced</h3>
+                    <p class="text-sm text-blue-800 mt-1">A new Vande Bharat service has been inaugurated between Ernakulam and Bengaluru. Booking is now open for dates starting next week.</p>
+                </div>
+            </div>
         </div>
     </main>
 
-    <!-- FOOTER -->
     <footer style="background-color: #071936 !important;" class="text-white pt-10 pb-6 border-t-4 border-irctc-orange relative z-30 w-full shadow-xl shrink-0 mt-auto">
-        <div class="max-w-300 mx-auto px-4 md:px-8 text-center text-xs text-gray-300">
+        <div class="max-w-300 w-full mx-auto px-4 md:px-8 text-center text-xs text-gray-300">
             <p class="font-medium">Copyright © 2026 - www.irctc.co.in. All Rights Reserved</p>
-            <p class="mt-1 text-gray-400 text-[11px]">Designed and Hosted by CRIS</p>
         </div>
     </footer>
 
+    <!-- INJECT DB SIMULATION (This powers the dynamic navbar!) -->
+    <script src="../js/db.js"></script>
     <script src="../js/train-animation.js"></script>
+
 </body>
 </html>

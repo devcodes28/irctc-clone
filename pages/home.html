@@ -20,7 +20,7 @@
                     <a href="home.html" class="text-irctc-orange font-bold border-b-2 border-irctc-orange pb-1 transition-colors">Home</a>
                     <a href="TrainSearch.html" class="text-gray-700 hover:text-irctc-orange font-semibold transition-colors">Trains</a>
                     <a href="holidays.html" class="text-gray-700 hover:text-irctc-orange font-semibold transition-colors">Holidays</a>
-                    <a href="e-wallet.html" class="text-gray-700 hover:text-irctc-orange font-semibold transition-colors">E-wallet</a>
+                    <a href="e-wallet.html" id="navEwallet" class="hidden text-gray-700 hover:text-irctc-orange font-semibold transition-colors">E-wallet</a>                    
                     <a href="alerts.html" class="text-gray-700 hover:text-irctc-orange font-semibold transition-colors flex items-center">Alerts <span class="bg-red-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full ml-1.5 shadow-sm">2</span></a>
                     <a href="contact-us.html" class="text-gray-700 hover:text-irctc-orange font-semibold transition-colors">Contact Us</a>
                 </div>
@@ -42,7 +42,7 @@
         <div class="max-w-300 mx-auto">
             
             <!-- Hero Banner -->
-                <div class="bg-linear-to-r from-irctc-blue to-blue-800 p-8 text-center text-white">
+            <div class="bg-linear-to-r from-irctc-blue to-blue-800 p-8 text-center text-white rounded-2xl shadow-md">
                 <div class="relative z-10 px-6 py-8 md:px-12 md:py-10 flex flex-col md:flex-row items-center justify-between gap-8">
                     
                     <div class="max-w-2xl text-center md:text-left">
@@ -64,38 +64,49 @@
                         </div>
                     </div>
 
-                    <!-- Right Side Stacked Feature Cards -->
+                    <!-- Right Side Stacked Feature Cards with Professional SVG Icons -->
                     <div class="w-full md:w-80 grid grid-cols-1 gap-3 text-left">
+                        
+                        <!-- Feature 1: Tatkal & General Booking -->
                         <div class="flex items-center gap-3 bg-white/10 backdrop-blur-md p-3.5 rounded-xl border border-white/10 shadow-sm">
-                            <div class="w-9 h-9 rounded-lg bg-irctc-orange/20 flex items-center justify-center text-irctc-orange font-bold shrink-0">⚡</div>
+                            <div class="w-9 h-9 rounded-lg bg-irctc-orange/20 flex items-center justify-center text-irctc-orange shrink-0">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                            </div>
                             <div>
                                 <h4 class="text-xs font-bold text-white">Tatkal & General Booking</h4>
                                 <p class="text-[10px] text-gray-300">Fast & seamless ticket checkout</p>
                             </div>
                         </div>
 
+                        <!-- Feature 2: Instant Refunds -->
                         <div class="flex items-center gap-3 bg-white/10 backdrop-blur-md p-3.5 rounded-xl border border-white/10 shadow-sm">
-                            <div class="w-9 h-9 rounded-lg bg-irctc-orange/20 flex items-center justify-center text-irctc-orange font-bold shrink-0">🛡️</div>
+                            <div class="w-9 h-9 rounded-lg bg-irctc-orange/20 flex items-center justify-center text-irctc-orange shrink-0">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+                            </div>
                             <div>
                                 <h4 class="text-xs font-bold text-white">Instant Refunds</h4>
                                 <p class="text-[10px] text-gray-300">Hassle-free cancellation policy</p>
                             </div>
                         </div>
 
+                        <!-- Feature 3: Live Train Status -->
                         <div class="flex items-center gap-3 bg-white/10 backdrop-blur-md p-3.5 rounded-xl border border-white/10 shadow-sm">
-                            <div class="w-9 h-9 rounded-lg bg-irctc-orange/20 flex items-center justify-center text-irctc-orange font-bold shrink-0">📍</div>
+                            <div class="w-9 h-9 rounded-lg bg-irctc-orange/20 flex items-center justify-center text-irctc-orange shrink-0">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                            </div>
                             <div>
                                 <h4 class="text-xs font-bold text-white">Live Train Status</h4>
                                 <p class="text-[10px] text-gray-300">Real-time GPS tracking updates</p>
                             </div>
                         </div>
+
                     </div>
 
                 </div>
             </div>
 
             <!-- App Promotion Banner -->
-            <section class="w-full mb-6">
+            <section class="w-full mb-6 mt-6">
                 <div class="bg-white rounded-2xl shadow-md overflow-hidden flex flex-col md:flex-row items-center justify-between border border-gray-100 bg-linear-to-r from-blue-50 to-white px-8 py-6">
                     <div class="w-full md:w-3/4">
                         <h2 class="text-2xl md:text-3xl font-black text-gray-800 leading-tight mb-2">
@@ -110,7 +121,7 @@
                     </div>
 
                     <div class="hidden md:flex flex-col items-center shrink-0">
-                        <div class="bg-white p-2 rounded-lg shadow-xs border border-gray-200">
+                        <div class="bg-white p-2 rounded-lg shadow-sm border border-gray-200">
                             <img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=https://irctc.co.in/mobile" alt="QR Code" class="w-20 h-20 opacity-80">
                         </div>
                         <p class="text-irctc-blue font-bold text-[10px] mt-1">Scan to download</p>
@@ -130,5 +141,45 @@
     </footer>
 
     <script src="../js/train-animation.js"></script>
+
+    <!-- INJECT DB SIMULATION -->
+    <script src="../js/db.js"></script>
+
+    <!-- DYNAMIC NAVBAR SCRIPT -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            if (typeof DB_API === 'undefined') return;
+            
+            // 1. Check if a user is currently logged in
+            const currentUser = DB_API.getCurrentUser();
+            
+            if (currentUser) {
+                // 2. Unhide the E-wallet link
+                const ewalletLink = document.getElementById('navEwallet');
+                if (ewalletLink) {
+                    ewalletLink.classList.remove('hidden');
+                    ewalletLink.classList.add('flex');
+                }
+                
+                // 3. Find the "Login / Register" button and transform it into a "Logout" button
+                const buttons = document.querySelectorAll('button');
+                buttons.forEach(btn => {
+                    if (btn.textContent.includes('Login')) {
+                        btn.textContent = 'Logout';
+                        
+                        // Change colors from orange to red to match our design system
+                        btn.classList.remove('bg-irctc-orange', 'hover:bg-orange-600');
+                        btn.classList.add('bg-red-500', 'hover:bg-red-600');
+                        
+                        // Override the click action to log the user out instead of going to login.html
+                        btn.onclick = (e) => {
+                            e.preventDefault();
+                            DB_API.logoutUser();
+                        };
+                    }
+                });
+            }
+        });
+    </script>
 </body>
 </html>

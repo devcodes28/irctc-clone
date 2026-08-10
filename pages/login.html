@@ -18,29 +18,25 @@
 </head>
 <body class="text-gray-800 font-sans relative min-h-screen bg-gray-50 flex flex-col justify-between">
 
-    <!-- GLOBAL HEADER & NAVBAR -->
     <header class="w-full relative z-20 px-4 md:px-8 pt-4 md:pt-6">
+        <!-- FIXED: changed max-w-1200 to max-w-[1200px] for consistent width -->
         <div class="max-w-300 mx-auto bg-white rounded-lg shadow-sm">
             <nav class="flex items-center justify-between p-4 mb-0">
-                <!-- Logo -->
                 <div class="flex items-center cursor-pointer" onclick="window.location.href='home.html'">
                     <span class="text-3xl font-bold text-irctc-blue">IRCTC</span>
                 </div>
                 
-                <!-- Desktop Menu -->
                 <div class="hidden md:flex space-x-6 items-center">
                     <a href="home.html" class="text-gray-700 hover:text-irctc-orange font-semibold transition-colors">Home</a>
                     <a href="TrainSearch.html" class="text-gray-700 hover:text-irctc-orange font-semibold transition-colors">Trains</a>
                     <a href="holidays.html" class="text-gray-700 hover:text-irctc-orange font-semibold transition-colors">Holidays</a>
-                    <a href="e-wallet.html" class="text-gray-700 hover:text-irctc-orange font-semibold transition-colors">E-wallet</a>
-                    <a href="alerts.html" class="text-gray-700 hover:text-irctc-orange font-semibold transition-colors flex items-center">
+                    <a href="e-wallet.html" id="navEwallet" class="hidden text-gray-700 hover:text-irctc-orange font-semibold transition-colors">E-wallet</a>                    <a href="alerts.html" class="text-gray-700 hover:text-irctc-orange font-semibold transition-colors flex items-center">
                         Alerts 
                         <span class="bg-red-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full ml-1.5 shadow-sm">2</span>
                     </a>
                     <a href="contact-us.html" class="text-gray-700 hover:text-irctc-orange font-semibold transition-colors">Contact Us</a>
                 </div>
 
-                <!-- Action Buttons -->
                 <div class="flex items-center space-x-3">
                     <button onclick="window.location.href='my-bookings.html'" class="border-2 border-irctc-blue text-irctc-blue hover:bg-blue-50 font-bold py-2 px-4 rounded transition-colors text-sm">
                         My Bookings
@@ -53,11 +49,9 @@
         </div>
     </header>
 
-    <!-- MAIN SPLIT CONTAINER -->
     <main class="w-full grow flex items-center justify-center px-4 md:px-8 py-8">
         <div class="max-w-275 w-full bg-white rounded-3xl shadow-xl overflow-hidden flex flex-col lg:flex-row border border-gray-100">
 
-            <!-- Left branding panel -->
             <div class="hidden lg:flex lg:w-2/5 bg-irctc-blue flex-col justify-between p-10 text-white relative overflow-hidden">
                 <div class="absolute -right-10 -top-10 w-40 h-40 bg-white opacity-5 rounded-full"></div>
                 
@@ -72,7 +66,6 @@
                         Sign in to pick up where you left off and keep track of your upcoming trips securely.
                     </p>
 
-                    <!-- rail track animation -->
                     <div class="mt-8">
                         <div class="relative h-px bg-white/25">
                             <span class="absolute -top-1 left-0 w-2 h-2 rounded-full bg-irctc-orange"></span>
@@ -99,11 +92,9 @@
                 <p class="text-blue-100/50 text-xs">From booking to boarding, we've got you covered.</p>
             </div>
 
-            <!-- Right panel: ticket-styled login card -->
             <div class="w-full lg:w-3/5 flex items-center justify-center p-6 sm:p-10">
                 <div class="w-full max-w-sm bg-white rounded-2xl relative">
 
-                    <!-- ticket stub header -->
                     <div class="flex items-center justify-between pb-4">
                         <div>
                             <p class="text-[11px] text-gray-400 uppercase tracking-wide">Boarding pass · Auth</p>
@@ -112,7 +103,6 @@
                         <span class="text-[10px] font-bold text-irctc-orange border border-irctc-orange/40 bg-orange-50 px-2.5 py-1 rounded-full">WELCOME ABOARD</span>
                     </div>
 
-                    <!-- perforation line -->
                     <div class="relative my-2">
                         <div class="border-t-2 border-dashed border-gray-200"></div>
                         <span class="absolute -left-9 top-1/2 -translate-y-1/2 w-5 h-5 rounded-full bg-gray-50"></span>
@@ -132,7 +122,6 @@
                                     <input type="text" id="loginId" name="loginId" placeholder="you@example.com or 9XXXXXXXXX"
                                         class="w-full border border-gray-300 rounded-lg pl-10 pr-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-irctc-blue">
                                 </div>
-                                <p id="loginIdError" class="text-red-500 text-xs mt-1 hidden">Please enter a valid email or mobile number.</p>
                             </div>
 
                             <div>
@@ -148,7 +137,6 @@
                                         <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
                                     </button>
                                 </div>
-                                <p id="passwordError" class="text-red-500 text-xs mt-1 hidden">Password must be at least 6 characters.</p>
                             </div>
 
                             <div class="flex items-center justify-between text-xs">
@@ -176,14 +164,19 @@
         </div>
     </main>
 
+    <footer style="background-color: #071936 !important;" class="text-white pt-10 pb-6 border-t-4 border-irctc-orange relative z-30 w-full shadow-xl mt-auto">
+        <div class="max-w-300 mx-auto px-4 md:px-8 text-center text-xs text-gray-300">
+            <p class="font-medium">Copyright © 2026 - www.irctc.co.in. All Rights Reserved</p>
+            <p class="mt-1 text-gray-400 text-[11px]">Designed and Hosted by CRIS</p>
+        </div>
+    </footer>
 
-    <!-- SCRIPT VALIDATION -->
+    <!-- INJECT DB SIMULATION -->
+    <script src="../js/db.js"></script>
     <script>
         const form = document.getElementById('loginForm');
         const loginId = document.getElementById('loginId');
         const password = document.getElementById('password');
-        const loginIdError = document.getElementById('loginIdError');
-        const passwordError = document.getElementById('passwordError');
         const toggleBtn = document.getElementById('togglePassword');
 
         toggleBtn.addEventListener('click', function () {
@@ -194,31 +187,42 @@
 
         form.addEventListener('submit', function (e) {
             e.preventDefault();
-            let isValid = true;
+            
+            const idVal = loginId.value.trim();
+            const passVal = password.value;
 
-            if (loginId.value.trim().length < 3) {
-                loginIdError.classList.remove('hidden');
-                loginId.classList.add('border-red-500');
-                isValid = false;
-            } else {
-                loginIdError.classList.add('hidden');
-                loginId.classList.remove('border-red-500');
+            if (idVal.length < 3 || passVal.length < 6) {
+                alert('Please enter valid login details.');
+                return;
             }
 
-            if (password.value.length < 6) {
-                passwordError.classList.remove('hidden');
-                password.classList.add('border-red-500');
-                isValid = false;
-            } else {
-                passwordError.classList.add('hidden');
-                password.classList.remove('border-red-500');
-            }
-
-            if (isValid) {
-                alert('Login successful! (UI demo only, no backend yet)');
+            // Attempt login against DB
+            const auth = DB_API.loginUser(idVal, passVal);
+            
+            if (auth.success) {
                 form.reset();
+                
+                // Check if admin login
+                if (auth.isAdmin || idVal.toLowerCase() === 'admin@irctc.co.in') {
+                    localStorage.setItem('is_admin', 'true');
+                    window.location.href = 'admin-dashboard.html';
+                    return;
+                }
+
+                // Check if they were interrupted while trying to book a ticket
+                if (localStorage.getItem('redirect_to_booking') === 'true') {
+                    localStorage.removeItem('redirect_to_booking'); 
+                    window.location.href = 'booking.html'; 
+                } else {
+                    window.location.href = 'dashboard.html'; 
+                }
+
+            } else {
+                // Only alert if login explicitly fails
+                alert(auth.message); 
             }
         });
     </script>
+
 </body>
 </html>

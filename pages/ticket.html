@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Ticket | IRCTC Clone</title>
+    <link rel="stylesheet" href="../assets/css/output.css">
+    <style>
+        /* Hide navbar and footer when printing */
+        @media print {
+            header, footer, .no-print { display: none !important; }
+            body { background-color: white !important; }
+            .ticket-container { border: none !important; box-shadow: none !important; }
+        }
+    </style>
+</head>
+<body class="text-gray-800 font-sans bg-gray-50 m-0 min-h-screen flex flex-col overflow-x-hidden">
+
+    <!-- HEADER (no-print) -->
+    <header class="w-full relative z-20 px-4 md:px-6 pt-4 md:pt-8 shrink-0 no-print">
+        <div class="max-w-300 w-full mx-auto bg-white rounded-lg shadow-sm">
+            <nav class="flex items-center justify-between p-4 mb-0">
+                <div class="flex items-center cursor-pointer" onclick="window.location.href='home.html'">
+                    <span class="text-3xl font-bold text-irctc-blue">IRCTC</span>
+                </div>
+                
+                <div class="hidden md:flex space-x-6 items-center">
+                    <a href="dashboard.html" class="text-gray-700 hover:text-irctc-orange font-semibold transition-colors">Dashboard</a>
+                    <a href="my-bookings.html" class="text-irctc-orange font-bold border-b-2 border-irctc-orange pb-1 transition-colors">My Bookings</a>
+                </div>
+
+                <div class="flex items-center space-x-3">
+                    <button onclick="window.history.back()" class="border-2 border-irctc-blue text-irctc-blue hover:bg-blue-50 font-bold py-2 px-4 rounded transition-colors text-sm">
+                        Go Back
+                    </button>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- CONTENT -->
+    <main class="w-full relative z-10 px-4 md:px-6 py-6 md:py-10 grow flex justify-center">
+        <div class="max-w-212.5 w-full">
+            
+            <!-- ACTION BUTTONS -->
+            <div class="flex justify-end gap-3 mb-4 no-print">
+                <button onclick="window.print()" class="bg-gray-800 hover:bg-gray-900 text-white font-bold py-2 px-6 rounded-lg text-sm transition-colors shadow-sm flex items-center gap-2">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>
+                    Print ERS
+                </button>
+            </div>
+
+            <!-- THE TICKET -->
+            <div class="ticket-container bg-white rounded-xl shadow-lg border-2 border-dashed border-gray-300 p-8 md:p-10 relative overflow-hidden">
+                
+                <!-- Watermark -->
+                <div class="absolute inset-0 flex items-center justify-center opacity-[0.03] pointer-events-none">
+                    <span class="text-9xl font-black text-irctc-blue tracking-tighter transform -rotate-45">IRCTC</span>
+                </div>
+
+                <!-- Ticket Header -->
+                <div class="flex justify-between items-start border-b-2 border-gray-800 pb-6 mb-6 relative z-10">
+                    <div>
+                        <h1 class="text-3xl font-black text-irctc-blue tracking-tight">IRCTC</h1>
+                        <p class="text-xs font-bold text-gray-500 uppercase tracking-widest mt-1">Electronic Reservation Slip (ERS)</p>
+                        <div id="t_statusBadge" class="mt-3 inline-block px-3 py-1 bg-green-100 text-green-800 text-xs font-black uppercase tracking-wide rounded-sm border border-green-300">
+                            CONFIRMED
+                        </div>
+                    </div>
+                    <div class="text-right flex flex-col items-end">
+                        <!-- REAL QR CODE VIA API -->
+                        <div class="w-24 h-24 bg-white border border-gray-300 p-1 rounded inline-block">
+                            <img id="t_qrCode" src="" alt="Ticket QR Code" class="w-full h-full object-contain" />
+                        </div>
+                        <p class="text-[10px] text-gray-500 mt-1 font-semibold">Scan to Verify</p>
+                    </div>
+                </div>
+
+                <!-- Primary Journey Info -->
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-8 relative z-10">
+                    <div>
+                        <p class="text-[11px] text-gray-500 uppercase tracking-wide font-semibold">PNR No.</p>
+                        <p id="t_pnr" class="text-lg font-black text-gray-900">--</p>
+                    </div>
+                    <div>
+                        <p class="text-[11px] text-gray-500 uppercase tracking-wide font-semibold">Train No. & Name</p>
+                        <p id="t_trainInfo" class="text-sm font-bold text-gray-900 uppercase">--</p>
+                    </div>
+                    <div>
+                        <p class="text-[11px] text-gray-500 uppercase tracking-wide font-semibold">Date of Journey</p>
+                        <p id="t_doj" class="text-sm font-bold text-gray-900">--</p>
+                    </div>
+                    <div>
+                        <p class="text-[11px] text-gray-500 uppercase tracking-wide font-semibold">Class</p>
+                        <p id="t_class" class="text-sm font-bold text-gray-900">--</p>
+                    </div>
+                </div>
+
+                <!-- Route Details Box -->
+                <div class="bg-blue-50 border border-blue-100 rounded-lg p-5 mb-8 relative z-10 flex flex-col md:flex-row justify-between items-center gap-6">
+                    <div class="text-center md:text-left w-full md:w-auto">
+                        <p class="text-[11px] text-blue-600 uppercase tracking-wide font-bold">From</p>
+                        <p id="t_sourceCode" class="text-3xl font-black text-irctc-blue my-1">--</p>
+                        <p id="t_sourceName" class="text-xs text-gray-600 font-semibold uppercase">--</p>
+                        <p id="t_depTime" class="text-sm font-bold text-gray-900 mt-1">--</p>
+                    </div>
+                    
+                    <div class="flex-1 flex flex-col items-center justify-center w-full px-4">
+                        <div class="w-full flex items-center">
+                            <div class="h-0.5 w-full bg-blue-200"></div>
+                            <svg class="w-6 h-6 text-blue-400 mx-2 shrink-0 transform rotate-90 md:rotate-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                            <div class="h-0.5 w-full bg-blue-200"></div>
+                        </div>
+                        <span class="text-[10px] font-bold text-blue-400 uppercase tracking-widest mt-2 bg-blue-50 px-2">Boarding</span>
+                    </div>
+
+                    <div class="text-center md:text-right w-full md:w-auto">
+                        <p class="text-[11px] text-blue-600 uppercase tracking-wide font-bold">To</p>
+                        <p id="t_destCode" class="text-3xl font-black text-irctc-blue my-1">--</p>
+                        <p id="t_destName" class="text-xs text-gray-600 font-semibold uppercase">--</p>
+                        <p id="t_arrTime" class="text-sm font-bold text-gray-900 mt-1">--</p>
+                    </div>
+                </div>
+
+                <!-- Passenger Details Table -->
+                <div class="mb-8 relative z-10">
+                    <h3 class="font-bold text-gray-900 border-b-2 border-gray-200 pb-2 mb-4 text-sm uppercase tracking-wide">Passenger Details</h3>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-sm whitespace-nowrap">
+                            <thead class="text-xs text-gray-500 uppercase bg-gray-50 border-b border-gray-200">
+                                <tr>
+                                    <th class="px-4 py-3 font-semibold">#</th>
+                                    <th class="px-4 py-3 font-semibold">Name</th>
+                                    <th class="px-4 py-3 font-semibold">Age</th>
+                                    <th class="px-4 py-3 font-semibold">Gender</th>
+                                    <th class="px-4 py-3 font-semibold">Booking Status</th>
+                                    <th class="px-4 py-3 font-semibold text-right">Coach / Seat / Berth</th>
+                                </tr>
+                            </thead>
+                            <tbody id="t_passengers" class="divide-y divide-gray-100">
+                                <!-- JS WILL INJECT ROWS HERE -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Payment Details -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 relative z-10">
+                    <div>
+                        <h3 class="font-bold text-gray-900 border-b-2 border-gray-200 pb-2 mb-3 text-sm uppercase tracking-wide">Payment Details</h3>
+                        <div class="space-y-2 text-sm text-gray-600">
+                            <div class="flex justify-between"><span>Ticket Fare</span><span id="t_baseFare" class="font-semibold text-gray-900">₹0.00</span></div>
+                            <div class="flex justify-between"><span>IRCTC Convenience Fee</span><span class="font-semibold text-gray-900">₹35.40</span></div>
+                            <div class="flex justify-between"><span>Travel Insurance</span><span class="font-semibold text-gray-900">₹0.35</span></div>
+                            <div class="flex justify-between pt-2 border-t border-gray-200 font-bold text-gray-900">
+                                <span>Total Fare</span><span id="t_totalFare">₹0.00</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-gray-50 rounded p-4 text-[10px] text-gray-500 border border-gray-200 flex flex-col justify-center">
+                        <p class="font-bold text-gray-700 mb-1 uppercase">Important Instructions:</p>
+                        <ul class="list-disc pl-4 space-y-1">
+                            <li>Prescribed original ID proof is required while travelling along with SMS/VRM/ERS.</li>
+                            <li>Passengers are advised not to carry inflammable/dangerous articles.</li>
+                            <li>Contact 139 for PNR, Fare and accommodation availability enquiries.</li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </main>
+
+    <footer style="background-color: #071936 !important;" class="text-white pt-10 pb-6 border-t-4 border-irctc-orange relative z-30 w-full shadow-xl shrink-0 mt-auto no-print">
+        <div class="max-w-300 w-full mx-auto px-4 md:px-8 text-center text-xs text-gray-300">
+            <p class="font-medium">Copyright © 2026 - www.irctc.co.in. All Rights Reserved</p>
+        </div>
+    </footer>
+
+    <!-- INJECT DB SIMULATION -->
+    <script src="../js/db.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // 1. Auth Guard
+            const currentUser = DB_API.getCurrentUser();
+            if (!currentUser) {
+                alert('Please login to view tickets.');
+                window.location.href = 'login.html';
+                return;
+            }
+
+            // 2. Get PNR from URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const pnr = urlParams.get('pnr');
+
+            if (!pnr) {
+                alert('Invalid Ticket URL.');
+                window.location.href = 'dashboard.html';
+                return;
+            }
+
+            // 3. Fetch Data from DB
+            const booking = DB_API.getBookingByPNR(pnr);
+            
+            if (!booking) {
+                alert('Ticket not found.');
+                window.location.href = 'dashboard.html';
+                return;
+            }
+
+            const train = DB_API.getTrainDetails(booking.trainNumber);
+
+            // 4. Render Top Details
+            document.getElementById('t_pnr').textContent = booking.pnr;
+            document.getElementById('t_trainInfo').textContent = `${train.trainNumber} / ${train.trainName}`;
+            document.getElementById('t_doj').textContent = booking.travelDate;
+            
+            // Assuming first passenger determines coach class for display
+            const pClass = booking.passengers.length > 0 ? booking.passengers[0].coach.replace(/[0-9]/g, '') : 'SL';
+            document.getElementById('t_class').textContent = pClass;
+
+            // Render Route Details
+            document.getElementById('t_sourceCode').textContent = train.originCode;
+            document.getElementById('t_sourceName').textContent = train.originName;
+            document.getElementById('t_depTime').textContent = train.departureTime;
+            
+            document.getElementById('t_destCode').textContent = train.destinationCode;
+            document.getElementById('t_destName').textContent = train.destinationName;
+            document.getElementById('t_arrTime').textContent = train.arrivalTime;
+
+            // Render Status Badge
+            const badge = document.getElementById('t_statusBadge');
+            if (booking.bookingStatus === 'Cancelled') {
+                badge.textContent = 'CANCELLED';
+                badge.className = 'mt-3 inline-block px-3 py-1 bg-red-100 text-red-800 text-xs font-black uppercase tracking-wide rounded-sm border border-red-300';
+            }
+
+            // 5. Render Passengers Loop
+            const tbody = document.getElementById('t_passengers');
+            tbody.innerHTML = ''; // Clear empty
+
+            booking.passengers.forEach((pass, index) => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td class="px-4 py-3">${index + 1}</td>
+                    <td class="px-4 py-3 font-bold text-gray-900">${pass.name}</td>
+                    <td class="px-4 py-3 text-gray-600">${pass.age}</td>
+                    <td class="px-4 py-3 text-gray-600">${pass.gender}</td>
+                    <td class="px-4 py-3 font-semibold text-gray-900">${pass.status}</td>
+                    <td class="px-4 py-3 text-right">
+                        <span class="font-bold text-irctc-blue border border-blue-200 bg-blue-50 px-2 py-1 rounded">
+                            ${pass.coach}, ${pass.berth} (${pass.berthPreference})
+                        </span>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+
+            // 6. Render Finances with Fallbacks for older DB entries
+            const totalFare = booking.fareDetails.totalFare || 0;
+            const baseFare = booking.fareDetails.baseFare || (totalFare > 35.75 ? totalFare - 35.75 : totalFare);
+            
+            document.getElementById('t_baseFare').textContent = `₹${baseFare.toFixed(2)}`;
+            document.getElementById('t_totalFare').textContent = `₹${totalFare.toFixed(2)}`;
+
+            // 7. Generate Real QR Code using QRServer API
+            const primaryPassenger = booking.passengers[0] ? booking.passengers[0].name : 'Unknown';
+            const qrDataString = `PNR:${booking.pnr} | Train:${train.trainNumber} | Date:${booking.travelDate} | Name:${primaryPassenger} | Status:${booking.bookingStatus}`;
+            
+            // Encode the string so it's safe to put in a URL
+            const encodedQrData = encodeURIComponent(qrDataString);
+            const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodedQrData}`;
+            
+            document.getElementById('t_qrCode').src = qrUrl;
+        });
+    </script>
+</body>
+</html>

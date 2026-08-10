@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Ticket | IRCTC Clone</title>
+    <link rel="stylesheet" href="../assets/css/output.css">
+</head>
+<body class="text-gray-800 font-sans bg-gray-50 m-0 min-h-screen flex flex-col">
+
+    <!-- STANDARDIZED HEADER -->
+    <header class="w-full relative z-20 px-4 md:px-8 pt-4 md:pt-6 shrink-0">
+        <div class="max-w-300 mx-auto bg-white rounded-lg shadow-sm">
+            <nav class="flex items-center justify-between p-4 mb-0">
+                <div class="flex items-center cursor-pointer" onclick="window.location.href='home.html'">
+                    <span class="text-3xl font-bold text-irctc-blue">IRCTC</span>
+                </div>
+                
+                <div class="hidden md:flex space-x-6 items-center">
+                    <a href="home.html" class="text-gray-700 hover:text-irctc-orange font-semibold transition-colors">Home</a>
+                    <a href="TrainSearch.html" class="text-irctc-orange font-bold border-b-2 border-irctc-orange pb-1 transition-colors">Trains</a>
+                    <a href="holidays.html" class="text-gray-700 hover:text-irctc-orange font-semibold transition-colors">Holidays</a>
+                    <a href="e-wallet.html" id="navEwallet" class="hidden text-gray-700 hover:text-irctc-orange font-semibold transition-colors">E-wallet</a>
+                    <a href="alerts.html" class="text-gray-700 hover:text-irctc-orange font-semibold transition-colors flex items-center">Alerts <span class="bg-red-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full ml-1.5 shadow-sm">2</span></a>
+                    <a href="contact-us.html" class="text-gray-700 hover:text-irctc-orange font-semibold transition-colors">Contact Us</a>
+                </div>
+
+                <div class="flex items-center space-x-3">
+                    <button onclick="window.location.href='my-bookings.html'" class="border-2 border-irctc-blue text-irctc-blue hover:bg-blue-50 font-bold py-2 px-4 rounded transition-colors text-sm">
+                        My Bookings
+                    </button>
+                    <button onclick="window.location.href='login.html'" class="bg-irctc-orange hover:bg-orange-600 text-white font-bold py-2 px-4 rounded transition-colors text-sm">
+                        Login / Register
+                    </button>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- CONTENT AREA -->
+    <main class="w-full relative z-10 px-4 md:px-8 py-6 md:py-10 grow">
+        <div class="max-w-225 mx-auto space-y-6">
+            
+            <div class="flex justify-between items-center">
+                <h2 class="text-2xl font-black text-irctc-blue">Complete Your Ticket Booking</h2>
+                <button onclick="window.location.href='TrainSearch.html'" class="text-xs font-bold text-gray-500 hover:text-irctc-orange transition">
+                    &larr; Back to Trains
+                </button>
+            </div>
+
+            <!-- Train Summary Card -->
+            <div id="trainSummaryCard" class="bg-white p-6 rounded-2xl shadow-sm border border-gray-200">
+                <!-- Injected via JS -->
+            </div>
+
+            <!-- Passenger Details Section -->
+            <form id="bookingForm" onsubmit="handleBookingSubmission(event)" class="space-y-6">
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-200">
+                    <div class="flex justify-between items-center mb-4 pb-2 border-b">
+                        <h3 class="text-lg font-bold text-irctc-blue">Passenger Details</h3>
+                        <button type="button" onclick="addPassengerRow()" class="bg-blue-50 text-irctc-blue hover:bg-blue-100 font-bold px-3 py-1.5 rounded-lg text-xs transition flex items-center gap-1">
+                            + Add Passenger
+                        </button>
+                    </div>
+
+                    <!-- Dynamic Passenger List Container -->
+                    <div id="passengerContainer" class="space-y-4">
+                        <!-- Passenger Row 1 (Default) -->
+                        <div class="passenger-row grid grid-cols-1 sm:grid-cols-12 gap-3 p-4 bg-gray-50 rounded-xl border border-gray-200 relative">
+                            <div class="sm:col-span-5">
+                                <label class="block text-[11px] font-semibold text-gray-600 mb-1">Full Name</label>
+                                <input type="text" required name="p_name" placeholder="Passenger Name" class="w-full border border-gray-300 rounded p-2 text-sm bg-white outline-none">
+                            </div>
+                            <div class="sm:col-span-2">
+                                <label class="block text-[11px] font-semibold text-gray-600 mb-1">Age</label>
+                                <input type="number" required name="p_age" min="1" max="100" placeholder="Age" class="w-full border border-gray-300 rounded p-2 text-sm bg-white outline-none">
+                            </div>
+                            <div class="sm:col-span-2">
+                                <label class="block text-[11px] font-semibold text-gray-600 mb-1">Gender</label>
+                                <select name="p_gender" class="w-full border border-gray-300 rounded p-2 text-sm bg-white outline-none">
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+                            <div class="sm:col-span-3">
+                                <label class="block text-[11px] font-semibold text-gray-600 mb-1">Berth Preference</label>
+                                <div class="flex items-center gap-2">
+                                    <select name="p_berth" class="w-full border border-gray-300 rounded p-2 text-sm bg-white outline-none">
+                                        <option value="No Preference">No Preference</option>
+                                        <option value="Lower">Lower</option>
+                                        <option value="Middle">Middle</option>
+                                        <option value="Upper">Upper</option>
+                                        <option value="Side Lower">Side Lower</option>
+                                    </select>
+                                    <button type="button" onclick="removePassengerRow(this)" class="text-gray-400 hover:text-red-500 font-bold px-2 py-1 hidden remove-btn">✕</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Payment Summary & Mode Card -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-200 space-y-4">
+                    <h3 class="text-lg font-bold text-irctc-blue pb-2 border-b">Payment & Summary</h3>
+                    
+                    <div class="bg-blue-50 border border-blue-100 rounded-xl p-4 flex justify-between items-center">
+                        <div>
+                            <p class="text-xs text-gray-600">Total Calculated Fare</p>
+                            <p id="displayTotalFare" class="text-2xl font-black text-irctc-orange">₹0.00</p>
+                        </div>
+                        <div class="text-right">
+                            <p class="text-xs text-gray-600">Your E-Wallet Balance</p>
+                            <p id="displayWalletBal" class="text-sm font-bold text-irctc-blue">₹0.00</p>
+                        </div>
+                    </div>
+
+                    <div>
+                        <p class="font-bold text-gray-900 mb-2 text-sm">Select Payment Mode</p>
+                        <div class="space-y-2">
+                            <label class="flex items-center gap-2 text-sm cursor-pointer border p-3 rounded-lg hover:bg-gray-50 transition">
+                                <input type="radio" name="paymentMode" value="ewallet" class="accent-irctc-orange w-4 h-4" checked>
+                                <span class="font-semibold">IRCTC E-Wallet</span>
+                            </label>
+                            <label class="flex items-center gap-2 text-sm cursor-pointer border p-3 rounded-lg hover:bg-gray-50 transition">
+                                <input type="radio" name="paymentMode" value="upi" class="accent-irctc-orange w-4 h-4">
+                                <span class="font-semibold text-gray-700">UPI / BHIM (Mock Instant Pay)</span>
+                            </label>
+                            <label class="flex items-center gap-2 text-sm cursor-pointer border p-3 rounded-lg hover:bg-gray-50 transition">
+                                <input type="radio" name="paymentMode" value="card" class="accent-irctc-orange w-4 h-4">
+                                <span class="font-semibold text-gray-700">Credit / Debit Card (Mock Instant Pay)</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="pt-4 flex justify-end gap-3">
+                        <button type="submit" class="w-full sm:w-auto bg-irctc-orange hover:bg-orange-600 text-white font-bold py-3 px-8 rounded-xl shadow-sm transition text-sm">
+                            Proceed to Pay & Book
+                        </button>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer style="background-color: #071936 !important;" class="text-white pt-10 pb-6 border-t-4 border-irctc-orange relative z-30 w-full shadow-xl shrink-0 mt-auto">
+        <div class="max-w-300 w-full mx-auto px-4 md:px-8 text-center text-xs text-gray-300">
+            <p class="font-medium">Copyright © 2026 - www.irctc.co.in. All Rights Reserved</p>
+        </div>
+    </footer>
+
+    <!-- INJECT DATABASE -->
+    <script src="../js/db.js"></script>
+
+    <!-- BOOKING LOGIC SCRIPT -->
+    <script>
+        let selectedTrain = null;
+        let selectedClassObj = null;
+        let searchContext = null;
+
+        document.addEventListener('DOMContentLoaded', () => {
+            if (typeof DB_API === 'undefined') return;
+
+            const currentUser = DB_API.getCurrentUser();
+            if (!currentUser) {
+                alert("Please login to proceed with booking.");
+                localStorage.setItem('redirect_to_booking', 'true');
+                window.location.href = 'login.html';
+                return;
+            }
+
+            document.getElementById('displayWalletBal').textContent = `₹${currentUser.walletBalance.toLocaleString('en-IN', {minimumFractionDigits: 2})}`;
+
+            // Session data with fallback protection
+            searchContext = JSON.parse(localStorage.getItem('last_search'));
+            let trainNum = localStorage.getItem('selected_train_num');
+            let classType = localStorage.getItem('selected_class_type');
+
+            if (!searchContext || !trainNum) {
+                searchContext = {
+                    sourceCode: "TVC",
+                    sourceName: "Trivandrum",
+                    destCode: "NDLS",
+                    destName: "New Delhi",
+                    date: "2026-08-15"
+                };
+                trainNum = "12625"; 
+                classType = "SL";
+                
+                localStorage.setItem('last_search', JSON.stringify(searchContext));
+                localStorage.setItem('selected_train_num', trainNum);
+                localStorage.setItem('selected_class_type', classType);
+            }
+
+            selectedTrain = DB_API.getTrainDetails(trainNum);
+            selectedClassObj = selectedTrain.availableClasses.find(c => c.classType === classType) || selectedTrain.availableClasses[0];
+
+            // Render Summary Card
+            document.getElementById('trainSummaryCard').innerHTML = `
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                    <div>
+                        <span class="text-xs font-bold text-irctc-orange uppercase tracking-wider">${selectedTrain.trainNumber} - ${selectedTrain.trainName}</span>
+                        <h3 class="text-xl font-bold text-gray-900 mt-1">${searchContext.sourceName} &rarr; ${searchContext.destName}</h3>
+                        <p class="text-xs text-gray-500 mt-1">Date: <strong>${searchContext.date}</strong> | Class: <strong>${selectedClassObj.classType}</strong></p>
+                    </div>
+                    <div class="text-right">
+                        <p class="text-xs text-gray-400 uppercase">Fare per traveler</p>
+                        <p class="text-xl font-black text-irctc-blue">₹${selectedClassObj.baseFare.toLocaleString('en-IN')}</p>
+                    </div>
+                </div>
+            `;
+
+            updateTotalFare();
+        });
+
+        // 1. Add Passenger Row
+        function addPassengerRow() {
+            const container = document.getElementById('passengerContainer');
+            const rowCount = container.getElementsByClassName('passenger-row').length;
+
+            if (rowCount >= 6) {
+                alert("You can book a maximum of 6 passengers in a single transaction.");
+                return;
+            }
+
+            const newRow = document.createElement('div');
+            newRow.className = "passenger-row grid grid-cols-1 sm:grid-cols-12 gap-3 p-4 bg-gray-50 rounded-xl border border-gray-200 relative";
+            newRow.innerHTML = `
+                <div class="sm:col-span-5">
+                    <label class="block text-[11px] font-semibold text-gray-600 mb-1">Full Name</label>
+                    <input type="text" required name="p_name" placeholder="Passenger Name" class="w-full border border-gray-300 rounded p-2 text-sm bg-white outline-none">
+                </div>
+                <div class="sm:col-span-2">
+                    <label class="block text-[11px] font-semibold text-gray-600 mb-1">Age</label>
+                    <input type="number" required name="p_age" min="1" max="100" placeholder="Age" class="w-full border border-gray-300 rounded p-2 text-sm bg-white outline-none">
+                </div>
+                <div class="sm:col-span-2">
+                    <label class="block text-[11px] font-semibold text-gray-600 mb-1">Gender</label>
+                    <select name="p_gender" class="w-full border border-gray-300 rounded p-2 text-sm bg-white outline-none">
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                <div class="sm:col-span-3">
+                    <label class="block text-[11px] font-semibold text-gray-600 mb-1">Berth Preference</label>
+                    <div class="flex items-center gap-2">
+                        <select name="p_berth" class="w-full border border-gray-300 rounded p-2 text-sm bg-white outline-none">
+                            <option value="No Preference">No Preference</option>
+                            <option value="Lower">Lower</option>
+                            <option value="Middle">Middle</option>
+                            <option value="Upper">Upper</option>
+                            <option value="Side Lower">Side Lower</option>
+                        </select>
+                        <button type="button" onclick="removePassengerRow(this)" class="text-gray-400 hover:text-red-500 font-bold px-2 py-1 remove-btn">✕</button>
+                    </div>
+                </div>
+            `;
+            container.appendChild(newRow);
+            updateTotalFare();
+        }
+
+        // 2. Remove Passenger Row
+        function removePassengerRow(button) {
+            const row = button.closest('.passenger-row');
+            row.remove();
+            updateTotalFare();
+        }
+
+        // 3. Update Total Fare dynamically
+        function updateTotalFare() {
+            const count = document.getElementsByClassName('passenger-row').length;
+            const farePerTicket = selectedClassObj ? selectedClassObj.baseFare : 500;
+            const total = count * farePerTicket;
+            document.getElementById('displayTotalFare').textContent = `₹${total.toLocaleString('en-IN', {minimumFractionDigits: 2})}`;
+        }
+
+        // 4. Handle Final Checkout & DB Storage
+        function handleBookingSubmission(e) {
+            e.preventDefault();
+
+            const currentUser = DB_API.getCurrentUser();
+            const count = document.getElementsByClassName('passenger-row').length;
+            const totalFare = count * selectedClassObj.baseFare;
+            const paymentMode = document.querySelector('input[name="paymentMode"]:checked').value;
+
+            if (paymentMode === 'ewallet' && currentUser.walletBalance < totalFare) {
+                alert(`Insufficient E-Wallet Balance!\n\nRequired: ₹${totalFare}\nYour Balance: ₹${currentUser.walletBalance}\nPlease top up your wallet.`);
+                window.location.href = 'e-wallet.html';
+                return;
+            }
+
+            const passengers = [];
+            const rows = document.getElementsByClassName('passenger-row');
+            for (let row of rows) {
+                passengers.push({
+                    name: row.querySelector('input[name="p_name"]').value.trim(),
+                    age: parseInt(row.querySelector('input[name="p_age"]').value),
+                    gender: row.querySelector('select[name="p_gender"]').value,
+                    berthPreference: row.querySelector('select[name="p_berth"]').value,
+                    status: "CNF",
+                    coach: selectedClassObj.classType === 'SL' ? 'S5' : 'B2',
+                    berth: Math.floor(Math.random() * 60) + 1
+                });
+            }
+
+            const pnr = Math.floor(1000000000 + Math.random() * 9000000000).toString();
+            const bookingData = {
+                pnr: pnr,
+                trainNumber: selectedTrain.trainNumber,
+                travelDate: searchContext.date,
+                passengers: passengers,
+                fareDetails: { totalFare: totalFare },
+                bookingStatus: "Confirmed"
+            };
+
+            const db = DB_API.getAll();
+            if (!db.bookings) db.bookings = [];
+            db.bookings.unshift(bookingData);
+
+            if (paymentMode === 'ewallet') {
+                const userIndex = db.users.findIndex(u => u.id === currentUser.id);
+                if (userIndex !== -1) {
+                    db.users[userIndex].walletBalance -= totalFare;
+                }
+            }
+
+            localStorage.setItem('irctc_db', JSON.stringify(db));
+
+            alert(`TICKET BOOKED SUCCESSFULLY!\n\nPNR: ${pnr}\nPassengers: ${passengers.length}\nTotal Amount Paid: ₹${totalFare.toLocaleString('en-IN')}`);
+            window.location.href = `ticket.html?pnr=${pnr}`;
+        }
+    </script>
+</body>
+</html>

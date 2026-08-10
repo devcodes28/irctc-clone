@@ -8,80 +8,83 @@
 </head>
 <body class="text-gray-800 font-sans bg-gray-50 m-0 min-h-screen flex flex-col">
 
-    <!-- HEADER -->
+    <!-- STANDARDIZED HEADER -->
     <header class="w-full relative z-20 px-4 md:px-8 pt-4 md:pt-8 shrink-0">
         <div class="max-w-300 mx-auto bg-white rounded-lg shadow-sm">
             <nav class="flex items-center justify-between p-4 mb-0">
                 <div class="flex items-center cursor-pointer" onclick="window.location.href='home.html'">
                     <span class="text-3xl font-bold text-irctc-blue">IRCTC</span>
                 </div>
+                
                 <div class="hidden md:flex space-x-6 items-center">
                     <a href="home.html" class="text-gray-700 hover:text-irctc-orange font-semibold transition-colors">Home</a>
                     <a href="TrainSearch.html" class="text-gray-700 hover:text-irctc-orange font-semibold transition-colors">Trains</a>
                     <a href="holidays.html" class="text-gray-700 hover:text-irctc-orange font-semibold transition-colors">Holidays</a>
-                    <a href="e-wallet.html" class="text-irctc-orange font-bold border-b-2 border-irctc-orange pb-1 transition-colors">E-wallet</a>
-                    <a href="alerts.html" class="text-gray-700 hover:text-irctc-orange font-semibold transition-colors flex items-center">Alerts <span class="bg-red-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full ml-1.5 shadow-sm">2</span></a>
+                    
+                    <!-- E-WALLET LINK (Active state) -->
+                    <a href="e-wallet.html" id="navEwallet" class="flex text-irctc-orange font-bold border-b-2 border-irctc-orange pb-1 transition-colors">E-wallet</a>
+                    
+                    <a href="alerts.html" class="text-gray-700 hover:text-irctc-orange font-semibold transition-colors flex items-center">
+                        Alerts 
+                        <span class="bg-red-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full ml-1.5 shadow-sm">2</span>
+                    </a>
                     <a href="contact-us.html" class="text-gray-700 hover:text-irctc-orange font-semibold transition-colors">Contact Us</a>
                 </div>
+
                 <div class="flex items-center space-x-3">
-                    <button onclick="window.location.href='my-bookings.html'" class="border-2 border-irctc-blue text-irctc-blue hover:bg-blue-50 font-bold py-2 px-4 rounded transition-colors">My Bookings</button>
-                    <button onclick="window.location.href='login.html'" class="bg-irctc-orange hover:bg-orange-600 text-white font-bold py-2 px-4 rounded transition-colors">Login / Register</button>
+                    <button onclick="window.location.href='dashboard.html'" class="border-2 border-irctc-blue text-irctc-blue hover:bg-blue-50 font-bold py-2 px-4 rounded transition-colors text-sm">
+                        Dashboard
+                    </button>
+                    <button id="logoutBtn" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded transition-colors text-sm">
+                        Logout
+                    </button>
                 </div>
             </nav>
         </div>
     </header>
 
-    <!-- CONTENT -->
+    <!-- CONTENT AREA -->
     <main class="w-full relative z-10 px-4 md:px-8 py-6 md:py-10 grow">
-        <div class="max-w-300 mx-auto">
+        <div class="max-w-200 mx-auto">
             
-            <h2 class="text-2xl font-bold text-irctc-blue mb-6">IRCTC E-Wallet</h2>
-            
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <!-- Balance Card -->
-                <div class="bg-linear-to-br from-blue-900 to-blue-700 text-white p-8 rounded-2xl shadow-lg border border-blue-800 relative overflow-hidden">
-                    <div class="absolute -right-6 -top-6 w-32 h-32 bg-white opacity-10 rounded-full"></div>
-                    <p class="text-blue-200 text-sm font-semibold tracking-wide uppercase">Available Balance</p>
-                    <h3 class="text-4xl font-black mt-2 tracking-tight text-white">₹4,500.00</h3>
-                    
-                    <button class="mt-8 bg-white text-irctc-blue font-bold py-3 px-4 rounded-lg w-full hover:bg-gray-100 transition shadow-sm">
-                        + Add Money
-                    </button>
+            <div class="bg-white p-8 shadow-md rounded-lg border-t-4 border-irctc-blue">
+                <div class="flex flex-col md:flex-row justify-between items-center border-b border-gray-200 pb-6 mb-6">
+                    <div>
+                        <h2 class="text-2xl font-bold text-irctc-blue">IRCTC E-Wallet</h2>
+                        <p class="text-sm text-gray-500 mt-1">Manage your funds for seamless ticket booking.</p>
+                    </div>
+                    <div class="mt-4 md:mt-0 text-center md:text-right bg-blue-50 px-6 py-4 rounded-lg border border-blue-100">
+                        <p class="text-xs text-gray-500 uppercase tracking-wide font-semibold">Available Balance</p>
+                        <p id="displayBalance" class="text-3xl font-black text-irctc-blue mt-1">₹0.00</p>
+                    </div>
                 </div>
 
-                <!-- Transaction History -->
-                <div class="md:col-span-2 bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
-                    <h3 class="text-lg font-bold text-gray-900 mb-6">Recent Transactions</h3>
+                <div class="max-w-md">
+                    <h3 class="text-lg font-bold text-gray-800 mb-4">Top-up Wallet</h3>
                     
-                    <div class="space-y-4">
-                        <div class="flex justify-between items-center py-3 border-b border-gray-100">
-                            <div class="flex items-center gap-4">
-                                <div class="w-10 h-10 rounded-full bg-red-50 flex items-center justify-center text-red-500 font-bold">↑</div>
-                                <div>
-                                    <p class="font-bold text-gray-800">Ticket Booking (PNR: 8493028491)</p>
-                                    <p class="text-xs text-gray-500">15 Aug 2026 • 12625 KERALA EXPRESS</p>
-                                </div>
-                            </div>
-                            <p class="text-red-600 font-bold">- ₹1,250.00</p>
+                    <form id="topupForm" class="space-y-5">
+                        <div class="flex flex-col">
+                            <label class="text-gray-700 font-semibold mb-2 text-sm">Enter Amount (₹)</label>
+                            <input type="number" id="topupAmount" placeholder="e.g. 1000" min="100" class="border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-irctc-blue font-bold text-lg">
                         </div>
-                        
-                        <div class="flex justify-between items-center py-3 border-b border-gray-100">
-                            <div class="flex items-center gap-4">
-                                <div class="w-10 h-10 rounded-full bg-green-50 flex items-center justify-center text-green-500 font-bold">↓</div>
-                                <div>
-                                    <p class="font-bold text-gray-800">Wallet Recharge via UPI</p>
-                                    <p class="text-xs text-gray-500">10 Aug 2026 • Ref: UPI92837482</p>
-                                </div>
-                            </div>
-                            <p class="text-green-600 font-bold">+ ₹2,000.00</p>
+
+                        <!-- Quick Add Buttons -->
+                        <div class="flex gap-3">
+                            <button type="button" onclick="setAmount(500)" class="flex-1 border border-gray-300 hover:border-irctc-orange hover:bg-orange-50 text-gray-700 font-semibold py-2 rounded-md transition text-sm">+ ₹500</button>
+                            <button type="button" onclick="setAmount(1000)" class="flex-1 border border-gray-300 hover:border-irctc-orange hover:bg-orange-50 text-gray-700 font-semibold py-2 rounded-md transition text-sm">+ ₹1000</button>
+                            <button type="button" onclick="setAmount(2000)" class="flex-1 border border-gray-300 hover:border-irctc-orange hover:bg-orange-50 text-gray-700 font-semibold py-2 rounded-md transition text-sm">+ ₹2000</button>
                         </div>
-                    </div>
+
+                        <button type="submit" class="w-full bg-irctc-orange hover:bg-orange-600 text-white font-bold py-3 rounded-lg shadow-sm transition-colors mt-4">
+                            Proceed to Add Money
+                        </button>
+                    </form>
                 </div>
             </div>
 
         </div>
     </main>
-    
+
     <!-- FOOTER -->
     <footer style="background-color: #071936 !important;" class="text-white pt-10 pb-6 border-t-4 border-irctc-orange relative z-30 w-full shadow-xl shrink-0 mt-auto">
         <div class="max-w-300 mx-auto px-4 md:px-8 text-center text-xs text-gray-300">
@@ -90,6 +93,62 @@
         </div>
     </footer>
 
+    <!-- INJECT DB SIMULATION -->
+    <script src="../js/db.js"></script>
+
+    <script>
+        // Quick amount setter for the buttons
+        function setAmount(amount) {
+            document.getElementById('topupAmount').value = amount;
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // 1. AUTH GUARD
+            const currentUser = DB_API.getCurrentUser();
+            if (!currentUser) {
+                alert('Please login to access your E-Wallet.');
+                window.location.href = 'login.html';
+                return;
+            }
+
+            // 2. Display Initial Balance
+            const balanceEl = document.getElementById('displayBalance');
+            balanceEl.textContent = `₹${currentUser.walletBalance.toFixed(2)}`;
+
+            // 3. Handle Logout
+            document.getElementById('logoutBtn').addEventListener('click', (e) => {
+                e.preventDefault();
+                DB_API.logoutUser();
+            });
+
+            // 4. Handle Top-up Form Submission
+            const form = document.getElementById('topupForm');
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                
+                const amountInput = document.getElementById('topupAmount').value;
+                const amount = parseFloat(amountInput);
+
+                if (isNaN(amount) || amount <= 0) {
+                    alert('Please enter a valid amount greater than 0.');
+                    return;
+                }
+
+                // Call DB_API to add funds
+                const result = DB_API.addWalletFunds(currentUser.id, amount);
+                
+                if (result.success) {
+                    alert(`Successfully added ₹${amount.toFixed(2)} to your wallet!`);
+                    // Update UI immediately
+                    balanceEl.textContent = `₹${result.newBalance.toFixed(2)}`;
+                    form.reset();
+                } else {
+                    alert('Error adding funds. Please try again.');
+                }
+            });
+        });
+    </script>
     <script src="../js/train-animation.js"></script>
+
 </body>
 </html>
