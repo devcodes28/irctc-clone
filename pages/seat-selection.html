@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Seat Selection - IRCTC</title>
+
+    <link rel="stylesheet" href="../assets/css/output.css">
+</head>
+
+<body class="bg-gray-100">
+
+    <!-- HEADER -->
+    <header class="w-full relative z-20 px-4 md:px-8 pt-4 md:pt-8">
+        <div class="max-w-300 mx-auto bg-white rounded-lg shadow-sm">
+
+            <nav class="flex items-center justify-between p-4">
+
+                <div class="flex items-center cursor-pointer"
+                     onclick="window.location.href='../index.html'">
+
+                    <span class="text-3xl font-bold text-irctc-blue">
+                        IRCTC
+                    </span>
+
+                </div>
+
+                <div class="flex items-center space-x-3">
+
+                    <button
+                        onclick="window.location.href='my-bookings.html'"
+                        class="border-2 border-irctc-blue text-irctc-blue font-bold py-2 px-4 rounded">
+
+                        My Bookings
+
+                    </button>
+
+                    <button
+                        onclick="window.location.href='login.html'"
+                        class="bg-irctc-orange text-white font-bold py-2 px-4 rounded">
+
+                        Login / Register
+
+                    </button>
+
+                </div>
+
+            </nav>
+
+        </div>
+    </header>
+
+
+    <!-- MAIN CONTENT -->
+
+    <main class="px-4 md:px-8 py-8">
+
+        <div class="max-w-3xl mx-auto bg-white rounded-lg shadow p-6">
+
+            <h1 class="text-2xl font-bold text-gray-800 mb-6">
+                Seat & Class Selection
+            </h1>
+
+
+            <!-- CLASS SELECTION -->
+
+            <h2 class="text-lg font-bold mb-4">
+                Select Class
+            </h2>
+
+            <div class="space-y-3 mb-8">
+
+                <label class="flex items-center gap-3">
+                    <input type="radio"
+                           name="travelClass"
+                           value="AC First Class">
+                    <span>AC First Class</span>
+                </label>
+
+                <label class="flex items-center gap-3">
+                    <input type="radio"
+                           name="travelClass"
+                           value="AC 2 Tier">
+                    <span>AC 2 Tier</span>
+                </label>
+
+                <label class="flex items-center gap-3">
+                    <input type="radio"
+                           name="travelClass"
+                           value="AC 3 Tier">
+                    <span>AC 3 Tier</span>
+                </label>
+
+                <label class="flex items-center gap-3">
+                    <input type="radio"
+                           name="travelClass"
+                           value="Sleeper">
+                    <span>Sleeper</span>
+                </label>
+
+                <label class="flex items-center gap-3">
+                    <input type="radio"
+                           name="travelClass"
+                           value="General">
+                    <span>General</span>
+                </label>
+
+            </div>
+
+
+            <!-- SEAT SELECTION -->
+
+            <h2 class="text-lg font-bold mb-4">
+                Select Your Seat
+            </h2>
+
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+
+                <button type="button"
+                        class="seat border-2 border-gray-300 rounded-lg p-4 font-semibold"
+                        data-seat="A1">
+                    A1
+                </button>
+
+                <button type="button"
+                        class="seat border-2 border-gray-300 rounded-lg p-4 font-semibold"
+                        data-seat="A2">
+                    A2
+                </button>
+
+                <button type="button"
+                        class="seat border-2 border-gray-300 rounded-lg p-4 font-semibold"
+                        data-seat="B1">
+                    B1
+                </button>
+
+                <button type="button"
+                        class="seat border-2 border-gray-300 rounded-lg p-4 font-semibold"
+                        data-seat="B2">
+                    B2
+                </button>
+
+                <button type="button"
+                        class="seat border-2 border-gray-300 rounded-lg p-4 font-semibold"
+                        data-seat="C1">
+                    C1
+                </button>
+
+                <button type="button"
+                        class="seat border-2 border-gray-300 rounded-lg p-4 font-semibold"
+                        data-seat="C2">
+                    C2
+                </button>
+
+                <button type="button"
+                        class="seat border-2 border-gray-300 rounded-lg p-4 font-semibold"
+                        data-seat="D1">
+                    D1
+                </button>
+
+                <button type="button"
+                        class="seat border-2 border-gray-300 rounded-lg p-4 font-semibold"
+                        data-seat="D2">
+                    D2
+                </button>
+
+            </div>
+
+
+            <!-- SELECTED SEAT -->
+
+            <div class="bg-gray-100 rounded-lg p-4 mb-6">
+
+                <p class="font-semibold">
+                    Selected Seat:
+                    <span id="selectedSeat">None</span>
+                </p>
+
+            </div>
+
+
+            <!-- CONTINUE -->
+
+            <button
+                id="continueButton"
+                type="button"
+                class="w-full bg-irctc-orange text-white font-bold py-3 rounded-lg">
+
+                Continue
+
+            </button>
+
+        </div>
+
+    </main>
+
+
+    <script src="../js/seat-selection.js"></script>
+
+</body>
+
+</html>
