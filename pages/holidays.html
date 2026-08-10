@@ -3,157 +3,288 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Holidays & Tour Packages | IRCTC Clone</title>
-    <!-- CRITICAL: Ensure this path correctly points to your CSS file -->
+    <title>Holiday Packages | IRCTC Clone</title>
     <link rel="stylesheet" href="../assets/css/output.css">
 </head>
-<body class="text-gray-800 font-sans relative min-h-screen">
+<body class="text-gray-800 font-sans bg-gray-50 m-0 min-h-screen flex flex-col overflow-x-hidden">
 
-    <!-- ========================================== -->
-    <!-- 1. STANDARDIZED HEADER                     -->
-    <!-- ========================================== -->
-    <header class="w-full relative z-20 px-4 md:px-8 pt-4 md:pt-8">
-        <div class="max-w-300 mx-auto bg-white rounded-lg shadow-sm">
-        <nav class="flex items-center justify-between p-4 mb-0">
-            <!-- Logo -->
-            <div class="flex items-center cursor-pointer" onclick="window.location.href='home.html'">
-                <span class="text-3xl font-bold text-irctc-blue">IRCTC</span>
-            </div>
-            
-            <!-- Desktop Menu -->
-            <div class="hidden md:flex space-x-6 items-center">
-                <a href="home.html" class="text-gray-700 hover:text-irctc-orange font-semibold transition-colors">Home</a>
-                <a href="TrainSearch.html" class="text-gray-700 hover:text-irctc-orange font-semibold transition-colors">Trains</a>
-                <a href="holidays.html" class="text-gray-700 hover:text-irctc-orange font-semibold transition-colors">Holidays</a>
-                <!-- NEW LINKS -->
-                <a href="e-wallet.html" class="text-gray-700 hover:text-irctc-orange font-semibold transition-colors">E-wallet</a>
-                <a href="alerts.html" class="text-gray-700 hover:text-irctc-orange font-semibold transition-colors flex items-center">
-                    Alerts 
-                    <span class="bg-red-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full ml-1.5 shadow-sm">2</span>
-                </a>
-                <a href="contact-us.html" class="text-gray-700 hover:text-irctc-orange font-semibold transition-colors">Contact Us</a>
-            </div>
+    <!-- STANDARDIZED HEADER -->
+    <header class="w-full relative z-20 px-4 md:px-6 pt-4 md:pt-8 shrink-0">
+        <div class="max-w-300 w-full mx-auto bg-white rounded-lg shadow-sm">
+            <nav class="flex items-center justify-between p-4 mb-0">
+                <div class="flex items-center cursor-pointer" onclick="window.location.href='home.html'">
+                    <span class="text-3xl font-bold text-irctc-blue">IRCTC</span>
+                </div>
+                
+                <div class="hidden md:flex space-x-6 items-center">
+                    <a href="home.html" class="text-gray-700 hover:text-irctc-orange font-semibold transition-colors">Home</a>
+                    <a href="TrainSearch.html" class="text-gray-700 hover:text-irctc-orange font-semibold transition-colors">Trains</a>
+                    <a href="holidays.html" class="text-irctc-orange font-bold border-b-2 border-irctc-orange pb-1 transition-colors">Holidays</a>
+                    <a href="e-wallet.html" id="navEwallet" class="hidden text-gray-700 hover:text-irctc-orange font-semibold transition-colors">E-wallet</a>
+                    <a href="alerts.html" class="text-gray-700 hover:text-irctc-orange font-semibold transition-colors flex items-center">Alerts <span class="bg-red-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full ml-1.5 shadow-sm">2</span></a>
+                    <a href="contact-us.html" class="text-gray-700 hover:text-irctc-orange font-semibold transition-colors">Contact Us</a>
+                </div>
 
-            <!-- Action Buttons -->
-            <div class="flex items-center space-x-3">
-                <button onclick="window.location.href='my-bookings.html'" class="border-2 border-irctc-blue text-irctc-blue hover:bg-blue-50 font-bold py-2 px-4 rounded transition-colors">
-                    My Bookings
-                </button>
-                <button onclick="window.location.href='login.html'" class="bg-irctc-orange hover:bg-orange-600 text-white font-bold py-2 px-4 rounded transition-colors">
-                    Login / Register
-                </button>
-            </div>
-        </nav>
+                <div class="flex items-center space-x-3">
+                    <button onclick="window.location.href='my-bookings.html'" class="border-2 border-irctc-blue text-irctc-blue hover:bg-blue-50 font-bold py-2 px-4 rounded transition-colors text-sm">
+                        My Bookings
+                    </button>
+                    <button class="bg-irctc-orange hover:bg-orange-600 text-white font-bold py-2 px-4 rounded transition-colors text-sm" onclick="window.location.href='login.html'">
+                        Login / Register
+                    </button>
+                </div>
+            </nav>
         </div>
     </header>
 
-    <!-- ========================================== -->
-    <!-- 2. STANDARDIZED CONTENT AREA               -->
-    <!-- ========================================== -->
-    <main class="w-full relative z-10 px-4 md:px-8 py-6 md:py-10">
-        <div class="max-w-300 mx-auto">
-            
-            <!-- Holidays Header -->
-            <div class="mb-8 text-center md:text-left">
-                <h2 class="text-3xl font-extrabold text-irctc-blue tracking-tight">Explore Incredible India</h2>
-                <p class="text-gray-600 mt-2 text-lg">Book premium rail tour packages, Bharat Gaurav trains, and spiritual yatras.</p>
+    <!-- CONTENT -->
+    <main class="w-full relative z-10 px-4 md:px-6 py-6 md:py-10 grow">
+        <div class="max-w-300 w-full mx-auto">
+            <div class="text-center mb-10">
+                <h1 class="text-3xl md:text-4xl font-black text-irctc-blue mb-3">Discover Incredible India</h1>
+                <p class="text-gray-600 max-w-2xl mx-auto">Explore our curated tour packages, from spiritual journeys to luxury train experiences.</p>
             </div>
 
-            <!-- Categories Tabs -->
-            <div class="flex gap-4 overflow-x-auto border-b border-gray-300 text-sm font-semibold text-gray-600 mb-8 pb-2">
-                <button class="shrink-0 text-irctc-blue border-b-4 border-irctc-orange pb-2 px-2">Bharat Gaurav Trains</button>
-                <button class="shrink-0 hover:text-irctc-blue transition pb-2 px-2">Rail Tour Packages</button>
-                <button class="shrink-0 hover:text-irctc-blue transition pb-2 px-2">Domestic Air Packages</button>
-                <button class="shrink-0 hover:text-irctc-blue transition pb-2 px-2">International Tours</button>
-            </div>
-
-            <!-- Tour Packages Grid -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                
-                <!-- Package Card 1 -->
-                <div class="bg-white rounded-xl shadow-md border border-gray-200 overflow-hidden hover:shadow-xl transition-shadow duration-300">
-                    <div class="h-48 bg-gray-200 relative">
-                        <img src="C:\Users\Sreedev Suresh\OneDrive\Documents\Projects\irctc-clone\assets\images\kerala backwaters.jpg" alt="Kerala Backwaters" class="w-full h-full object-cover">
-                        <div class="absolute top-3 right-3 bg-irctc-orange text-white text-xs font-bold px-3 py-1 rounded-full shadow">
-                            5 Nights / 6 Days
-                        </div>
-                    </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Package 1 -->
+                <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden hover:shadow-lg transition">
+                    <div class="h-48 bg-gray-200 bg-cover bg-center" style="background-image: url('../assets/images/Golden Temple.jpg');"></div>
                     <div class="p-6">
-                        <h3 class="text-xl font-bold text-gray-900 mb-1">Dakshin Bharat Yatra</h3>
-                        <p class="text-sm text-gray-500 mb-4">Trivandrum - Kanyakumari - Madurai - Rameshwaram</p>
-                        <div class="flex justify-between items-center mt-4">
+                        <div class="text-xs font-bold text-irctc-orange uppercase tracking-wide mb-2">Golden Temple</div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">Delhi - Amritsar - Jaipur</h3>
+                        <p class="text-sm text-gray-500 mb-4 line-clamp-2">Experience the rich heritage of India with this classic 5-day tour covering the iconic Golden Temple.</p>
+                        <div class="flex justify-between items-center mt-4 pt-4 border-t border-gray-100">
                             <div>
-                                <p class="text-xs text-gray-400 uppercase tracking-wide">Starting from</p>
-                                <p class="text-2xl font-black text-irctc-blue">₹9,450</p>
+                                <p class="text-[10px] text-gray-400 uppercase">Starting from</p>
+                                <p class="text-lg font-black text-irctc-blue">₹14,500</p>
                             </div>
-                            <button class="bg-blue-600 hover:bg-blue-800 text-white font-bold py-2 px-5 rounded transition">
-                                Book Now
-                            </button>
+                            <button onclick="openBookingModal('Delhi - Amritsar - Jaipur', 14500)" class="bg-irctc-orange hover:bg-orange-600 text-white px-4 py-2 rounded-lg text-sm font-bold shadow-sm transition">View Details</button>
                         </div>
                     </div>
                 </div>
 
-                <!-- Package Card 2 -->
-                <div class="bg-white rounded-xl shadow-md border border-gray-200 overflow-hidden hover:shadow-xl transition-shadow duration-300">
-                    <div class="h-48 bg-gray-200 relative">
-                        <img src="C:\Users\Sreedev Suresh\OneDrive\Documents\Projects\irctc-clone\assets\images\Vaishno Devi.jpg" alt="Vaishno Devi Shrine" class="w-full h-full object-cover">
-                        <div class="absolute top-3 right-3 bg-irctc-orange text-white text-xs font-bold px-3 py-1 rounded-full shadow">
-                            3 Nights / 4 Days
-                        </div>
-                    </div>
+                <!-- Package 2 -->
+                <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden hover:shadow-lg transition">
+                    <div class="h-48 bg-gray-200 bg-cover bg-center" style="background-image: url('../assets/images/Vaishno Devi.jpg');"></div>
                     <div class="p-6">
-                        <h3 class="text-xl font-bold text-gray-900 mb-1">Vaishno Devi Economy</h3>
-                        <p class="text-sm text-gray-500 mb-4">New Delhi - Katra - Mata Vaishno Devi Shrine</p>
-                        <div class="flex justify-between items-center mt-4">
+                        <div class="text-xs font-bold text-irctc-orange uppercase tracking-wide mb-2">Spiritual Journey</div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">South India Temple Tour</h3>
+                        <p class="text-sm text-gray-500 mb-4 line-clamp-2">A divine 7-day journey through the magnificent temples of Madurai, Rameswaram, and Kanyakumari.</p>
+                        <div class="flex justify-between items-center mt-4 pt-4 border-t border-gray-100">
                             <div>
-                                <p class="text-xs text-gray-400 uppercase tracking-wide">Starting from</p>
-                                <p class="text-2xl font-black text-irctc-blue">₹2,490</p>
+                                <p class="text-[10px] text-gray-400 uppercase">Starting from</p>
+                                <p class="text-lg font-black text-irctc-blue">₹18,200</p>
                             </div>
-                            <button class="bg-blue-600 hover:bg-blue-800 text-white font-bold py-2 px-5 rounded transition">
-                                Book Now
-                            </button>
+                            <button onclick="openBookingModal('South India Temple Tour', 18200)" class="bg-irctc-orange hover:bg-orange-600 text-white px-4 py-2 rounded-lg text-sm font-bold shadow-sm transition">View Details</button>
                         </div>
                     </div>
                 </div>
 
-                <!-- Package Card 3 -->
-                <div class="bg-white rounded-xl shadow-md border border-gray-200 overflow-hidden hover:shadow-xl transition-shadow duration-300">
-                    <div class="h-48 bg-gray-200 relative">
-                        <img src="C:\Users\Sreedev Suresh\OneDrive\Documents\Projects\irctc-clone\assets\images\Golden Temple.jpg" alt="Golden Temple" class="w-full h-full object-cover">
-                        <div class="absolute top-3 right-3 bg-irctc-orange text-white text-xs font-bold px-3 py-1 rounded-full shadow">
-                            1 Night / 2 Days
-                        </div>
-                    </div>
+                <!-- Package 3 -->
+                <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden hover:shadow-lg transition">
+                    <div class="h-48 bg-gray-200 bg-cover bg-center" style="background-image: url('../assets/images/kerala backwaters.jpg');"></div>
                     <div class="p-6">
-                        <h3 class="text-xl font-bold text-gray-900 mb-1">Amritsar Rail Tour</h3>
-                        <p class="text-sm text-gray-500 mb-4">Swarna Shatabdi Express - Golden Temple - Wagah Border</p>
-                        <div class="flex justify-between items-center mt-4">
+                        <div class="text-xs font-bold text-irctc-orange uppercase tracking-wide mb-2">Nature Retreat</div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">Kerala Backwaters</h3>
+                        <p class="text-sm text-gray-500 mb-4 line-clamp-2">Relax in the serene backwaters of Alleppey and Munnar tea gardens on this peaceful 4-day getaway.</p>
+                        <div class="flex justify-between items-center mt-4 pt-4 border-t border-gray-100">
                             <div>
-                                <p class="text-xs text-gray-400 uppercase tracking-wide">Starting from</p>
-                                <p class="text-2xl font-black text-irctc-blue">₹5,545</p>
+                                <p class="text-[10px] text-gray-400 uppercase">Starting from</p>
+                                <p class="text-lg font-black text-irctc-blue">₹12,800</p>
                             </div>
-                            <button class="bg-blue-600 hover:bg-blue-800 text-white font-bold py-2 px-5 rounded transition">
-                                Book Now
-                            </button>
+                            <button onclick="openBookingModal('Kerala Backwaters', 12800)" class="bg-irctc-orange hover:bg-orange-600 text-white px-4 py-2 rounded-lg text-sm font-bold shadow-sm transition">View Details</button>
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
     </main>
 
+    <!-- BOOKING MODAL (Hidden by default) -->
+    <div id="bookingModal" class="fixed inset-0 z-50 hidden bg-gray-900/60 backdrop-blur-sm items-center justify-center p-4">
+        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-lg overflow-hidden flex flex-col max-h-[90vh]">
+            <!-- Modal Header -->
+            <div class="bg-irctc-blue p-5 flex justify-between items-center text-white shrink-0">
+                <h2 class="text-xl font-bold">Book Holiday Package</h2>
+                <button onclick="closeBookingModal()" class="text-blue-200 hover:text-white transition">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+            </div>
+            
+            <!-- Modal Body (Scrollable if needed) -->
+            <div class="p-6 overflow-y-auto">
+                <div class="mb-4 pb-4 border-b border-gray-100">
+                    <h3 id="modalPackageName" class="text-lg font-black text-gray-900 uppercase">Package Name</h3>
+                    <p class="text-sm text-gray-500 mt-0.5">Base Price: <span id="modalBasePrice" class="font-bold text-irctc-blue">₹0</span> per person</p>
+                </div>
+
+                <form id="holidayForm" class="space-y-4">
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="flex flex-col">
+                            <label class="text-xs font-semibold text-gray-600 mb-1">Travel Date</label>
+                            <input type="date" required id="h_date" class="border border-gray-300 rounded p-2.5 focus:ring-2 focus:ring-irctc-blue outline-none text-sm">
+                        </div>
+                        <div class="flex flex-col">
+                            <label class="text-xs font-semibold text-gray-600 mb-1">No. of Travelers</label>
+                            <input type="number" required id="h_travelers" min="1" max="10" value="1" onchange="updateTotal()" class="border border-gray-300 rounded p-2.5 focus:ring-2 focus:ring-irctc-blue outline-none text-sm">
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col">
+                        <label class="text-xs font-semibold text-gray-600 mb-1">Contact Email</label>
+                        <input type="email" id="h_email" readonly class="border border-gray-300 bg-gray-50 rounded p-2.5 outline-none text-sm font-medium text-gray-500">
+                    </div>
+
+                    <div class="bg-blue-50 border border-blue-100 rounded-lg p-3.5">
+                        <div class="flex justify-between items-center">
+                            <span class="text-sm font-semibold text-gray-700">Total Package Cost</span>
+                            <span id="modalTotalCost" class="text-xl font-black text-irctc-orange">₹0</span>
+                        </div>
+                    </div>
+
+                    <!-- PAYMENT MODE SELECTION -->
+                    <div>
+                        <p class="font-bold text-gray-900 mb-2 text-sm">Payment Mode</p>
+                        <div class="space-y-2">
+                            <label class="flex items-center gap-2 text-sm cursor-pointer border p-3 rounded-lg hover:bg-gray-50 transition">
+                                <input type="radio" name="paymentMode" value="ewallet" class="accent-irctc-orange w-4 h-4" checked>
+                                <div class="flex-1 flex justify-between items-center">
+                                    <span class="font-semibold">IRCTC E-Wallet</span>
+                                    <span id="modalWalletBalance" class="text-xs font-bold text-gray-500">Bal: ₹0.00</span>
+                                </div>
+                            </label>
+                            
+                            <label class="flex items-center gap-2 text-sm cursor-pointer border p-3 rounded-lg hover:bg-gray-50 transition">
+                                <input type="radio" name="paymentMode" value="upi" class="accent-irctc-orange w-4 h-4">
+                                <span class="font-semibold text-gray-700">UPI / BHIM (Mock)</span>
+                            </label>
+                            
+                            <label class="flex items-center gap-2 text-sm cursor-pointer border p-3 rounded-lg hover:bg-gray-50 transition">
+                                <input type="radio" name="paymentMode" value="card" class="accent-irctc-orange w-4 h-4">
+                                <span class="font-semibold text-gray-700">Credit / Debit Card (Mock)</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="flex gap-3 pt-2">
+                        <button type="button" onclick="closeBookingModal()" class="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-800 font-bold py-3 rounded-lg transition-colors text-sm">
+                            Cancel
+                        </button>
+                        <button type="button" onclick="submitHolidayBooking()" class="flex-1 bg-irctc-orange hover:bg-orange-600 text-white font-bold py-3 rounded-lg shadow-sm transition-colors text-sm">
+                            Pay & Book
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <footer style="background-color: #071936 !important;" class="text-white pt-10 pb-6 border-t-4 border-irctc-orange relative z-30 w-full shadow-xl shrink-0 mt-auto">
-        <div class="max-w-300 mx-auto px-4 md:px-8 text-center text-xs text-gray-300">
+        <div class="max-w-300 w-full mx-auto px-4 md:px-8 text-center text-xs text-gray-300">
             <p class="font-medium">Copyright © 2026 - www.irctc.co.in. All Rights Reserved</p>
-            <p class="mt-1 text-gray-400 text-[11px]">Designed and Hosted by CRIS</p>
         </div>
     </footer>
 
-    <!-- ========================================== -->
-    <!-- 3. THE GLOBAL BACKGROUND ANIMATION         -->
-    <!-- ========================================== -->
+    <!-- INJECT DB SIMULATION -->
+    <script src="../js/db.js"></script>
     <script src="../js/train-animation.js"></script>
 
+    <!-- MODAL LOGIC -->
+    <script>
+        let currentPackagePrice = 0;
+        let currentPackageName = "";
+
+        // 1. Open Modal Function
+        function openBookingModal(packageName, basePrice) {
+            if (typeof DB_API === 'undefined') return;
+            
+            const currentUser = DB_API.getCurrentUser();
+            
+            // Auth Check
+            if (!currentUser) {
+                alert("Please login to book a holiday package.");
+                window.location.href = 'login.html';
+                return;
+            }
+
+            // Set variables
+            currentPackageName = packageName;
+            currentPackagePrice = basePrice;
+
+            // Populate Modal Data
+            document.getElementById('modalPackageName').textContent = packageName;
+            document.getElementById('modalBasePrice').textContent = `₹${basePrice.toLocaleString('en-IN')}`;
+            document.getElementById('h_email').value = currentUser.email;
+            document.getElementById('modalWalletBalance').textContent = `Bal: ₹${currentUser.walletBalance.toLocaleString('en-IN', {minimumFractionDigits: 2})}`;
+            
+            // Reset form and update total
+            document.getElementById('h_travelers').value = 1;
+            document.getElementById('h_date').value = "";
+            document.querySelector('input[name="paymentMode"][value="ewallet"]').checked = true;
+            updateTotal();
+
+            // Show Modal
+            const modal = document.getElementById('bookingModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        // 2. Close Modal Function
+        function closeBookingModal() {
+            const modal = document.getElementById('bookingModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        // 3. Update Total Calculation
+        function updateTotal() {
+            const travelers = parseInt(document.getElementById('h_travelers').value) || 1;
+            const total = travelers * currentPackagePrice;
+            document.getElementById('modalTotalCost').textContent = `₹${total.toLocaleString('en-IN')}`;
+        }
+
+        // 4. Submit Booking and Handle Payment Mode
+        function submitHolidayBooking() {
+            const date = document.getElementById('h_date').value;
+            const travelers = parseInt(document.getElementById('h_travelers').value);
+
+            if (!date) {
+                alert("Please select a travel date.");
+                return;
+            }
+
+            const currentUser = DB_API.getCurrentUser();
+            const totalCost = travelers * currentPackagePrice;
+            const paymentMode = document.querySelector('input[name="paymentMode"]:checked').value;
+
+            // If E-Wallet is chosen, verify balance
+            if (paymentMode === 'ewallet' && currentUser.walletBalance < totalCost) {
+                alert(`Insufficient E-Wallet Balance!\n\nPackage Cost: ₹${totalCost.toLocaleString('en-IN')}\nYour Balance: ₹${currentUser.walletBalance.toLocaleString('en-IN')}\n\nPlease top up your E-Wallet to proceed.`);
+                window.location.href = 'e-wallet.html';
+                return;
+            }
+
+            const db = DB_API.getAll();
+            const userIndex = db.users.findIndex(u => u.id === currentUser.id);
+            
+            if (userIndex !== -1) {
+                let successMessage = `HOLIDAY BOOKED SUCCESSFULLY!\n\nPackage: ${currentPackageName}\nTravelers: ${travelers}\nDate: ${date}\nAmount Paid: ₹${totalCost.toLocaleString('en-IN')}`;
+
+                // Only deduct if E-Wallet was used
+                if (paymentMode === 'ewallet') {
+                    db.users[userIndex].walletBalance -= totalCost;
+                    successMessage += `\nRemaining Wallet Balance: ₹${db.users[userIndex].walletBalance.toLocaleString('en-IN', {minimumFractionDigits: 2})}`;
+                } else {
+                    successMessage += `\nPayment processed via ${paymentMode.toUpperCase()}`;
+                }
+
+                localStorage.setItem('irctc_db', JSON.stringify(db));
+                
+                alert(successMessage);
+                closeBookingModal();
+                location.reload(); 
+            }
+        }
+    </script>
 </body>
 </html>

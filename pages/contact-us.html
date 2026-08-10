@@ -4,138 +4,114 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contact Us | IRCTC Clone</title>
-    <!-- CRITICAL: Ensure this path correctly points to your CSS file -->
     <link rel="stylesheet" href="../assets/css/output.css">
 </head>
-<body class="text-gray-800 font-sans relative min-h-screen">
+<body class="text-gray-800 font-sans bg-gray-50 m-0 min-h-screen flex flex-col overflow-x-hidden">
 
-    <!-- ========================================== -->
-    <!-- 1. STANDARDIZED HEADER                     -->
-    <!-- ========================================== -->
-    <header class="w-full relative z-20 px-4 md:px-8 pt-4 md:pt-8">
-        <div class="max-w-300 mx-auto bg-white rounded-lg shadow-sm">
-        <nav class="flex items-center justify-between p-4 mb-0">
-            <!-- Logo -->
-            <div class="flex items-center cursor-pointer" onclick="window.location.href='home.html'">
-                <span class="text-3xl font-bold text-irctc-blue">IRCTC</span>
-            </div>
-            
-            <!-- Desktop Menu -->
-            <div class="hidden md:flex space-x-6 items-center">
-                <a href="home.html" class="text-gray-700 hover:text-irctc-orange font-semibold transition-colors">Home</a>
-                <a href="TrainSearch.html" class="text-gray-700 hover:text-irctc-orange font-semibold transition-colors">Trains</a>
-                <a href="holidays.html" class="text-gray-700 hover:text-irctc-orange font-semibold transition-colors">Holidays</a>
-                <!-- NEW LINKS -->
-                <a href="e-wallet.html" class="text-gray-700 hover:text-irctc-orange font-semibold transition-colors">E-wallet</a>
-                <a href="alerts.html" class="text-gray-700 hover:text-irctc-orange font-semibold transition-colors flex items-center">
-                    Alerts 
-                    <span class="bg-red-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full ml-1.5 shadow-sm">2</span>
-                </a>
-                <a href="contact-us.html" class="text-gray-700 hover:text-irctc-orange font-semibold transition-colors">Contact Us</a>
-            </div>
+    <!-- STANDARDIZED HEADER -->
+    <header class="w-full relative z-20 px-4 md:px-6 pt-4 md:pt-8 shrink-0">
+        <div class="max-w-300 w-full mx-auto bg-white rounded-lg shadow-sm">
+            <nav class="flex items-center justify-between p-4 mb-0">
+                <div class="flex items-center cursor-pointer" onclick="window.location.href='home.html'">
+                    <span class="text-3xl font-bold text-irctc-blue">IRCTC</span>
+                </div>
+                
+                <div class="hidden md:flex space-x-6 items-center">
+                    <a href="home.html" class="text-gray-700 hover:text-irctc-orange font-semibold transition-colors">Home</a>
+                    <a href="TrainSearch.html" class="text-gray-700 hover:text-irctc-orange font-semibold transition-colors">Trains</a>
+                    <a href="holidays.html" class="text-gray-700 hover:text-irctc-orange font-semibold transition-colors">Holidays</a>
+                    <a href="e-wallet.html" id="navEwallet" class="hidden text-gray-700 hover:text-irctc-orange font-semibold transition-colors">E-wallet</a>
+                    <a href="alerts.html" class="text-gray-700 hover:text-irctc-orange font-semibold transition-colors flex items-center">Alerts <span class="bg-red-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full ml-1.5 shadow-sm">2</span></a>
+                    <a href="contact-us.html" class="text-irctc-orange font-bold border-b-2 border-irctc-orange pb-1 transition-colors">Contact Us</a>
+                </div>
 
-            <!-- Action Buttons -->
-            <div class="flex items-center space-x-3">
-                <button onclick="window.location.href='my-bookings.html'" class="border-2 border-irctc-blue text-irctc-blue hover:bg-blue-50 font-bold py-2 px-4 rounded transition-colors">
-                    My Bookings
-                </button>
-                <button onclick="window.location.href='login.html'" class="bg-irctc-orange hover:bg-orange-600 text-white font-bold py-2 px-4 rounded transition-colors">
-                    Login / Register
-                </button>
-            </div>
-        </nav>
+                <div class="flex items-center space-x-3">
+                    <button onclick="window.location.href='my-bookings.html'" class="border-2 border-irctc-blue text-irctc-blue hover:bg-blue-50 font-bold py-2 px-4 rounded transition-colors text-sm">
+                        My Bookings
+                    </button>
+                    <button class="bg-irctc-orange hover:bg-orange-600 text-white font-bold py-2 px-4 rounded transition-colors text-sm" onclick="window.location.href='login.html'">
+                        Login / Register
+                    </button>
+                </div>
+            </nav>
         </div>
     </header>
 
-    <!-- ========================================== -->
-    <!-- 2. STANDARDIZED CONTENT AREA               -->
-    <!-- ========================================== -->
-    <main class="w-full relative z-10 px-4 md:px-8 py-6 md:py-10">
-        <div class="max-w-300 mx-auto">
+    <!-- CONTENT -->
+    <main class="w-full relative z-10 px-4 md:px-6 py-6 md:py-10 grow
+        <div class="max-w-250 w-full mx-auto flex flex-col md:flex-row gap-8">
             
-            <div class="bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden">
-                <!-- Header Banner -->
-                <div class="bg-linear-to-r from-irctc-blue to-blue-800 p-8 text-center text-white">
-                    <h2 class="text-3xl font-extrabold tracking-tight mb-2">How Can We Help You?</h2>
-                    <p class="text-blue-200">Customer Support for Railway Tickets & E-Catering Services</p>
+            <!-- Left Info Panel -->
+            <div class="w-full md:w-1/3 space-y-6">
+                <div>
+                    <h2 class="text-2xl font-black text-irctc-blue mb-4">Get in touch</h2>
+                    <p class="text-sm text-gray-600">We are here to assist you with your booking queries, cancellations, and feedback.</p>
                 </div>
 
-                <div class="p-8 grid grid-cols-1 md:grid-cols-2 gap-10">
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-200">
+                    <h3 class="font-bold text-gray-900 mb-2 border-b pb-2">Customer Care Numbers</h3>
+                    <p class="text-sm text-gray-600 mb-1">For general enquiries:</p>
+                    <p class="text-xl font-black text-irctc-blue mb-4">139</p>
                     
-                    <!-- Direct Contact Information -->
-                    <div class="space-y-8">
-                        <div>
-                            <h3 class="text-lg font-bold text-gray-900 border-b border-gray-200 pb-2 mb-4">Helpline Numbers</h3>
-                            <div class="flex items-start gap-3 mb-4">
-                                <span class="text-2xl text-irctc-orange">📞</span>
-                                <div>
-                                    <p class="font-bold text-irctc-blue text-lg">14646</p>
-                                    <p class="text-sm text-gray-500">Toll-Free (Within India) - Support in 12 Languages</p>
-                                </div>
-                            </div>
-                            <div class="flex items-start gap-3">
-                                <span class="text-2xl text-irctc-orange">🌐</span>
-                                <div>
-                                    <p class="font-bold text-irctc-blue text-lg">+91-8044647999</p>
-                                    <p class="text-sm text-gray-500">Customer Support (Outside India)</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div>
-                            <h3 class="text-lg font-bold text-gray-900 border-b border-gray-200 pb-2 mb-4">Email Support</h3>
-                            <ul class="space-y-3">
-                                <li class="flex items-center justify-between">
-                                    <span class="text-sm font-semibold text-gray-700">General E-Tickets:</span>
-                                    <a href="mailto:care@irctc.co.in" class="text-blue-600 font-bold hover:underline">care@irctc.co.in</a>
-                                </li>
-                                <li class="flex items-center justify-between">
-                                    <span class="text-sm font-semibold text-gray-700">Ticket Cancellations:</span>
-                                    <a href="mailto:etickets@irctc.co.in" class="text-blue-600 font-bold hover:underline">etickets@irctc.co.in</a>
-                                </li>
-                                <li class="flex items-center justify-between">
-                                    <span class="text-sm font-semibold text-gray-700">Tourism & Holidays:</span>
-                                    <a href="mailto:tourism@irctc.com" class="text-blue-600 font-bold hover:underline">tourism@irctc.com</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <!-- Corporate Office & Quick Form -->
-                    <div class="bg-gray-50 rounded-xl p-6 border border-gray-200 shadow-inner">
-                        <h3 class="text-lg font-bold text-gray-900 mb-4">Registered Corporate Office</h3>
-                        <p class="text-sm text-gray-600 leading-relaxed mb-6">
-                            <strong>Indian Railway Catering and Tourism Corporation Ltd.</strong><br>
-                            4th Floor, Tower-D, World Trade Center,<br>
-                            Nauroji Nagar, New Delhi-110029
-                        </p>
-
-                        <div class="bg-blue-50 border border-blue-100 p-4 rounded-lg">
-                            <h4 class="font-bold text-irctc-blue mb-2 text-sm">Online eQuery Interface</h4>
-                            <p class="text-xs text-gray-600 mb-4">Submit and track your ticket queries or TDR filing issues directly through our online portal.</p>
-                            <a href="#" class="block text-center bg-irctc-orange hover:bg-orange-600 text-white font-bold py-2 px-4 rounded transition-colors text-sm">
-                                Track My Query
-                            </a>
-                        </div>
-                    </div>
-
+                    <p class="text-sm text-gray-600 mb-1">For e-ticketing queries:</p>
+                    <p class="text-lg font-bold text-gray-900">14646 / 0755-6610661</p>
                 </div>
+
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-200">
+                    <h3 class="font-bold text-gray-900 mb-2 border-b pb-2">Email Support</h3>
+                    <p class="text-sm text-gray-600 mb-1">E-ticketing queries:</p>
+                    <a href="mailto:care@irctc.co.in" class="text-irctc-orange font-bold text-sm hover:underline">care@irctc.co.in</a>
+                    
+                    <p class="text-sm text-gray-600 mt-3 mb-1">Cancellation queries:</p>
+                    <a href="mailto:etickets@irctc.co.in" class="text-irctc-orange font-bold text-sm hover:underline">etickets@irctc.co.in</a>
+                </div>
+            </div>
+
+            <!-- Right Form Panel -->
+            <div class="w-full md:w-2/3 bg-white p-8 rounded-2xl shadow-sm border border-gray-200">
+                <h3 class="text-xl font-bold text-gray-900 mb-6">Write to Us</h3>
+                
+                <form class="space-y-4" onsubmit="event.preventDefault(); alert('Message Sent Successfully!'); this.reset();">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="flex flex-col">
+                            <label class="text-xs font-semibold text-gray-600 mb-1">Full Name</label>
+                            <input type="text" required class="border border-gray-300 rounded p-2.5 focus:ring-2 focus:ring-irctc-blue outline-none text-sm">
+                        </div>
+                        <div class="flex flex-col">
+                            <label class="text-xs font-semibold text-gray-600 mb-1">Email Address</label>
+                            <input type="email" required class="border border-gray-300 rounded p-2.5 focus:ring-2 focus:ring-irctc-blue outline-none text-sm">
+                        </div>
+                    </div>
+                    
+                    <div class="flex flex-col">
+                        <label class="text-xs font-semibold text-gray-600 mb-1">Subject / PNR Number</label>
+                        <input type="text" class="border border-gray-300 rounded p-2.5 focus:ring-2 focus:ring-irctc-blue outline-none text-sm">
+                    </div>
+                    
+                    <div class="flex flex-col">
+                        <label class="text-xs font-semibold text-gray-600 mb-1">Message</label>
+                        <textarea rows="5" required class="border border-gray-300 rounded p-2.5 focus:ring-2 focus:ring-irctc-blue outline-none text-sm resize-none"></textarea>
+                    </div>
+
+                    <button type="submit" class="w-full bg-irctc-blue hover:bg-blue-900 text-white font-bold py-3 rounded-lg shadow-sm transition-colors mt-2">
+                        Send Message
+                    </button>
+                </form>
             </div>
 
         </div>
     </main>
 
-        <footer style="background-color: #071936 !important;" class="text-white pt-10 pb-6 border-t-4 border-irctc-orange relative z-30 w-full shadow-xl shrink-0 mt-auto">
-        <div class="max-w-300 mx-auto px-4 md:px-8 text-center text-xs text-gray-300">
+    <footer style="background-color: #071936 !important;" class="text-white pt-10 pb-6 border-t-4 border-irctc-orange relative z-30 w-full shadow-xl shrink-0 mt-auto">
+        <div class="max-w-300 w-full mx-auto px-4 md:px-8 text-center text-xs text-gray-300">
             <p class="font-medium">Copyright © 2026 - www.irctc.co.in. All Rights Reserved</p>
-            <p class="mt-1 text-gray-400 text-[11px]">Designed and Hosted by CRIS</p>
         </div>
     </footer>
 
-    <!-- ========================================== -->
-    <!-- 3. THE GLOBAL BACKGROUND ANIMATION         -->
-    <!-- ========================================== -->
+    <!-- INJECT DB SIMULATION (This powers the dynamic navbar!) -->
+    <script src="../js/db.js"></script>
     <script src="../js/train-animation.js"></script>
+    
 
 </body>
 </html>

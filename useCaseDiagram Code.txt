@@ -1,0 +1,122 @@
+@startuml
+top to bottom direction
+skinparam packageStyle rectangle
+skinparam backgroundColor transparent
+skinparam DefaultFontName Arial
+skinparam RankSep 55
+skinparam NodeSep 20
+
+skinparam actor {
+    BackgroundColor #071936
+    BorderColor #071936
+    FontColor #071936
+}
+skinparam usecase {
+    BackgroundColor #FFFFFF
+    BorderColor #071936
+    FontColor #071936
+}
+skinparam package {
+    BackgroundColor #F5F7FA
+    BorderColor #071936
+    FontColor #071936
+}
+
+' ---------- Actors on far left / far right for width ----------
+actor "Guest User" as Guest
+actor "Registered User" as User
+actor "Administrator" as Admin
+
+rectangle "IRCTC Clone System" as System {
+
+    ' Left column of packages
+    package "Authentication & Profile" {
+        usecase "Register Account" as Register
+        usecase "Sign In / Auth" as Login
+        usecase "Manage Profile" as ManageProfile
+    }
+
+    package "Financial Subsystem" {
+        usecase "Check Wallet" as ViewWallet
+        usecase "Top-Up Wallet" as TopupWallet
+    }
+
+    ' Middle column - largest package
+    package "Train & Ticketing Operations" {
+        usecase "Search Trains" as SearchTrains
+        usecase "View Schedule" as ViewSchedule
+        usecase "Check PNR Status" as CheckPnr
+        usecase "Book Train Ticket" as BookTicket
+        usecase "View Bookings" as ViewBookings
+        usecase "Cancel & Refund" as CancelTicket
+    }
+
+    ' Right column of packages
+    package "Auxiliary Services" {
+        usecase "Browse Holidays" as ViewHolidays
+        usecase "Book Holidays" as BookHolidays
+        usecase "View Travel Alerts" as ViewAlerts
+        usecase "Contact Support" as ContactSupport
+    }
+
+    package "Administrator Controls" {
+        usecase "Manage Trains" as ManageTrains
+        usecase "Monitor Bookings" as ViewAllBookings
+        usecase "Broadcast Alerts" as ManageAlerts
+    }
+}
+
+' Arrange packages into a 3-row grid (narrower, taller rectangle)
+' Row 1
+"Authentication & Profile" -[hidden]right-> "Financial Subsystem"
+' Row 2
+"Train & Ticketing Operations" -[hidden]right-> "Auxiliary Services"
+' Row 3 - single package, centered by hidden anchor
+"Administrator Controls" -[hidden]right-> "Administrator Controls"
+
+' Link rows vertically so each row sits under the previous
+"Authentication & Profile" -[hidden]down-> "Train & Ticketing Operations"
+"Financial Subsystem" -[hidden]down-> "Auxiliary Services"
+"Train & Ticketing Operations" -[hidden]down-> "Administrator Controls"
+
+' Guest Links
+Guest --> Register
+Guest --> Login
+Guest --> SearchTrains
+Guest --> ViewSchedule
+Guest --> CheckPnr
+Guest --> ViewHolidays
+Guest --> ViewAlerts
+Guest --> ContactSupport
+
+' Registered User Links
+User --> Login
+User --> ManageProfile
+User --> SearchTrains
+User --> BookTicket
+User --> ViewBookings
+User --> CancelTicket
+User --> ViewWallet
+User --> TopupWallet
+User --> BookHolidays
+User --> CheckPnr
+User --> ViewSchedule
+User --> ViewAlerts
+User --> ContactSupport
+
+' Administrator Links
+Admin --> Login
+Admin --> ManageTrains
+Admin --> ViewAllBookings
+Admin --> ManageAlerts
+
+' Includes Relationships
+BookTicket ..> ViewWallet : <<includes>>
+CancelTicket ..> ViewWallet : <<includes>>
+BookHolidays ..> ViewWallet : <<includes>>
+
+' ---------- Actor placement hints for wide spread ----------
+Guest -[hidden]down-> User
+User -[hidden]down-> Admin
+
+@enduml
