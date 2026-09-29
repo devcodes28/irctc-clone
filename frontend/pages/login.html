@@ -30,9 +30,9 @@
                     <a href="home.html" class="text-gray-700 hover:text-irctc-orange font-semibold transition-colors">Home</a>
                     <a href="TrainSearch.html" class="text-gray-700 hover:text-irctc-orange font-semibold transition-colors">Trains</a>
                     <a href="holidays.html" class="text-gray-700 hover:text-irctc-orange font-semibold transition-colors">Holidays</a>
+                    <a href="dashboard.html" id="navDashboard" class="hidden text-gray-700 hover:text-irctc-orange font-semibold transition-colors">Dashboard</a>
                     <a href="e-wallet.html" id="navEwallet" class="hidden text-gray-700 hover:text-irctc-orange font-semibold transition-colors">E-wallet</a>                    <a href="alerts.html" class="text-gray-700 hover:text-irctc-orange font-semibold transition-colors flex items-center">
                         Alerts 
-                        <span class="bg-red-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full ml-1.5 shadow-sm">2</span>
                     </a>
                     <a href="contact-us.html" class="text-gray-700 hover:text-irctc-orange font-semibold transition-colors">Contact Us</a>
                 </div>
@@ -185,7 +185,7 @@
             toggleBtn.setAttribute('aria-label', isHidden ? 'Hide password' : 'Show password');
         });
 
-        form.addEventListener('submit', function (e) {
+form.addEventListener('submit', async function (e) {
             e.preventDefault();
             
             const idVal = loginId.value.trim();
@@ -196,30 +196,35 @@
                 return;
             }
 
-            // Attempt login against DB
-            const auth = DB_API.loginUser(idVal, passVal);
-            
-            if (auth.success) {
-                form.reset();
+            try {
+                // Added 'await' to pause and wait for the backend response
+                const auth = await DB_API.loginUser(idVal, passVal);
                 
-                // Check if admin login
-                if (auth.isAdmin || idVal.toLowerCase() === 'admin@irctc.co.in') {
-                    localStorage.setItem('is_admin', 'true');
-                    window.location.href = 'admin-dashboard.html';
-                    return;
-                }
+                if (auth && auth.success) {
+                    form.reset();
+                    
+                    // Check if admin login
+                    if (auth.isAdmin || idVal.toLowerCase() === 'admin@irctc.co.in') {
+                        localStorage.setItem('is_admin', 'true');
+                        window.location.href = 'admin-dashboard.html';
+                        return;
+                    }
 
-                // Check if they were interrupted while trying to book a ticket
-                if (localStorage.getItem('redirect_to_booking') === 'true') {
-                    localStorage.removeItem('redirect_to_booking'); 
-                    window.location.href = 'booking.html'; 
+                    // Check if they were interrupted while trying to book a ticket
+                    if (localStorage.getItem('redirect_to_booking') === 'true') {
+                        localStorage.removeItem('redirect_to_booking'); 
+                        window.location.href = 'booking.html'; 
+                    } else {
+                        window.location.href = 'dashboard.html'; 
+                    }
+
                 } else {
-                    window.location.href = 'dashboard.html'; 
+                    // Alert the specific error message from the backend (e.g., "Incorrect password")
+                    alert(auth?.message || "Login failed."); 
                 }
-
-            } else {
-                // Only alert if login explicitly fails
-                alert(auth.message); 
+            } catch (error) {
+                alert("Server connection failed. Is your backend running?");
+                console.error(error);
             }
         });
     </script>

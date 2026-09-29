@@ -181,9 +181,8 @@
     <!-- INJECT DB SIMULATION -->
     <script src="../js/db.js"></script>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            // 1. Auth Guard
+<script>
+        document.addEventListener('DOMContentLoaded', async () => {
             const currentUser = DB_API.getCurrentUser();
             if (!currentUser) {
                 alert('Please login to view tickets.');
@@ -191,7 +190,6 @@
                 return;
             }
 
-            // 2. Get PNR from URL
             const urlParams = new URLSearchParams(window.location.search);
             const pnr = urlParams.get('pnr');
 
@@ -201,27 +199,24 @@
                 return;
             }
 
-            // 3. Fetch Data from DB
-            const booking = DB_API.getBookingByPNR(pnr);
-            
+            // Using await for both network lookups
+            const booking = await DB_API.getBookingByPNR(pnr);
             if (!booking) {
                 alert('Ticket not found.');
                 window.location.href = 'dashboard.html';
                 return;
             }
 
-            const train = DB_API.getTrainDetails(booking.trainNumber);
+            const train = await DB_API.getTrainDetails(booking.trainNumber);
 
-            // 4. Render Top Details
+            // Render logic below (Unchanged)
             document.getElementById('t_pnr').textContent = booking.pnr;
             document.getElementById('t_trainInfo').textContent = `${train.trainNumber} / ${train.trainName}`;
             document.getElementById('t_doj').textContent = booking.travelDate;
             
-            // Assuming first passenger determines coach class for display
             const pClass = booking.passengers.length > 0 ? booking.passengers[0].coach.replace(/[0-9]/g, '') : 'SL';
             document.getElementById('t_class').textContent = pClass;
 
-            // Render Route Details
             document.getElementById('t_sourceCode').textContent = train.originCode;
             document.getElementById('t_sourceName').textContent = train.originName;
             document.getElementById('t_depTime').textContent = train.departureTime;
@@ -230,16 +225,14 @@
             document.getElementById('t_destName').textContent = train.destinationName;
             document.getElementById('t_arrTime').textContent = train.arrivalTime;
 
-            // Render Status Badge
             const badge = document.getElementById('t_statusBadge');
             if (booking.bookingStatus === 'Cancelled') {
                 badge.textContent = 'CANCELLED';
                 badge.className = 'mt-3 inline-block px-3 py-1 bg-red-100 text-red-800 text-xs font-black uppercase tracking-wide rounded-sm border border-red-300';
             }
 
-            // 5. Render Passengers Loop
             const tbody = document.getElementById('t_passengers');
-            tbody.innerHTML = ''; // Clear empty
+            tbody.innerHTML = ''; 
 
             booking.passengers.forEach((pass, index) => {
                 const tr = document.createElement('tr');
@@ -258,22 +251,16 @@
                 tbody.appendChild(tr);
             });
 
-            // 6. Render Finances with Fallbacks for older DB entries
             const totalFare = booking.fareDetails.totalFare || 0;
             const baseFare = booking.fareDetails.baseFare || (totalFare > 35.75 ? totalFare - 35.75 : totalFare);
             
             document.getElementById('t_baseFare').textContent = `₹${baseFare.toFixed(2)}`;
             document.getElementById('t_totalFare').textContent = `₹${totalFare.toFixed(2)}`;
 
-            // 7. Generate Real QR Code using QRServer API
             const primaryPassenger = booking.passengers[0] ? booking.passengers[0].name : 'Unknown';
             const qrDataString = `PNR:${booking.pnr} | Train:${train.trainNumber} | Date:${booking.travelDate} | Name:${primaryPassenger} | Status:${booking.bookingStatus}`;
-            
-            // Encode the string so it's safe to put in a URL
             const encodedQrData = encodeURIComponent(qrDataString);
-            const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodedQrData}`;
-            
-            document.getElementById('t_qrCode').src = qrUrl;
+            document.getElementById('t_qrCode').src = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodedQrData}`;
         });
     </script>
 </body>

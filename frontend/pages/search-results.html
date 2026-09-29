@@ -20,6 +20,7 @@
                     <a href="home.html" class="text-gray-700 hover:text-irctc-orange font-semibold transition-colors">Home</a>
                     <a href="TrainSearch.html" class="text-gray-700 hover:text-irctc-orange font-semibold transition-colors">Trains</a>
                     <a href="holidays.html" class="text-gray-700 hover:text-irctc-orange font-semibold transition-colors">Holidays</a>
+                    <a href="dashboard.html" id="navDashboard" class="hidden text-gray-700 hover:text-irctc-orange font-semibold transition-colors">Dashboard</a>
                     <a href="e-wallet.html" id="navEwallet" class="hidden text-gray-700 hover:text-irctc-orange font-semibold transition-colors">E-wallet</a>
                     <a href="alerts.html" class="text-gray-700 hover:text-irctc-orange font-semibold transition-colors flex items-center">Alerts</a>
                     <a href="contact-us.html" class="text-gray-700 hover:text-irctc-orange font-semibold transition-colors">Contact Us</a>
@@ -82,26 +83,21 @@
     </main>
 
     <script src="../js/db.js"></script>
-    <script>
-        // --- UPDATED: Smarter Auth Check ---
+ <script>
         window.proceedToBooking = function(trainNumber) {
-            // 1. ALWAYS save the train first, even if they aren't logged in yet
             localStorage.setItem('selected_train', trainNumber);
-            
             const isLoggedIn = localStorage.getItem('current_user_id') !== null;
             
             if (!isLoggedIn) {
-                // 2. Set a flag so the login page knows where to send them back to
                 localStorage.setItem('redirect_to_booking', 'true');
                 alert("Login to proceed with booking.");
                 window.location.href = 'login.html';
             } else {
-                // 3. Already logged in, go straight to booking
                 window.location.href = 'booking.html';
             }
         };
 
-        document.addEventListener('DOMContentLoaded', () => {
+        document.addEventListener('DOMContentLoaded', async () => {
             const searchData = JSON.parse(localStorage.getItem('last_search'));
             
             if (searchData) {
@@ -113,14 +109,13 @@
                 return;
             }
 
-            const allTrains = DB_API.getAll().trains;
-            // FILTER ONLY TRAINS THAT MATCH THE SEARCH
-            const matchedTrains = allTrains.filter(t => t.originCode === searchData.sourceCode && t.destinationCode === searchData.destCode);
-            
             const container = document.getElementById('trainResultsList');
             const noResults = document.getElementById('noResults');
             
-            if (matchedTrains.length === 0) {
+            // REPLACED: Manual filtering with Live API fetch
+            const matchedTrains = await DB_API.searchTrains(searchData.sourceCode, searchData.destCode);
+            
+            if (!matchedTrains || matchedTrains.length === 0) {
                 noResults.classList.remove('hidden');
                 return;
             }

@@ -20,7 +20,7 @@
                     <a href="TrainSearch.html" class="text-gray-700 hover:text-irctc-orange font-semibold transition-colors">Trains</a>
                     <a href="holidays.html" class="text-gray-700 hover:text-irctc-orange font-semibold transition-colors">Holidays</a>
                     <a href="e-wallet.html" id="navEwallet" class="hidden text-gray-700 hover:text-irctc-orange font-semibold transition-colors">E-wallet</a>                   
-                    <a href="alerts.html" class="text-gray-700 hover:text-irctc-orange font-semibold transition-colors flex items-center">Alerts <span class="bg-red-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full ml-1.5 shadow-sm">2</span></a>
+                    <a href="alerts.html" class="text-gray-700 hover:text-irctc-orange font-semibold transition-colors flex items-center">Alerts </a>
                     <a href="contact-us.html" class="text-gray-700 hover:text-irctc-orange font-semibold transition-colors">Contact Us</a>
                 </div>
 
@@ -130,7 +130,7 @@
 
     <!-- AUTH GUARD & RENDER DYNAMIC DATA -->
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
+        document.addEventListener('DOMContentLoaded', async () => {
             // 1. Get logged-in user from active session
             const currentUser = DB_API.getCurrentUser();
 
@@ -143,12 +143,13 @@
 
             // 3. Render Current User's Name & Balance
             document.getElementById('welcomeTitle').textContent = `Welcome back, ${currentUser.fullName.split(' ')[0]}`;
-            document.getElementById('walletBalance').textContent = `₹${currentUser.walletBalance.toFixed(2)}`;
+            const walletBal = currentUser.walletBalance !== undefined ? currentUser.walletBalance : 5000.00;
+            document.getElementById('walletBalance').textContent = `₹${walletBal.toFixed(2)}`;
 
-            // 4. Load their upcoming journey (if any exist)
-            const upcomingBooking = DB_API.getRecentBooking(currentUser.fullName);
+            // 4. Load their upcoming journey (if any exist) - Added await here
+            const upcomingBooking = await DB_API.getRecentBooking(currentUser._id || currentUser.id);
             if (upcomingBooking) {
-                const trainDetails = DB_API.getTrainDetails(upcomingBooking.trainNumber);
+                const trainDetails = await DB_API.getTrainDetails(upcomingBooking.trainNumber);
                 const passenger = upcomingBooking.passengers[0];
                 
                 const journeyCard = document.getElementById('upcomingJourneyCard');
