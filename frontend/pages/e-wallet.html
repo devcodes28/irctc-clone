@@ -20,13 +20,13 @@
                     <a href="home.html" class="text-gray-700 hover:text-irctc-orange font-semibold transition-colors">Home</a>
                     <a href="TrainSearch.html" class="text-gray-700 hover:text-irctc-orange font-semibold transition-colors">Trains</a>
                     <a href="holidays.html" class="text-gray-700 hover:text-irctc-orange font-semibold transition-colors">Holidays</a>
+                    <a href="dashboard.html" id="navDashboard" class="hidden text-gray-700 hover:text-irctc-orange font-semibold transition-colors">Dashboard</a>
                     
                     <!-- E-WALLET LINK (Active state) -->
                     <a href="e-wallet.html" id="navEwallet" class="flex text-irctc-orange font-bold border-b-2 border-irctc-orange pb-1 transition-colors">E-wallet</a>
                     
                     <a href="alerts.html" class="text-gray-700 hover:text-irctc-orange font-semibold transition-colors flex items-center">
                         Alerts 
-                        <span class="bg-red-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full ml-1.5 shadow-sm">2</span>
                     </a>
                     <a href="contact-us.html" class="text-gray-700 hover:text-irctc-orange font-semibold transition-colors">Contact Us</a>
                 </div>
@@ -113,7 +113,8 @@
 
             // 2. Display Initial Balance
             const balanceEl = document.getElementById('displayBalance');
-            balanceEl.textContent = `₹${currentUser.walletBalance.toFixed(2)}`;
+            const balance = currentUser.walletBalance !== undefined ? currentUser.walletBalance : 0;
+            balanceEl.textContent = `₹${balance.toFixed(2)}`;
 
             // 3. Handle Logout
             document.getElementById('logoutBtn').addEventListener('click', (e) => {
@@ -122,8 +123,9 @@
             });
 
             // 4. Handle Top-up Form Submission
+// 4. Handle Top-up Form Submission
             const form = document.getElementById('topupForm');
-            form.addEventListener('submit', (e) => {
+            form.addEventListener('submit', async (e) => { // <-- Added async here
                 e.preventDefault();
                 
                 const amountInput = document.getElementById('topupAmount').value;
@@ -134,16 +136,15 @@
                     return;
                 }
 
-                // Call DB_API to add funds
-                const result = DB_API.addWalletFunds(currentUser.id, amount);
+                // Call DB_API to add funds with await
+                const result = await DB_API.addWalletFunds(currentUser._id || currentUser.id, amount); // <-- Added await here
                 
-                if (result.success) {
+                if (result && result.success) {
                     alert(`Successfully added ₹${amount.toFixed(2)} to your wallet!`);
-                    // Update UI immediately
                     balanceEl.textContent = `₹${result.newBalance.toFixed(2)}`;
                     form.reset();
                 } else {
-                    alert('Error adding funds. Please try again.');
+                    alert(result?.message || 'Error adding funds. Please try again.');
                 }
             });
         });

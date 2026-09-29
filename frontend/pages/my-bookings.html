@@ -22,13 +22,13 @@
                     <a href="home.html" class="text-gray-700 hover:text-irctc-orange font-semibold transition-colors">Home</a>
                     <a href="TrainSearch.html" class="text-gray-700 hover:text-irctc-orange font-semibold transition-colors">Trains</a>
                     <a href="holidays.html" class="text-gray-700 hover:text-irctc-orange font-semibold transition-colors">Holidays</a>
+                    <a href="dashboard.html" id="navDashboard" class="hidden text-gray-700 hover:text-irctc-orange font-semibold transition-colors">Dashboard</a>
                     
                     <!-- HIDDEN BY DEFAULT E-WALLET LINK -->
                     <a href="e-wallet.html" id="navEwallet" class="hidden text-gray-700 hover:text-irctc-orange font-semibold transition-colors">E-wallet</a>                
                     
                     <a href="alerts.html" class="text-gray-700 hover:text-irctc-orange font-semibold transition-colors flex items-center">
                         Alerts 
-                        <span class="bg-red-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full ml-1.5 shadow-sm">2</span>
                     </a>
                     <a href="contact-us.html" class="text-gray-700 hover:text-irctc-orange font-semibold transition-colors">Contact Us</a>
                 </div>
@@ -78,9 +78,8 @@
     <!-- INJECT DB SIMULATION -->
     <script src="../js/db.js"></script>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            // 1. AUTH GUARD
+<script>
+        document.addEventListener('DOMContentLoaded', async () => {
             const currentUser = DB_API.getCurrentUser();
             if (!currentUser) {
                 alert('Please login to view your bookings.');
@@ -88,44 +87,41 @@
                 return;
             }
 
-            // 2. Unhide e-wallet link if logged in
             const ewalletLink = document.getElementById('navEwallet');
             if (ewalletLink) { 
                 ewalletLink.classList.remove('hidden'); 
                 ewalletLink.classList.add('flex'); 
             }
 
-            // 3. Handle Logout
             document.getElementById('logoutBtn').addEventListener('click', (e) => {
                 e.preventDefault();
                 DB_API.logoutUser();
             });
 
-            // 4. FETCH & RENDER BOOKINGS
             const container = document.getElementById('bookingsContainer');
             const emptyState = document.getElementById('emptyState');
-            const myBookings = DB_API.getUserBookings(currentUser.fullName);
+            
+            // REPLACED: Fetching from API by user ID instead of local string
+            const myBookings = await DB_API.getUserBookings(currentUser.id);
 
-            if (myBookings.length === 0) {
+            if (!myBookings || myBookings.length === 0) {
                 emptyState.classList.remove('hidden');
                 return;
             }
 
-            myBookings.forEach(booking => {
-                const trainDetails = DB_API.getTrainDetails(booking.trainNumber);
+            // Using for...of so we can properly await the train details
+            for (const booking of myBookings) {
+                const trainDetails = await DB_API.getTrainDetails(booking.trainNumber);
                 const isCancelled = booking.bookingStatus === "Cancelled";
                 
-                // Dynamic Status Badge
                 const statusBadge = isCancelled 
                     ? `<span class="px-3 py-1 bg-red-100 text-red-700 text-sm font-bold rounded-full">CANCELLED</span>`
                     : `<span class="px-3 py-1 bg-green-100 text-green-700 text-sm font-bold rounded-full">CONFIRMED</span>`;
 
-                // Dynamic Action Buttons
                 const actionBtn = isCancelled
                     ? `<button disabled class="bg-gray-100 border border-gray-200 text-gray-400 px-6 py-2 rounded font-semibold cursor-not-allowed">Ticket Cancelled</button>`
                     : `<button onclick="cancelTicket('${booking.pnr}')" class="border-2 border-red-500 text-red-500 hover:bg-red-50 px-6 py-2 rounded transition font-semibold">Cancel Ticket</button>`;
 
-                // Use the first passenger to display coach info (or fallback to NA)
                 const primaryPassenger = booking.passengers[0];
                 const coachClass = primaryPassenger ? primaryPassenger.coach : 'NA';
 
@@ -162,20 +158,20 @@
                     </div>
                 `;
                 container.appendChild(card);
-            });
+            }
         });
 
-        // 5. CANCEL TICKET LOGIC
-        window.cancelTicket = function(pnr) {
+        // CANCEL TICKET LOGIC
+        window.cancelTicket = async function(pnr) {
             if (confirm(`Are you sure you want to cancel ticket PNR: ${pnr}?\nThe refund will be credited instantly to your E-Wallet.`)) {
-                const currentUser = DB_API.getCurrentUser();
-                const result = DB_API.cancelBooking(pnr, currentUser.id);
+                // REPLACED: Added await for network patch
+                const result = await DB_API.cancelBooking(pnr);
 
-                if (result.success) {
-                    alert(`Success! ₹${result.refundAmount.toFixed(2)} has been refunded to your E-Wallet.`);
-                    location.reload(); // Reload the page to show the red "CANCELLED" badge
+                if (result && result.success) {
+                    alert(`Success! Ticket cancelled successfully.`);
+                    location.reload(); 
                 } else {
-                    alert(result.message);
+                    alert(result?.message || "Cancellation failed.");
                 }
             }
         };

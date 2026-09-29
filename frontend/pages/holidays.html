@@ -20,8 +20,9 @@
                     <a href="home.html" class="text-gray-700 hover:text-irctc-orange font-semibold transition-colors">Home</a>
                     <a href="TrainSearch.html" class="text-gray-700 hover:text-irctc-orange font-semibold transition-colors">Trains</a>
                     <a href="holidays.html" class="text-irctc-orange font-bold border-b-2 border-irctc-orange pb-1 transition-colors">Holidays</a>
+                    <a href="dashboard.html" id="navDashboard" class="hidden text-gray-700 hover:text-irctc-orange font-semibold transition-colors">Dashboard</a>
                     <a href="e-wallet.html" id="navEwallet" class="hidden text-gray-700 hover:text-irctc-orange font-semibold transition-colors">E-wallet</a>
-                    <a href="alerts.html" class="text-gray-700 hover:text-irctc-orange font-semibold transition-colors flex items-center">Alerts <span class="bg-red-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full ml-1.5 shadow-sm">2</span></a>
+                    <a href="alerts.html" class="text-gray-700 hover:text-irctc-orange font-semibold transition-colors flex items-center">Alerts</a>
                     <a href="contact-us.html" class="text-gray-700 hover:text-irctc-orange font-semibold transition-colors">Contact Us</a>
                 </div>
 
@@ -244,7 +245,7 @@
         }
 
         // 4. Submit Booking and Handle Payment Mode
-        function submitHolidayBooking() {
+        async function submitHolidayBooking() {
             const date = document.getElementById('h_date').value;
             const travelers = parseInt(document.getElementById('h_travelers').value);
 
@@ -257,32 +258,29 @@
             const totalCost = travelers * currentPackagePrice;
             const paymentMode = document.querySelector('input[name="paymentMode"]:checked').value;
 
-            // If E-Wallet is chosen, verify balance
             if (paymentMode === 'ewallet' && currentUser.walletBalance < totalCost) {
                 alert(`Insufficient E-Wallet Balance!\n\nPackage Cost: ₹${totalCost.toLocaleString('en-IN')}\nYour Balance: ₹${currentUser.walletBalance.toLocaleString('en-IN')}\n\nPlease top up your E-Wallet to proceed.`);
                 window.location.href = 'e-wallet.html';
                 return;
             }
 
-            const db = DB_API.getAll();
-            const userIndex = db.users.findIndex(u => u.id === currentUser.id);
-            
-            if (userIndex !== -1) {
-                let successMessage = `HOLIDAY BOOKED SUCCESSFULLY!\n\nPackage: ${currentPackageName}\nTravelers: ${travelers}\nDate: ${date}\nAmount Paid: ₹${totalCost.toLocaleString('en-IN')}`;
+            // Create a mock train booking format for the holiday package
+            const holidayBookingData = {
+                trainNumber: "HOLIDAY-01",
+                travelDate: date,
+                passengers: [{ name: currentUser.fullName, age: 20, gender: "Other", berthPreference: "Standard", status: "Confirmed", coach: "PKG", berth: 1 }],
+                fareDetails: { totalFare: totalCost },
+                bookingStatus: "Confirmed"
+            };
 
-                // Only deduct if E-Wallet was used
-                if (paymentMode === 'ewallet') {
-                    db.users[userIndex].walletBalance -= totalCost;
-                    successMessage += `\nRemaining Wallet Balance: ₹${db.users[userIndex].walletBalance.toLocaleString('en-IN', {minimumFractionDigits: 2})}`;
-                } else {
-                    successMessage += `\nPayment processed via ${paymentMode.toUpperCase()}`;
-                }
+            const result = await DB_API.saveBooking(holidayBookingData, currentUser._id || currentUser.id, paymentMode);
 
-                localStorage.setItem('irctc_db', JSON.stringify(db));
-                
-                alert(successMessage);
+            if (result && result.success) {
+                alert(`HOLIDAY BOOKED SUCCESSFULLY!\n\nPackage: ${currentPackageName}\nTravelers: ${travelers}\nDate: ${date}\nAmount Paid: ₹${totalCost.toLocaleString('en-IN')}`);
                 closeBookingModal();
                 location.reload(); 
+            } else {
+                alert(result?.message || "Booking failed.");
             }
         }
     </script>
