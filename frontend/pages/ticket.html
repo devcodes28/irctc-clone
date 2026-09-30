@@ -214,8 +214,9 @@
             document.getElementById('t_trainInfo').textContent = `${train.trainNumber} / ${train.trainName}`;
             document.getElementById('t_doj').textContent = booking.travelDate;
             
-            const pClass = booking.passengers.length > 0 ? booking.passengers[0].coach.replace(/[0-9]/g, '') : 'SL';
+            const pClass = booking.classType || (booking.passengers && booking.passengers.length > 0 ? booking.passengers[0].coach.replace(/[0-9]/g, '') : 'SL');
             document.getElementById('t_class').textContent = pClass;
+
 
             document.getElementById('t_sourceCode').textContent = train.originCode;
             document.getElementById('t_sourceName').textContent = train.originName;

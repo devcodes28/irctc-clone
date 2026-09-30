@@ -3,352 +3,392 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Portal | IRCTC Clone</title>
+    <title>Admin Command Center | IRCTC</title>
     <link rel="stylesheet" href="../assets/css/output.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
-<body class="text-gray-800 font-sans bg-gray-50 m-0 min-h-screen flex flex-col overflow-x-hidden">
+<body class="bg-gray-50 font-sans m-0 min-h-screen flex flex-col">
 
-    <!-- ADMIN HEADER -->
-    <header class="w-full relative z-20 px-4 md:px-6 pt-4 md:pt-8 shrink-0">
-        <div class="max-w-300 w-full mx-auto bg-white rounded-lg shadow-sm">
-            <nav class="flex items-center justify-between p-4 mb-0">
-                <div class="flex items-center gap-3">
-                    <span class="text-3xl font-bold text-irctc-blue">IRCTC</span>
-                    <span class="bg-red-600 text-white text-[10px] font-black px-2 py-0.5 rounded uppercase tracking-wider">Admin Console</span>
+    <!-- HEADER -->
+    <header class="w-full relative z-20 px-4 md:px-8 pt-4 md:pt-6 shrink-0">
+        <div class="max-w-7xl mx-auto bg-white rounded-lg shadow-sm border-t-4 border-irctc-blue p-4 flex items-center justify-between">
+            <div class="flex items-center">
+                <span class="text-3xl font-bold text-irctc-blue">IRCTC</span>
+                <span class="text-3xl font-bold text-irctc-orange ml-2">Admin</span>
+            </div>
+            <div class="flex items-center space-x-4">
+                <div class="flex items-center gap-2 px-3 py-1 bg-green-50 border border-green-200 rounded text-xs font-bold text-green-700 uppercase">
+                    <div class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
+                    System Online
                 </div>
-                
-                <div class="flex items-center space-x-3">
-                    <button onclick="adminLogout()" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded transition-colors text-sm shadow-sm">
-                        Admin Logout
-                    </button>
-                </div>
-            </nav>
+                <button onclick="logout()" class="border-2 border-red-500 text-red-500 hover:bg-red-50 font-bold py-1.5 px-4 rounded transition text-sm">
+                    Logout
+                </button>
+            </div>
         </div>
     </header>
 
-    <!-- CONTENT -->
-    <main class="w-full relative z-10 px-4 md:px-6 py-6 md:py-10 grow">
-        <div class="max-w-300 w-full mx-auto">
+    <!-- MAIN INTERFACE -->
+    <main class="w-full relative z-10 px-4 md:px-8 py-6 grow">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-6">
             
-            <!-- TABS NAVIGATION -->
-            <div class="flex border-b border-gray-200 mb-6 gap-6">
-                <button onclick="switchTab('trains')" id="tabBtnTrains" class="pb-3 font-bold text-irctc-orange border-b-2 border-irctc-orange transition text-sm">Manage Trains</button>
-                <button onclick="switchTab('bookings')" id="tabBtnBookings" class="pb-3 font-bold text-gray-500 hover:text-gray-800 transition text-sm">Monitor Bookings</button>
-                <button onclick="switchTab('alerts')" id="tabBtnAlerts" class="pb-3 font-bold text-gray-500 hover:text-gray-800 transition text-sm">Broadcast Alerts</button>
+            <!-- Sidebar Navigation -->
+            <div class="md:col-span-1 bg-white rounded-lg shadow-sm p-4 border border-gray-200 h-fit">
+                <ul class="space-y-2">
+                    <li><button onclick="switchTab('overview')" id="nav-overview" class="w-full text-left px-4 py-3 bg-blue-50 text-irctc-blue font-bold rounded border-l-4 border-irctc-blue transition">Dashboard Overview</button></li>
+                    <li><button onclick="switchTab('trains')" id="nav-trains" class="w-full text-left px-4 py-3 text-gray-600 hover:bg-gray-50 hover:text-irctc-orange font-semibold rounded transition">Manage Trains</button></li>
+                    <li><button onclick="switchTab('users')" id="nav-users" class="w-full text-left px-4 py-3 text-gray-600 hover:bg-gray-50 hover:text-irctc-orange font-semibold rounded transition">Manage Users</button></li>
+                    <li><button onclick="switchTab('alerts')" id="nav-alerts" class="w-full text-left px-4 py-3 text-gray-600 hover:bg-gray-50 hover:text-irctc-orange font-semibold rounded transition">Broadcast Alerts</button></li>
+                </ul>
             </div>
 
-            <!-- TAB 1: MANAGE TRAINS -->
-            <div id="tabTrains" class="space-y-6">
-                <div class="flex justify-between items-center">
-                    <h2 class="text-xl font-black text-irctc-blue">Active Train Inventories</h2>
-                    <button onclick="openTrainModal()" class="bg-irctc-orange hover:bg-orange-600 text-white px-4 py-2 rounded-lg text-sm font-bold shadow-sm transition">+ Add New Train</button>
-                </div>
-
-                <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
-                    <table class="w-full text-left text-sm">
-                        <thead class="bg-gray-50 text-gray-500 uppercase text-xs border-b border-gray-200">
-                            <tr>
-                                <th class="p-4">Train No.</th>
-                                <th class="p-4">Train Name</th>
-                                <th class="p-4">Route</th>
-                                <th class="p-4">Timings</th>
-                                <th class="p-4 text-right">Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody id="trainTableBody" class="divide-y divide-gray-100">
-                            <!-- Injected via JS -->
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-            <!-- TAB 2: MONITOR BOOKINGS -->
-            <div id="tabBookings" class="space-y-6 hidden">
-                <h2 class="text-xl font-black text-irctc-blue">System-Wide Passenger Bookings</h2>
-                <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
-                    <table class="w-full text-left text-sm">
-                        <thead class="bg-gray-50 text-gray-500 uppercase text-xs border-b border-gray-200">
-                            <tr>
-                                <th class="p-4">PNR No.</th>
-                                <th class="p-4">Train No.</th>
-                                <th class="p-4">Travel Date</th>
-                                <th class="p-4">Primary Passenger</th>
-                                <th class="p-4">Status</th>
-                                <th class="p-4 text-right">Fare</th>
-                            </tr>
-                        </thead>
-                        <tbody id="adminBookingsTable" class="divide-y divide-gray-100">
-                            <!-- Injected via JS -->
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-            <!-- TAB 3: BROADCAST ALERTS -->
-            <div id="tabAlerts" class="space-y-6 hidden">
-                <h2 class="text-xl font-black text-irctc-blue">Broadcast Live Travel Alerts</h2>
+            <!-- Content Panel -->
+            <div class="md:col-span-3 space-y-6">
                 
-                <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-200">
-                    <form id="alertForm" onsubmit="handlePostAlert(event)" class="space-y-4 max-w-xl">
-                        <div class="grid grid-cols-2 gap-4">
-                            <div>
-                                <label class="block text-xs font-semibold text-gray-600 mb-1">Alert Category</label>
-                                <select id="alertType" class="w-full border border-gray-300 rounded p-2.5 text-sm bg-white outline-none focus:ring-2 focus:ring-irctc-blue">
-                                    <option value="Cancelled">Cancelled</option>
-                                    <option value="Rescheduled">Rescheduled</option>
-                                    <option value="General Info">General Info</option>
-                                </select>
-                            </div>
-                            <div>
-                                <label class="block text-xs font-semibold text-gray-600 mb-1">Timestamp Label</label>
-                                <input type="text" id="alertDate" required placeholder="e.g. Today, 10:00 AM" class="w-full border border-gray-300 rounded p-2.5 text-sm outline-none focus:ring-2 focus:ring-irctc-blue">
-                            </div>
+                <!-- TAB 1: DASHBOARD OVERVIEW -->
+                <div id="tab-overview" class="space-y-6">
+                    
+                    <!-- KPI Stats Grid -->
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                        <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+                            <p class="text-xs text-gray-500 font-bold uppercase tracking-wide">Total Users</p>
+                            <h3 class="text-3xl font-bold text-irctc-blue mt-1" id="stat-users">--</h3>
                         </div>
-                        <div>
-                            <label class="block text-xs font-semibold text-gray-600 mb-1">Alert Title</label>
-                            <input type="text" id="alertTitle" required placeholder="e.g. Train No. 12625 Delayed" class="w-full border border-gray-300 rounded p-2.5 text-sm outline-none focus:ring-2 focus:ring-irctc-blue">
+                        <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+                            <p class="text-xs text-gray-500 font-bold uppercase tracking-wide">Active Bookings</p>
+                            <h3 class="text-3xl font-bold text-irctc-orange mt-1" id="stat-bookings">--</h3>
                         </div>
-                        <div>
-                            <label class="block text-xs font-semibold text-gray-600 mb-1">Detailed Description</label>
-                            <textarea id="alertDesc" rows="3" required placeholder="Enter description..." class="w-full border border-gray-300 rounded p-2.5 text-sm outline-none focus:ring-2 focus:ring-irctc-blue resize-none"></textarea>
+                        <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+                            <p class="text-xs text-gray-500 font-bold uppercase tracking-wide">Trains Indexed</p>
+                            <h3 class="text-3xl font-bold text-green-600 mt-1" id="stat-trains">--</h3>
                         </div>
-                        <button type="submit" class="bg-irctc-orange hover:bg-orange-600 text-white font-bold py-2.5 px-6 rounded-lg text-sm shadow-sm transition">Publish Alert</button>
-                    </form>
-                </div>
+                    </div>
 
-                <div class="mt-6">
-                    <h3 class="font-bold text-gray-900 mb-4 text-sm uppercase tracking-wider">Active Broadcasted Alerts</h3>
-                    <div id="activeAlertsList" class="space-y-3">
-                        <!-- Injected via JS -->
+                    <!-- Charts Grid -->
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                        <!-- Revenue Line Chart -->
+                        <div class="lg:col-span-2 bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+                            <h2 class="text-lg font-bold text-gray-800 mb-4">Database Activity Trend</h2>
+                            <div class="w-full h-64">
+                                <canvas id="bookingChart"></canvas>
+                            </div>
+                        </div>
+                        
+                        <!-- Class Demand Doughnut Chart -->
+                        <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+                            <h2 class="text-lg font-bold text-gray-800 mb-4">Tickets by Class</h2>
+                            <div class="w-full h-52 flex justify-center mt-4">
+                                <canvas id="classChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Live Booking Ledger -->
+                    <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+                        <div class="bg-gray-50 p-4 border-b border-gray-200">
+                            <h2 class="text-lg font-bold text-gray-800">Live Database Bookings</h2>
+                        </div>
+                        <div class="p-0 overflow-x-auto">
+                            <table class="w-full text-left text-sm text-gray-700">
+                                <thead class="bg-white text-xs uppercase font-bold text-gray-500 border-b border-gray-200">
+                                    <tr>
+                                        <th class="p-4">Booking ID / PNR</th>
+                                        <th class="p-4">Passenger</th>
+                                        <th class="p-4">Train Info</th>
+                                        <th class="p-4 text-right">Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="liveBookingsTable" class="divide-y divide-gray-100">
+                                    <tr><td colspan="4" class="p-4 text-center text-gray-400">Loading database records...</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
-            </div>
 
+                <!-- TAB 2: MANAGE TRAINS -->
+                <div id="tab-trains" class="hidden space-y-4">
+                    <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200 flex justify-between items-center">
+                        <h2 class="text-lg font-bold text-gray-800">Train Schedule Management</h2>
+                        <button onclick="openTrainModal()" class="bg-irctc-blue hover:bg-blue-900 text-white font-bold py-2 px-4 rounded text-sm transition">+ Add New Train</button>
+                    </div>
+                    <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-x-auto">
+                        <table class="w-full text-left text-sm text-gray-700">
+                            <thead class="bg-gray-50 text-xs uppercase font-bold text-gray-600 border-b border-gray-200">
+                                <tr><th class="p-3">Train No.</th><th class="p-3">Train Name</th><th class="p-3">Route</th><th class="p-3">Timing</th><th class="p-3 text-right">Actions</th></tr>
+                            </thead>
+                            <tbody id="trainsTableBody" class="divide-y divide-gray-100"><tr><td colspan="5" class="p-4 text-center text-gray-400">Loading...</td></tr></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- TAB 3: MANAGE USERS -->
+                <div id="tab-users" class="hidden space-y-4">
+                    <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200 flex justify-between items-center">
+                        <h2 class="text-lg font-bold text-gray-800">Registered Passengers & Accounts</h2>
+                        <input type="text" id="userSearch" onkeyup="filterUsers()" placeholder="Search user..." class="border border-gray-300 rounded px-3 py-1.5 text-sm focus:outline-none focus:ring-1 focus:ring-irctc-blue">
+                    </div>
+                    <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-x-auto">
+                        <table class="w-full text-left text-sm text-gray-700">
+                            <thead class="bg-gray-50 text-xs uppercase font-bold text-gray-600 border-b border-gray-200">
+                                <tr><th class="p-3">Full Name</th><th class="p-3">Email Address</th><th class="p-3">Role</th><th class="p-3 text-right">Actions</th></tr>
+                            </thead>
+                            <tbody id="usersTableBody" class="divide-y divide-gray-100"><tr><td colspan="4" class="p-4 text-center text-gray-400">Loading...</td></tr></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- TAB 4: BROADCAST ALERTS -->
+                <div id="tab-alerts" class="hidden space-y-6">
+                    <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+                        <h2 class="text-lg font-bold text-gray-800 mb-4">Create System Broadcast</h2>
+                        <form id="addAlertForm" class="flex flex-col sm:flex-row gap-4">
+                            <input type="text" id="alertMsg" required class="flex-1 border border-gray-300 rounded px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-irctc-blue" placeholder="Enter broadcast message">
+                            <select id="alertType" class="border border-gray-300 rounded px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-irctc-blue bg-white">
+                                <option value="info">Info (Blue)</option>
+                                <option value="warning">Warning (Orange)</option>
+                                <option value="critical">Critical (Red)</option>
+                            </select>
+                            <button type="submit" class="bg-irctc-blue hover:bg-blue-900 text-white font-bold py-2 px-6 rounded transition text-sm">Publish Alert</button>
+                        </form>
+                    </div>
+                    <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-x-auto">
+                        <div class="bg-gray-50 p-4 border-b border-gray-200"><h2 class="text-md font-bold text-gray-800">Recent Broadcasts</h2></div>
+                        <table class="w-full text-left text-sm text-gray-700">
+                            <thead class="bg-white text-xs uppercase font-bold text-gray-500 border-b border-gray-200">
+                                <tr><th class="p-4 w-1/6">Type</th><th class="p-4 w-3/4">Message</th><th class="p-4 w-1/6 text-right">Actions</th></tr>
+                            </thead>
+                            <tbody id="alertsTableBody" class="divide-y divide-gray-100"><tr><td colspan="3" class="p-4 text-center text-gray-400">Loading...</td></tr></tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
         </div>
     </main>
 
-    <!-- TRAIN EDIT/ADD MODAL -->
-    <div id="trainModal" class="fixed inset-0 z-50 hidden bg-gray-900/60 backdrop-blur-sm items-center justify-center p-4">
-        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-lg overflow-hidden p-6">
-            <div class="flex justify-between items-center mb-4 pb-2 border-b">
-                <h3 id="modalTitle" class="text-lg font-bold text-irctc-blue">Add New Train</h3>
-                <button onclick="closeTrainModal()" class="text-gray-400 hover:text-gray-600 font-bold">✕</button>
-            </div>
-            <form id="trainForm" onsubmit="handleSaveTrain(event)" class="space-y-3 text-sm">
-                <div class="grid grid-cols-2 gap-3">
-                    <div>
-                        <label class="block text-xs font-semibold text-gray-600 mb-1">Train Number</label>
-                        <input type="text" id="m_trainNum" required placeholder="e.g. 12951" class="w-full border border-gray-300 rounded p-2 outline-none">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-semibold text-gray-600 mb-1">Train Name</label>
-                        <input type="text" id="m_trainName" required placeholder="e.g. TEJAS EXP" class="w-full border border-gray-300 rounded p-2 outline-none uppercase">
-                    </div>
-                </div>
-                <div class="grid grid-cols-2 gap-3">
-                    <div>
-                        <label class="block text-xs font-semibold text-gray-600 mb-1">Origin Code</label>
-                        <input type="text" id="m_origCode" required placeholder="e.g. NDLS" class="w-full border border-gray-300 rounded p-2 outline-none uppercase">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-semibold text-gray-600 mb-1">Destination Code</label>
-                        <input type="text" id="m_destCode" required placeholder="e.g. MUM" class="w-full border border-gray-300 rounded p-2 outline-none uppercase">
-                    </div>
-                </div>
-                <div class="grid grid-cols-2 gap-3">
-                    <div>
-                        <label class="block text-xs font-semibold text-gray-600 mb-1">Departure Time</label>
-                        <input type="text" id="m_depTime" required placeholder="06:00" class="w-full border border-gray-300 rounded p-2 outline-none">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-semibold text-gray-600 mb-1">Arrival Time</label>
-                        <input type="text" id="m_arrTime" required placeholder="14:00" class="w-full border border-gray-300 rounded p-2 outline-none">
-                    </div>
-                </div>
-                <div class="flex justify-end gap-2 pt-3">
-                    <button type="button" onclick="closeTrainModal()" class="px-4 py-2 bg-gray-100 rounded text-gray-700 font-bold">Cancel</button>
-                    <button type="submit" class="px-4 py-2 bg-irctc-orange text-white rounded font-bold">Save Train</button>
+    <!-- ADD TRAIN MODAL -->
+    <div id="addTrainModal" class="fixed inset-0 bg-black/50 z-50 items-center justify-center hidden">
+        <div class="bg-white rounded-lg shadow-lg w-full max-w-lg p-6 space-y-4 relative">
+            <h3 class="text-lg font-bold text-irctc-blue border-b pb-2">Add New Railway Route</h3>
+            <form id="addTrainForm" class="grid grid-cols-2 gap-3 text-sm">
+                <div><label class="block font-bold text-xs text-gray-600 mb-1">Train Number</label><input type="text" id="mTrainNum" required class="w-full border rounded p-2"></div>
+                <div><label class="block font-bold text-xs text-gray-600 mb-1">Train Name</label><input type="text" id="mTrainName" required class="w-full border rounded p-2"></div>
+                <div><label class="block font-bold text-xs text-gray-600 mb-1">Origin Code</label><input type="text" id="mOrigCode" required placeholder="NDLS" class="w-full border rounded p-2 uppercase"></div>
+                <div><label class="block font-bold text-xs text-gray-600 mb-1">Origin Name</label><input type="text" id="mOrigName" required placeholder="New Delhi" class="w-full border rounded p-2"></div>
+                <div><label class="block font-bold text-xs text-gray-600 mb-1">Destination Code</label><input type="text" id="mDestCode" required placeholder="BCT" class="w-full border rounded p-2 uppercase"></div>
+                <div><label class="block font-bold text-xs text-gray-600 mb-1">Destination Name</label><input type="text" id="mDestName" required placeholder="Mumbai Central" class="w-full border rounded p-2"></div>
+                <div><label class="block font-bold text-xs text-gray-600 mb-1">Departure Time</label><input type="text" id="mDepTime" required placeholder="06:00" class="w-full border rounded p-2"></div>
+                <div><label class="block font-bold text-xs text-gray-600 mb-1">Arrival Time</label><input type="text" id="mArrTime" required placeholder="14:30" class="w-full border rounded p-2"></div>
+                <div class="col-span-2 flex justify-end gap-2 pt-3 border-t mt-2">
+                    <button type="button" onclick="closeTrainModal()" class="px-4 py-2 border rounded font-bold text-gray-600">Cancel</button>
+                    <button type="submit" class="px-4 py-2 bg-irctc-orange text-white font-bold rounded">Save Route</button>
                 </div>
             </form>
         </div>
     </div>
 
-    <!-- FOOTER -->
-    <footer style="background-color: #071936 !important;" class="text-white pt-10 pb-6 border-t-4 border-irctc-orange relative z-30 w-full shadow-xl shrink-0 mt-auto">
-        <div class="max-w-300 w-full mx-auto px-4 md:px-8 text-center text-xs text-gray-300">
-            <p class="font-medium">Copyright © 2026 - www.irctc.co.in. All Rights Reserved (Admin Portal)</p>
-        </div>
-    </footer>
-
-    <!-- INJECT DB -->
-    <script src="../js/db.js"></script>
-
-    <!-- ADMIN CONTROLS SCRIPT -->
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            // Admin Authentication Guard
-            const isAdmin = localStorage.getItem('is_admin') === 'true';
-            if (!isAdmin) {
-                alert("Unauthorized access! Please login as administrator.");
-                window.location.href = 'login.html';
-                return;
-            }
+        if (localStorage.getItem('irctc_admin_auth') !== 'true') window.location.href = 'admin.html';
+        function logout() { localStorage.removeItem('irctc_admin_auth'); window.location.href = 'admin.html'; }
 
-            loadTrainsTable();
-            loadBookingsTable();
-            loadAlertsList();
+        let bookingChartInstance = null;
+        let classChartInstance = null;
+
+        // Fetch Live Database Stats & Analytics
+        async function fetchStats() {
+            try {
+                // Fetch basic counts
+                const resStats = await fetch('http://localhost:5000/api/admin/stats');
+                const dataStats = await resStats.json();
+                if (dataStats.success) {
+                    document.getElementById('stat-users').innerText = dataStats.stats.users;
+                    document.getElementById('stat-bookings').innerText = dataStats.stats.bookings;
+                    document.getElementById('stat-trains').innerText = dataStats.stats.trains;
+                }
+
+                // Fetch real analytics data for charts and ledger
+                const resAnalytics = await fetch('http://localhost:5000/api/admin/analytics');
+                const dataAnalytics = await resAnalytics.json();
+                
+                if (dataAnalytics.success) {
+                    const { classDistribution, recentBookings } = dataAnalytics.analytics;
+                    
+                    // Update Class Demand Chart
+                    updateClassChart(classDistribution);
+
+                    // Update Recent Bookings Ledger Table
+                    const tbody = document.getElementById('liveBookingsTable');
+                    if (recentBookings.length > 0) {
+                        tbody.innerHTML = recentBookings.map(b => `
+                            <tr class="hover:bg-gray-50">
+                                <td class="p-4 font-mono font-bold text-gray-800">${b.pnr || b._id.slice(-8).toUpperCase()}</td>
+                                <td class="p-4 font-semibold">${b.passengerName || b.userName || 'Passenger'}</td>
+                                <td class="p-4 text-xs">${b.trainNumber || 'Express Train'}</td>
+                                <td class="p-4 text-right"><span class="px-2 py-1 bg-green-100 text-green-700 text-[10px] uppercase font-bold rounded">${b.status || 'Confirmed'}</span></td>
+                            </tr>
+                        `).join('');
+                    } else {
+                        tbody.innerHTML = `<tr><td colspan="4" class="p-4 text-center text-gray-500">No bookings recorded in database yet.</td></tr>`;
+                    }
+                }
+            } catch (err) {
+                console.error("Error loading dashboard data:", err);
+            }
+        }
+
+        function initCharts() {
+            // Line Chart: Activity Trend
+            const ctxBooking = document.getElementById('bookingChart').getContext('2d');
+            bookingChartInstance = new Chart(ctxBooking, {
+                type: 'line',
+                data: {
+                    labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                    datasets: [{
+                        label: 'Database Activity',
+                        data: [5, 12, 8, 15, 22, 30, 25],
+                        borderColor: '#0052cc',
+                        backgroundColor: 'rgba(0, 82, 204, 0.05)',
+                        borderWidth: 3,
+                        tension: 0.4,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: { y: { beginAtZero: true, grid: { borderDash: [5, 5] } }, x: { grid: { display: false } } }
+                }
+            });
+
+            // Doughnut Chart: Class Demand
+            const ctxClass = document.getElementById('classChart').getContext('2d');
+            classChartInstance = new Chart(ctxClass, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Sleeper (SL)', '3 AC (3A)', '2 AC (2A)', '1 AC (1A)'],
+                    datasets: [{
+                        data: [1, 1, 1, 1], // Initial placeholder
+                        backgroundColor: ['#f78d1e', '#0052cc', '#10b981', '#8b5cf6'],
+                        borderWidth: 0,
+                        hoverOffset: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    cutout: '75%',
+                    plugins: { legend: { position: 'bottom', labels: { usePointStyle: true, boxWidth: 8, font: { size: 11 } } } }
+                }
+            });
+        }
+
+        function updateClassChart(newData) {
+            if (classChartInstance) {
+                classChartInstance.data.datasets[0].data = newData;
+                classChartInstance.update();
+            }
+        }
+
+        // Tab Management
+        function switchTab(tab) {
+            ['overview', 'trains', 'users', 'alerts'].forEach(t => {
+                document.getElementById(`tab-${t}`).classList.add('hidden');
+                document.getElementById(`nav-${t}`).className = "w-full text-left px-4 py-3 text-gray-600 hover:bg-gray-50 hover:text-irctc-orange font-semibold rounded transition";
+            });
+            document.getElementById(`tab-${tab}`).classList.remove('hidden');
+            document.getElementById(`nav-${tab}`).className = "w-full text-left px-4 py-3 bg-blue-50 text-irctc-blue font-bold rounded border-l-4 border-irctc-blue transition";
+
+            if (tab === 'overview') fetchStats();
+            if (tab === 'trains') loadTrains();
+            if (tab === 'users') loadUsers();
+            if (tab === 'alerts') loadAlerts();
+        }
+
+        // ==========================
+        // TRAIN, USER & ALERT LOGIC
+        // ==========================
+        async function loadTrains() {
+            const tbody = document.getElementById('trainsTableBody');
+            const res = await fetch('http://localhost:5000/api/admin/trains');
+            const data = await res.json();
+            if (data.success && data.trains.length > 0) {
+                tbody.innerHTML = data.trains.map(t => `
+                    <tr class="border-b"><td class="p-3 font-bold text-irctc-blue">${t.trainNumber}</td><td class="p-3 font-semibold">${t.trainName}</td><td class="p-3"><span class="font-bold">${t.originCode}</span> → <span class="font-bold">${t.destinationCode}</span></td><td class="p-3 text-xs text-gray-500">${t.departureTime} - ${t.arrivalTime}</td><td class="p-3 text-right"><button onclick="deleteTrain('${t._id}')" class="text-red-600 font-bold text-xs">Delete</button></td></tr>
+                `).join('');
+            } else tbody.innerHTML = `<tr><td colspan="5" class="p-4 text-center">No trains found.</td></tr>`;
+        }
+
+        async function deleteTrain(id) {
+            if (!confirm("Delete train?")) return;
+            await fetch(`http://localhost:5000/api/admin/trains/${id}`, { method: 'DELETE' });
+            loadTrains();
+        }
+
+        function openTrainModal() { document.getElementById('addTrainModal').classList.remove('hidden'); }
+        function closeTrainModal() { document.getElementById('addTrainModal').classList.add('hidden'); }
+
+        document.getElementById('addTrainForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const payload = {
+                trainNumber: document.getElementById('mTrainNum').value, trainName: document.getElementById('mTrainName').value, originCode: document.getElementById('mOrigCode').value.toUpperCase(), originName: document.getElementById('mOrigName').value, destinationCode: document.getElementById('mDestCode').value.toUpperCase(), destinationName: document.getElementById('mDestName').value, departureTime: document.getElementById('mDepTime').value, arrivalTime: document.getElementById('mArrTime').value
+            };
+            await fetch('http://localhost:5000/api/admin/trains', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+            closeTrainModal(); this.reset(); loadTrains();
         });
 
-        function adminLogout() {
-            localStorage.removeItem('is_admin');
-            window.location.href = 'login.html';
+        async function loadUsers() {
+            const tbody = document.getElementById('usersTableBody');
+            const res = await fetch('http://localhost:5000/api/admin/users');
+            const data = await res.json();
+            if (data.success && data.users.length > 0) {
+                tbody.innerHTML = data.users.map(u => `
+                    <tr class="border-b user-row"><td class="p-3 font-bold">${u.fullName}</td><td class="p-3">${u.email}</td><td class="p-3"><span class="px-2 py-0.5 text-xs font-bold rounded bg-blue-100 text-blue-700">${u.role || 'Passenger'}</span></td><td class="p-3 text-right"><button onclick="deleteUser('${u._id}')" class="text-red-600 font-bold text-xs">Delete</button></td></tr>
+                `).join('');
+            } else tbody.innerHTML = `<tr><td colspan="4" class="p-4 text-center">No users found.</td></tr>`;
+        }
+        
+        async function deleteUser(id) {
+            if (!confirm("Remove user account?")) return;
+            await fetch(`http://localhost:5000/api/admin/users/${id}`, { method: 'DELETE' });
+            loadUsers();
+        }
+        function filterUsers() {
+            const query = document.getElementById('userSearch').value.toLowerCase();
+            document.querySelectorAll('.user-row').forEach(row => { row.style.display = row.innerText.toLowerCase().includes(query) ? '' : 'none'; });
         }
 
-        // Tab Switcher
-        function switchTab(tabName) {
-            document.getElementById('tabTrains').classList.add('hidden');
-            document.getElementById('tabBookings').classList.add('hidden');
-            document.getElementById('tabAlerts').classList.add('hidden');
-            
-            document.getElementById('tabBtnTrains').className = "pb-3 font-bold text-gray-500 hover:text-gray-800 transition text-sm";
-            document.getElementById('tabBtnBookings').className = "pb-3 font-bold text-gray-500 hover:text-gray-800 transition text-sm";
-            document.getElementById('tabBtnAlerts').className = "pb-3 font-bold text-gray-500 hover:text-gray-800 transition text-sm";
-
-            if (tabName === 'trains') {
-                document.getElementById('tabTrains').classList.remove('hidden');
-                document.getElementById('tabBtnTrains').className = "pb-3 font-bold text-irctc-orange border-b-2 border-irctc-orange transition text-sm";
-            } else if (tabName === 'bookings') {
-                document.getElementById('tabBookings').classList.remove('hidden');
-                document.getElementById('tabBtnBookings').className = "pb-3 font-bold text-irctc-orange border-b-2 border-irctc-orange transition text-sm";
-            } else if (tabName === 'alerts') {
-                document.getElementById('tabAlerts').classList.remove('hidden');
-                document.getElementById('tabBtnAlerts').className = "pb-3 font-bold text-irctc-orange border-b-2 border-irctc-orange transition text-sm";
-            }
+        async function loadAlerts() {
+            const tbody = document.getElementById('alertsTableBody');
+            const res = await fetch('http://localhost:5000/api/admin/alerts');
+            const data = await res.json();
+            if (data.success && data.alerts.length > 0) {
+                tbody.innerHTML = data.alerts.map(a => {
+                    let colorClass = a.type === 'critical' ? 'bg-red-100 text-red-700' : (a.type === 'warning' ? 'bg-orange-100 text-orange-700' : 'bg-blue-100 text-blue-700');
+                    return `<tr class="border-b hover:bg-gray-50"><td class="p-4"><span class="px-2 py-1 text-[10px] uppercase font-bold rounded ${colorClass}">${a.type}</span></td><td class="p-4 font-medium">${a.message}</td><td class="p-4 text-right"><button onclick="deleteAlert('${a._id}')" class="text-red-600 font-bold text-xs">Delete</button></td></tr>`;
+                }).join('');
+            } else tbody.innerHTML = `<tr><td colspan="3" class="p-4 text-center text-gray-500">No active broadcasts.</td></tr>`;
         }
 
-        // TAB 1: Trains Management
-        function loadTrainsTable() {
-            const db = DB_API.getAll();
-            const tbody = document.getElementById('trainTableBody');
-            tbody.innerHTML = '';
-
-            db.trains.forEach(t => {
-                const tr = document.createElement('tr');
-                tr.innerHTML = `
-                    <td class="p-4 font-bold text-irctc-blue">${t.trainNumber}</td>
-                    <td class="p-4 font-semibold">${t.trainName}</td>
-                    <td class="p-4 text-gray-600">${t.originCode} &rarr; ${t.destinationCode}</td>
-                    <td class="p-4 text-gray-600">${t.departureTime} &rarr; ${t.arrivalTime}</td>
-                    <td class="p-4 text-right">
-                        <button onclick="deleteTrain('${t.trainNumber}')" class="text-red-500 hover:text-red-700 font-bold text-xs bg-red-50 border border-red-200 px-3 py-1 rounded">Delete</button>
-                    </td>
-                `;
-                tbody.appendChild(tr);
-            });
-        }
-
-        function openTrainModal() {
-            document.getElementById('trainForm').reset();
-            document.getElementById('trainModal').classList.remove('hidden');
-            document.getElementById('trainModal').classList.add('flex');
-        }
-
-        function closeTrainModal() {
-            document.getElementById('trainModal').classList.add('hidden');
-            document.getElementById('trainModal').classList.remove('flex');
-        }
-
-        function handleSaveTrain(e) {
+        document.getElementById('addAlertForm').addEventListener('submit', async function(e) {
             e.preventDefault();
-            const trainData = {
-                trainNumber: document.getElementById('m_trainNum').value.trim(),
-                trainName: document.getElementById('m_trainName').value.trim().toUpperCase(),
-                originCode: document.getElementById('m_origCode').value.trim().toUpperCase(),
-                originName: "Station",
-                destinationCode: document.getElementById('m_destCode').value.trim().toUpperCase(),
-                destinationName: "Station",
-                departureTime: document.getElementById('m_depTime').value.trim(),
-                arrivalTime: document.getElementById('m_arrTime').value.trim(),
-                availableClasses: [{ classType: "SL", baseFare: 550, availableSeats: 100 }, { classType: "3A", baseFare: 1500, availableSeats: 50 }]
-            };
+            const payload = { message: document.getElementById('alertMsg').value, type: document.getElementById('alertType').value };
+            await fetch('http://localhost:5000/api/admin/alerts', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+            this.reset(); loadAlerts();
+        });
 
-            DB_API.saveTrain(trainData);
-            alert("Train saved successfully!");
-            closeTrainModal();
-            loadTrainsTable();
+        async function deleteAlert(id) {
+            if (!confirm("Delete broadcast?")) return;
+            await fetch(`http://localhost:5000/api/admin/alerts/${id}`, { method: 'DELETE' });
+            loadAlerts();
         }
 
-        function deleteTrain(trainNumber) {
-            if (confirm(`Are you sure you want to delete train ${trainNumber}?`)) {
-                DB_API.deleteTrain(trainNumber);
-                loadTrainsTable();
-            }
-        }
-
-        // TAB 2: Bookings Monitor
-        function loadBookingsTable() {
-            const bookings = DB_API.getAllSystemBookings();
-            const tbody = document.getElementById('adminBookingsTable');
-            tbody.innerHTML = '';
-
-            bookings.forEach(b => {
-                const passName = b.passengers[0] ? b.passengers[0].name : 'Unknown';
-                const tr = document.createElement('tr');
-                tr.innerHTML = `
-                    <td class="p-4 font-bold text-irctc-blue">${b.pnr}</td>
-                    <td class="p-4 font-semibold">${b.trainNumber}</td>
-                    <td class="p-4 text-gray-600">${b.travelDate}</td>
-                    <td class="p-4 font-medium">${passName}</td>
-                    <td class="p-4"><span class="px-2 py-0.5 rounded text-[10px] font-bold ${b.bookingStatus === 'Cancelled' ? 'bg-red-100 text-red-800' : 'bg-green-100 text-green-800'}">${b.bookingStatus}</span></td>
-                    <td class="p-4 text-right font-bold">₹${b.fareDetails.totalFare.toFixed(2)}</td>
-                `;
-                tbody.appendChild(tr);
-            });
-        }
-
-        // TAB 3: Alerts Management
-        function loadAlertsList() {
-            const alerts = DB_API.getAlerts();
-            const container = document.getElementById('activeAlertsList');
-            container.innerHTML = '';
-
-            alerts.forEach(a => {
-                const div = document.createElement('div');
-                div.className = "bg-gray-50 border border-gray-200 p-4 rounded-xl flex justify-between items-center";
-                div.innerHTML = `
-                    <div>
-                        <div class="flex items-center gap-2 mb-1">
-                            <span class="bg-blue-100 text-blue-800 text-[10px] font-bold px-2 py-0.5 rounded uppercase">${a.type}</span>
-                            <span class="text-xs text-gray-400">${a.date}</span>
-                        </div>
-                        <h4 class="font-bold text-gray-900 text-sm">${a.title}</h4>
-                        <p class="text-xs text-gray-600 mt-0.5">${a.desc}</p>
-                    </div>
-                    <button onclick="removeAlert(${a.id})" class="text-red-500 hover:text-red-700 text-xs font-bold px-3 py-1 bg-white border rounded">Remove</button>
-                `;
-                container.appendChild(div);
-            });
-        }
-
-        function handlePostAlert(e) {
-            e.preventDefault();
-            const alertData = {
-                type: document.getElementById('alertType').value,
-                title: document.getElementById('alertTitle').value.trim(),
-                desc: document.getElementById('alertDesc').value.trim(),
-                date: document.getElementById('alertDate').value.trim()
-            };
-
-            DB_API.saveAlert(alertData);
-            alert("Alert broadcasted successfully!");
-            document.getElementById('alertForm').reset();
-            loadAlertsList();
-        }
-
-        function removeAlert(alertId) {
-            DB_API.deleteAlert(alertId);
-            loadAlertsList();
-        }
+        // Initialize on load
+        document.addEventListener('DOMContentLoaded', () => {
+            initCharts();
+            fetchStats();
+        });
     </script>
 </body>
 </html>

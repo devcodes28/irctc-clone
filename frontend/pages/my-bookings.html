@@ -12,28 +12,20 @@
     <header class="w-full relative z-20 px-4 md:px-8 pt-4 md:pt-8 shrink-0">
         <div class="max-w-300 mx-auto bg-white rounded-lg shadow-sm">
             <nav class="flex items-center justify-between p-4 mb-0">
-                <!-- Logo -->
                 <div class="flex items-center cursor-pointer" onclick="window.location.href='home.html'">
                     <span class="text-3xl font-bold text-irctc-blue">IRCTC</span>
                 </div>
                 
-                <!-- Desktop Menu -->
                 <div class="hidden md:flex space-x-6 items-center">
                     <a href="home.html" class="text-gray-700 hover:text-irctc-orange font-semibold transition-colors">Home</a>
                     <a href="TrainSearch.html" class="text-gray-700 hover:text-irctc-orange font-semibold transition-colors">Trains</a>
                     <a href="holidays.html" class="text-gray-700 hover:text-irctc-orange font-semibold transition-colors">Holidays</a>
                     <a href="dashboard.html" id="navDashboard" class="hidden text-gray-700 hover:text-irctc-orange font-semibold transition-colors">Dashboard</a>
-                    
-                    <!-- HIDDEN BY DEFAULT E-WALLET LINK -->
                     <a href="e-wallet.html" id="navEwallet" class="hidden text-gray-700 hover:text-irctc-orange font-semibold transition-colors">E-wallet</a>                
-                    
-                    <a href="alerts.html" class="text-gray-700 hover:text-irctc-orange font-semibold transition-colors flex items-center">
-                        Alerts 
-                    </a>
+                    <a href="alerts.html" class="text-gray-700 hover:text-irctc-orange font-semibold transition-colors flex items-center">Alerts</a>
                     <a href="contact-us.html" class="text-gray-700 hover:text-irctc-orange font-semibold transition-colors">Contact Us</a>
                 </div>
 
-                <!-- Action Buttons for Authenticated Page -->
                 <div class="flex items-center space-x-3">
                     <button onclick="window.location.href='dashboard.html'" class="border-2 border-irctc-blue text-irctc-blue hover:bg-blue-50 font-bold py-2 px-4 rounded transition-colors text-sm">
                         Dashboard
@@ -46,24 +38,21 @@
         </div>
     </header>
 
-    <!-- STANDARDIZED CONTENT AREA -->
+    <!-- CONTENT AREA -->
     <main class="w-full relative z-10 px-4 md:px-8 py-6 md:py-10 grow">
         <div class="max-w-250 mx-auto">
             <h2 class="text-2xl font-bold text-irctc-blue mb-6">My Bookings</h2>
             
-            <!-- Booking List Container -->
             <div id="bookingsContainer" class="space-y-6">
-                <!-- Dynamic Bookings will be injected here -->
+                <div class="p-6 text-center text-gray-400">Loading bookings from database...</div>
             </div>
 
-            <!-- Empty State (Hidden by default) -->
             <div id="emptyState" class="hidden bg-white rounded-lg shadow border border-gray-200 p-10 text-center">
                 <p class="text-gray-500 mb-4">You have no upcoming or past bookings.</p>
                 <button onclick="window.location.href='TrainSearch.html'" class="bg-irctc-orange hover:bg-orange-600 text-white font-bold py-2 px-6 rounded transition shadow-sm">
                     Book a Ticket
                 </button>
             </div>
-            
         </div>
     </main>
 
@@ -75,13 +64,13 @@
         </div>
     </footer>
 
-    <!-- INJECT DB SIMULATION -->
     <script src="../js/db.js"></script>
-
-<script>
+    <script>
         document.addEventListener('DOMContentLoaded', async () => {
             const currentUser = DB_API.getCurrentUser();
-            if (!currentUser) {
+            const userId = DB_API.getCurrentUserId();
+
+            if (!currentUser || !userId) {
                 alert('Please login to view your bookings.');
                 window.location.href = 'login.html';
                 return;
@@ -101,70 +90,74 @@
             const container = document.getElementById('bookingsContainer');
             const emptyState = document.getElementById('emptyState');
             
-            // REPLACED: Fetching from API by user ID instead of local string
-            const myBookings = await DB_API.getUserBookings(currentUser.id);
+            try {
+                const myBookings = await DB_API.getUserBookings(userId);
+                container.innerHTML = ''; // Clear loader
 
-            if (!myBookings || myBookings.length === 0) {
-                emptyState.classList.remove('hidden');
-                return;
-            }
+                if (!myBookings || myBookings.length === 0) {
+                    emptyState.classList.remove('hidden');
+                    return;
+                }
 
-            // Using for...of so we can properly await the train details
-            for (const booking of myBookings) {
-                const trainDetails = await DB_API.getTrainDetails(booking.trainNumber);
-                const isCancelled = booking.bookingStatus === "Cancelled";
-                
-                const statusBadge = isCancelled 
-                    ? `<span class="px-3 py-1 bg-red-100 text-red-700 text-sm font-bold rounded-full">CANCELLED</span>`
-                    : `<span class="px-3 py-1 bg-green-100 text-green-700 text-sm font-bold rounded-full">CONFIRMED</span>`;
-
-                const actionBtn = isCancelled
-                    ? `<button disabled class="bg-gray-100 border border-gray-200 text-gray-400 px-6 py-2 rounded font-semibold cursor-not-allowed">Ticket Cancelled</button>`
-                    : `<button onclick="cancelTicket('${booking.pnr}')" class="border-2 border-red-500 text-red-500 hover:bg-red-50 px-6 py-2 rounded transition font-semibold">Cancel Ticket</button>`;
-
-                const primaryPassenger = booking.passengers[0];
-                const coachClass = primaryPassenger ? primaryPassenger.coach : 'NA';
-
-                const card = document.createElement('div');
-                card.className = 'bg-white rounded-lg shadow border border-gray-200 overflow-hidden';
-                
-                card.innerHTML = `
-                    <div class="bg-gray-50 border-b border-gray-200 px-6 py-3 flex justify-between items-center">
-                        <div class="font-semibold text-gray-700">PNR: ${booking.pnr}</div>
-                        ${statusBadge}
-                    </div>
+                for (const booking of myBookings) {
+                    const trainDetails = await DB_API.getTrainDetails(booking.trainNumber);
+                    const isCancelled = booking.bookingStatus === "Cancelled";
                     
-                    <div class="p-6 flex flex-col md:flex-row justify-between items-center gap-4">
-                        <div class="flex-1 w-full">
-                            <h3 class="text-lg font-bold text-gray-900">${trainDetails ? trainDetails.trainNumber + ' / ' + trainDetails.trainName : 'Train Details Unavailable'}</h3>
-                            <p class="text-gray-500 text-sm mt-1">${booking.travelDate} • Coach ${coachClass} • Total Fare: ₹${booking.fareDetails.totalFare.toFixed(2)}</p>
-                            
-                            <div class="mt-4 flex items-center space-x-4">
-                                <div>
-                                    <p class="font-bold text-lg">${trainDetails ? trainDetails.originCode : '--'}</p>
-                                    <p class="text-xs text-gray-500">${trainDetails ? trainDetails.departureTime : '--'}</p>
-                                </div>
-                                <div class="text-gray-400 font-bold">⟶</div>
-                                <div>
-                                    <p class="font-bold text-lg">${trainDetails ? trainDetails.destinationCode : '--'}</p>
-                                    <p class="text-xs text-gray-500">${trainDetails ? trainDetails.arrivalTime : '--'}</p>
-                                </div>
-                            </div>
+                    const statusBadge = isCancelled 
+                        ? `<span class="px-3 py-1 bg-red-100 text-red-700 text-sm font-bold rounded-full">CANCELLED</span>`
+                        : `<span class="px-3 py-1 bg-green-100 text-green-700 text-sm font-bold rounded-full">CONFIRMED</span>`;
+
+                    const actionBtn = isCancelled
+                        ? `<button disabled class="bg-gray-100 border border-gray-200 text-gray-400 px-6 py-2 rounded font-semibold cursor-not-allowed">Ticket Cancelled</button>`
+                        : `<button onclick="cancelTicket('${booking.pnr}')" class="border-2 border-red-500 text-red-500 hover:bg-red-50 px-6 py-2 rounded transition font-semibold">Cancel Ticket</button>`;
+
+                    const primaryPassenger = booking.passengers?.[0];
+                    const coachClass = primaryPassenger ? primaryPassenger.coach || 'S1' : 'S1';
+                    const totalFare = booking.fareDetails?.totalFare || 500;
+
+                    const card = document.createElement('div');
+                    card.className = 'bg-white rounded-lg shadow border border-gray-200 overflow-hidden';
+                    
+                    card.innerHTML = `
+                        <div class="bg-gray-50 border-b border-gray-200 px-6 py-3 flex justify-between items-center">
+                            <div class="font-semibold text-gray-700">PNR: ${booking.pnr}</div>
+                            ${statusBadge}
                         </div>
                         
-                        <div class="flex flex-col space-y-3 w-full md:w-auto mt-4 md:mt-0">
-                            ${actionBtn}
+                        <div class="p-6 flex flex-col md:flex-row justify-between items-center gap-4">
+                            <div class="flex-1 w-full">
+                                <h3 class="text-lg font-bold text-gray-900">${trainDetails ? trainDetails.trainNumber + ' / ' + trainDetails.trainName : booking.trainNumber + ' / Express Train'}</h3>
+                                <p class="text-gray-500 text-sm mt-1">${booking.travelDate} • Class: ${booking.classType || 'SL'} (${coachClass}) • Total Fare: ₹${totalFare.toFixed(2)}</p>
+                                
+                                <div class="mt-4 flex items-center space-x-4">
+                                    <div>
+                                        <p class="font-bold text-lg">${trainDetails ? trainDetails.originCode : 'SRC'}</p>
+                                        <p class="text-xs text-gray-500">${trainDetails ? trainDetails.departureTime : '06:00 AM'}</p>
+                                    </div>
+                                    <div class="text-gray-400 font-bold">⟶</div>
+                                    <div>
+                                        <p class="font-bold text-lg">${trainDetails ? trainDetails.destinationCode : 'DEST'}</p>
+                                        <p class="text-xs text-gray-500">${trainDetails ? trainDetails.arrivalTime : '08:00 PM'}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="flex flex-col space-y-3 w-full md:w-auto mt-4 md:mt-0">
+                                ${actionBtn}
+                            </div>
                         </div>
-                    </div>
-                `;
-                container.appendChild(card);
+                    `;
+                    container.appendChild(card);
+                }
+            } catch (err) {
+                console.error("Error fetching bookings:", err);
+                container.innerHTML = `<div class="p-6 text-center text-red-500 text-sm">Failed to load bookings. Make sure backend is running.</div>`;
             }
         });
 
         // CANCEL TICKET LOGIC
         window.cancelTicket = async function(pnr) {
             if (confirm(`Are you sure you want to cancel ticket PNR: ${pnr}?\nThe refund will be credited instantly to your E-Wallet.`)) {
-                // REPLACED: Added await for network patch
                 const result = await DB_API.cancelBooking(pnr);
 
                 if (result && result.success) {

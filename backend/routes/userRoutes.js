@@ -13,8 +13,8 @@ router.post('/register', async (req, res) => {
             return res.status(400).json({ success: false, message: "Email already registered." });
         }
 
-        // Create and save the new user
-        const newUser = new User({ fullName, email, mobile, password });
+        // Create and save the new user with default wallet balance
+        const newUser = new User({ fullName, email, mobile, password, walletBalance: 5000.00 });
         await newUser.save();
 
         res.status(201).json({ success: true, message: "Account created successfully!" });
@@ -42,16 +42,41 @@ router.post('/login', async (req, res) => {
             return res.status(401).json({ success: false, message: "Incorrect password." });
         }
 
-        // Send back user data for localStorage
+        // Send back user data including wallet balance for localStorage
         res.status(200).json({ 
             success: true, 
             message: "Login successful!",
             user: { 
                 _id: user._id, 
-                fullName: user.fullName 
+                fullName: user.fullName,
+                email: user.email,
+                mobile: user.mobile,
+                walletBalance: user.walletBalance ?? 5000.00 
             }
         });
 
+    } catch (error) {
+        res.status(500).json({ success: false, message: "Server error", error: error.message });
+    }
+});
+
+// GET: /api/users/:id (Fetch latest user details and live wallet balance)
+router.get('/:id', async (req, res) => {
+    try {
+        const user = await User.findById(req.params.id);
+        if (!user) {
+            return res.status(404).json({ success: false, message: "User not found." });
+        }
+        res.status(200).json({ 
+            success: true, 
+            user: { 
+                _id: user._id, 
+                fullName: user.fullName,
+                email: user.email,
+                mobile: user.mobile,
+                walletBalance: user.walletBalance ?? 5000.00 
+            }
+        });
     } catch (error) {
         res.status(500).json({ success: false, message: "Server error", error: error.message });
     }
@@ -69,7 +94,6 @@ router.put('/profile/:id', async (req, res) => {
         if (dob) updateData.dob = dob;
         if (walletBalance !== undefined) updateData.walletBalance = walletBalance;
 
-        // FIXED: Replaced { new: true } with { returnDocument: 'after' } to clear the Mongoose warning
         const updatedUser = await User.findByIdAndUpdate(req.params.id, updateData, { returnDocument: 'after' });
         
         if (!updatedUser) {
