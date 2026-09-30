@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login | IRCTC Clone</title>
+    <link rel="stylesheet" href="../assets/css/output.css">
+</head>
+<body class="bg-gray-900 flex items-center justify-center min-h-screen">
+
+    <div class="bg-white p-8 rounded-xl shadow-2xl w-full max-w-md">
+        <div class="text-center mb-6">
+            <h1 class="text-3xl font-bold text-irctc-blue">IRCTC <span class="text-irctc-orange">Admin</span></h1>
+            <p class="text-gray-500 text-sm mt-2">Restricted Access. Authorized personnel only.</p>
+        </div>
+
+        <div class="space-y-4">
+            <div>
+                <label class="block text-gray-700 text-sm font-bold mb-2">Admin Username</label>
+                <input type="text" id="adminUser" class="w-full border border-gray-300 rounded p-3 focus:outline-none focus:ring-2 focus:ring-irctc-blue">
+            </div>
+            <div>
+                <label class="block text-gray-700 text-sm font-bold mb-2">Password</label>
+                <input type="password" id="adminPass" class="w-full border border-gray-300 rounded p-3 focus:outline-none focus:ring-2 focus:ring-irctc-blue">
+            </div>
+            <div id="errorMsg" class="text-red-500 text-xs hidden font-semibold">Invalid credentials.</div>
+            
+            <button id="loginBtn" class="w-full bg-irctc-blue hover:bg-blue-900 text-white font-bold py-3 px-4 rounded transition-colors mt-4">
+                Access Terminal
+            </button>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('loginBtn').addEventListener('click', () => {
+            const user = document.getElementById('adminUser').value;
+            const pass = document.getElementById('adminPass').value;
+
+            // Hardcoded admin credentials
+            if (user === 'admin' && pass === 'admin123') {
+                localStorage.setItem('irctc_admin_auth', 'true');
+                window.location.href = 'admin-dashboard.html';
+            } else {
+                document.getElementById('errorMsg').classList.remove('hidden');
+            }
+        });
+    </script>
+</body>
+</html>

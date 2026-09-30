@@ -145,12 +145,30 @@ window.DB_API = window.DB_API || {
 
     saveBooking: async (newBooking, userId, paymentMode) => {
         try {
+            const validUserId = userId || DB_API.getCurrentUserId();
+            const mode = paymentMode || 'E-Wallet';
+
             const response = await fetch(`${API_BASE_URL}/bookings`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ ...newBooking, userId })
+                body: JSON.stringify({ ...newBooking, userId: validUserId, paymentMode: mode })
             });
-            return await response.json();
+            const data = await response.json();
+
+            // Fetch fresh profile from MongoDB to immediately sync the exact wallet deduction
+            if (data.success && validUserId) {
+                try {
+                    const userRes = await fetch(`${API_BASE_URL}/users/${validUserId}`);
+                    const userData = await userRes.json();
+                    if (userData.success && userData.user) {
+                        localStorage.setItem('current_user', JSON.stringify(userData.user));
+                    }
+                } catch (err) {
+                    console.error("Failed to sync updated wallet balance:", err);
+                }
+            }
+
+            return data;
         } catch (error) {
             console.error("Error saving booking:", error);
             return { success: false, message: "Network error while booking." };
@@ -260,45 +278,36 @@ window.DB_API = window.DB_API || {
 
     submitContactMessage: async (messageData) => {
         try {
-            console.log("🚀 Sending contact data to:", `${API_BASE_URL}/contact/submit`);
-            console.log("📦 Payload:", messageData);
-
             const response = await fetch(`${API_BASE_URL}/contact/submit`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(messageData)
             });
-            const data = await response.json();
-            console.log("📥 Response from server:", data);
-            return data;
+            return await response.json();
         } catch (error) {
-            console.error("❌ Network error submitting contact message:", error);
+            console.error("Network error submitting contact message:", error);
             return { success: false, message: "Network error while submitting message." };
         }
     }
 };
 
 // --- GLOBAL NAVBAR STATE MANAGER ---
-// --- GLOBAL NAVBAR STATE MANAGER ---
 document.addEventListener('DOMContentLoaded', () => {
     const isLoggedIn = localStorage.getItem('current_user_id') !== null;
 
     if (isLoggedIn) {
-        // Show E-wallet link
         const ewalletLink = document.getElementById('navEwallet');
         if (ewalletLink) {
             ewalletLink.classList.remove('hidden');
             ewalletLink.classList.add('flex');
         }
 
-        // Show Dashboard link
         const dashboardLink = document.getElementById('navDashboard');
         if (dashboardLink) {
             dashboardLink.classList.remove('hidden');
             dashboardLink.classList.add('flex');
         }
 
-        // Convert Login button to Logout
         const buttons = document.querySelectorAll('button');
         buttons.forEach(btn => {
             if (btn.textContent.includes('Login')) {

@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
 
-// Define a Train Schema so Mongoose knows the structure
 const trainSchema = new mongoose.Schema({
     trainNumber: { type: String, required: true, unique: true },
     trainName: { type: String, required: true },
@@ -36,18 +35,7 @@ router.get('/search', async (req, res) => {
     }
 });
 
-// GET: /api/trains/:trainNumber
-router.get('/:trainNumber', async (req, res) => {
-    try {
-        const train = await Train.findOne({ trainNumber: req.params.trainNumber });
-        if (!train) return res.status(404).json({ success: false, message: "Train not found" });
-        res.status(200).json({ success: true, train });
-    } catch (error) {
-        res.status(500).json({ success: false, message: "Server error", error: error.message });
-    }
-});
-
-// GET: /api/trains/stations (Fetches unique origin/destination stations)
+// GET: /api/trains/stations (MOVED THIS UP)
 router.get('/stations', async (req, res) => {
     try {
         const trains = await Train.find({});
@@ -68,4 +56,16 @@ router.get('/stations', async (req, res) => {
         res.status(500).json({ success: false, message: "Server error", error: error.message });
     }
 });
+
+// GET: /api/trains/:trainNumber (MOVED THIS DOWN so it acts as a fallback)
+router.get('/:trainNumber', async (req, res) => {
+    try {
+        const train = await Train.findOne({ trainNumber: req.params.trainNumber });
+        if (!train) return res.status(404).json({ success: false, message: "Train not found" });
+        res.status(200).json({ success: true, train });
+    } catch (error) {
+        res.status(500).json({ success: false, message: "Server error", error: error.message });
+    }
+});
+
 module.exports = router;

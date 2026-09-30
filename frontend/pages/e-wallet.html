@@ -97,12 +97,11 @@
     <script src="../js/db.js"></script>
 
     <script>
-        // Quick amount setter for the buttons
         function setAmount(amount) {
             document.getElementById('topupAmount').value = amount;
         }
 
-        document.addEventListener('DOMContentLoaded', () => {
+        document.addEventListener('DOMContentLoaded', async () => {
             // 1. AUTH GUARD
             const currentUser = DB_API.getCurrentUser();
             if (!currentUser) {
@@ -111,21 +110,34 @@
                 return;
             }
 
-            // 2. Display Initial Balance
+            const userId = currentUser._id || currentUser.id;
             const balanceEl = document.getElementById('displayBalance');
+
+            // 2. Auto-Refresh Wallet Balance from MongoDB Database on Load
+            try {
+                const res = await fetch(`http://localhost:5000/api/users/${userId}`);
+                const data = await res.json();
+                if (data.success && data.user) {
+                    localStorage.setItem('current_user', JSON.stringify(data.user));
+                    currentUser.walletBalance = data.user.walletBalance;
+                }
+            } catch (e) {
+                console.error("Error fetching live wallet balance:", e);
+            }
+
+            // 3. Display Initial / Refreshed Balance
             const balance = currentUser.walletBalance !== undefined ? currentUser.walletBalance : 0;
             balanceEl.textContent = `₹${balance.toFixed(2)}`;
 
-            // 3. Handle Logout
+            // 4. Handle Logout
             document.getElementById('logoutBtn').addEventListener('click', (e) => {
                 e.preventDefault();
                 DB_API.logoutUser();
             });
 
-            // 4. Handle Top-up Form Submission
-// 4. Handle Top-up Form Submission
+            // 5. Handle Top-up Form Submission
             const form = document.getElementById('topupForm');
-            form.addEventListener('submit', async (e) => { // <-- Added async here
+            form.addEventListener('submit', async (e) => {
                 e.preventDefault();
                 
                 const amountInput = document.getElementById('topupAmount').value;
@@ -136,8 +148,7 @@
                     return;
                 }
 
-                // Call DB_API to add funds with await
-                const result = await DB_API.addWalletFunds(currentUser._id || currentUser.id, amount); // <-- Added await here
+                const result = await DB_API.addWalletFunds(userId, amount);
                 
                 if (result && result.success) {
                     alert(`Successfully added ₹${amount.toFixed(2)} to your wallet!`);

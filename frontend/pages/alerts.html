@@ -81,7 +81,7 @@
                         Please <a href="login.html" class="font-bold underline text-irctc-orange">login</a> to view your account alerts.
                     </div>
                 `;
-                badge.textContent = '0';
+                if (badge) badge.textContent = '0';
                 return;
             }
 
@@ -94,12 +94,12 @@
                         No new alerts found at this time.
                     </div>
                 `;
-                badge.textContent = '0';
+                if (badge) badge.textContent = '0';
                 return;
             }
 
             // Update badge count
-            badge.textContent = alerts.length;
+            if (badge) badge.textContent = alerts.length;
 
             // Render alerts dynamically
             container.innerHTML = alerts.map(alert => {
@@ -112,12 +112,18 @@
                 } else if (alert.type === 'warning') {
                     borderColor = 'border-orange-200 bg-orange-50 text-orange-900';
                     iconColor = 'text-irctc-orange';
+                } else if (alert.type === 'critical') {
+                    borderColor = 'border-red-200 bg-red-50 text-red-900';
+                    iconColor = 'text-red-600';
                 }
 
-                const dateStr = new Date(alert.createdAt).toLocaleString('en-IN', {
+                const dateStr = alert.createdAt ? new Date(alert.createdAt).toLocaleString('en-IN', {
                     dateStyle: 'medium',
                     timeStyle: 'short'
-                });
+                }) : 'Just now';
+
+                const alertTitle = alert.title || (alert.type ? `${alert.type.toUpperCase()} Advisory` : 'IRCTC Notification');
+
 
                 return `
                     <div class="p-4 border ${borderColor} rounded-xl shadow-sm flex items-start space-x-4 transition">
@@ -128,7 +134,7 @@
                         </div>
                         <div class="grow">
                             <div class="flex justify-between items-center mb-1">
-                                <h4 class="font-bold text-base">${alert.title}</h4>
+                                <h4 class="font-bold text-base">${alertTitle}</h4>
                                 <span class="text-[11px] opacity-75">${dateStr}</span>
                             </div>
                             <p class="text-xs leading-relaxed opacity-90">${alert.message}</p>
