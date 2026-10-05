@@ -1,36 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const mongoose = require('mongoose');
-
-// ==========================================
-// MONGODB SCHEMAS & MODELS
-// ==========================================
-const trainSchema = new mongoose.Schema({
-    trainNumber: { type: String, required: true, unique: true },
-    trainName: { type: String, required: true },
-    originCode: { type: String, required: true },
-    originName: { type: String, required: true },
-    destinationCode: { type: String, required: true },
-    destinationName: { type: String, required: true },
-    departureTime: { type: String, required: true },
-    arrivalTime: { type: String, required: true },
-    availableClasses: [{ classType: String, baseFare: Number, availableSeats: Number }]
-});
-const Train = mongoose.models.Train || mongoose.model('Train', trainSchema);
-
-const userSchema = new mongoose.Schema({
-    fullName: { type: String, required: true },
-    email: { type: String, required: true, unique: true },
-    phone: { type: String },
-    role: { type: String, default: 'passenger' },
-    createdAt: { type: Date, default: Date.now }
-});
-const User = mongoose.models.User || mongoose.model('User', userSchema);
-
+const Train = require('../models/Train');
+const User = require('../models/User');
+const Booking = require('../models/Booking');
 const Alert = require('../models/Alert');
-
-
-const Booking = mongoose.models.Booking;
 
 // ==========================================
 // 1. SYSTEM OVERVIEW & ANALYTICS ROUTES
