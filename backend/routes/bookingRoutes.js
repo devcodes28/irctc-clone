@@ -1,41 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const mongoose = require('mongoose');
 const User = require('../models/User');
-
-const bookingSchema = new mongoose.Schema({
-    pnr: { type: String, required: true, unique: true },
-    userId: { type: String, required: true },
-    trainNumber: { type: String, required: true },
-    travelDate: { type: String, required: true },
-    passengers: [{
-        name: String,
-        age: Number,
-        gender: String,
-        berthPreference: String,
-        status: String,
-        coach: String,
-        berth: Number
-    }],
-    fareDetails: { 
-        totalFare: { type: Number, default: 0 } 
-    },
-    classType: { type: String, default: 'SL' },
-    bookingStatus: { type: String, default: "Confirmed" }
-}, { timestamps: true });
-
-const Booking = mongoose.models.Booking || mongoose.model('Booking', bookingSchema);
-
-// Wallet Transaction Schema mapping to MongoDB 'wallets' collection
-const walletSchema = new mongoose.Schema({
-    transactionId: { type: String, required: true },
-    userId: { type: String, required: true },
-    type: { type: String, enum: ['credit', 'debit'], required: true },
-    amount: { type: Number, required: true },
-    timestamp: { type: Date, default: Date.now },
-    description: { type: String }
-});
-const WalletTransaction = mongoose.models.WalletTransaction || mongoose.model('WalletTransaction', walletSchema, 'wallets');
+const Booking = require('../models/Booking');
+const WalletTransaction = require('../models/WalletTransaction');
 
 // POST: /api/bookings - Save booking & debit wallet
 router.post('/', async (req, res) => {
