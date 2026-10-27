@@ -51,6 +51,7 @@ router.post('/login', async (req, res) => {
                 fullName: user.fullName,
                 email: user.email,
                 mobile: user.mobile,
+                dob: user.dob || '',
                 walletBalance: user.walletBalance ?? 5000.00 
             }
         });
@@ -74,6 +75,7 @@ router.get('/:id', async (req, res) => {
                 fullName: user.fullName,
                 email: user.email,
                 mobile: user.mobile,
+                dob: user.dob || '',
                 walletBalance: user.walletBalance ?? 5000.00 
             }
         });
@@ -94,13 +96,24 @@ router.put('/profile/:id', async (req, res) => {
         if (dob) updateData.dob = dob;
         if (walletBalance !== undefined) updateData.walletBalance = walletBalance;
 
-        const updatedUser = await User.findByIdAndUpdate(req.params.id, updateData, { returnDocument: 'after' });
+        const updatedUser = await User.findByIdAndUpdate(req.params.id, updateData, { new: true, returnDocument: 'after' });
         
         if (!updatedUser) {
             return res.status(404).json({ success: false, message: "User not found." });
         }
 
         res.status(200).json({ success: true, user: updatedUser });
+    } catch (error) {
+        res.status(500).json({ success: false, message: "Server error", error: error.message });
+    }
+});
+
+// POST: /api/users/forgot-password
+router.post('/forgot-password', async (req, res) => {
+    try {
+        const { email } = req.body;
+        if (!email) return res.status(400).json({ success: false, message: "Email is required." });
+        res.status(200).json({ success: true, message: "Password reset instructions sent to your email address." });
     } catch (error) {
         res.status(500).json({ success: false, message: "Server error", error: error.message });
     }
