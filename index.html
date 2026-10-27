@@ -6,26 +6,13 @@
     <title>IRCTC Clone - Ticket Booking</title>
     
     <!-- This links to the CSS file Tailwind is generating -->
-    <link rel="stylesheet" href="./assets/css/output.css">
+    <link rel="stylesheet" href="/assets/css/output.css">
 </head>
 
-<!-- We apply the IRCTC background and basic font styles directly to the body -->
-<body class="bg-irctc-light text-gray-800 font-sans p-8">
-
-    <!-- Tailwind's version of a container -->
-    <div class="max-w-7xl mx-auto">
-        
-        <!-- Styling the heading with our custom IRCTC blue -->
-        <h1 class="text-3xl font-bold text-irctc-blue mb-4">IRCTC Clone Setup Complete</h1>
-        
-        <p class="mb-6 text-gray-600">This is the starting point for the Home Page.</p>
-        
-        <!-- Tailwind's version of our btn-primary using the IRCTC orange -->
-        <button class="bg-irctc-orange hover:bg-orange-600 text-white font-bold py-2 px-4 rounded transition-colors">
-            Test Button
-        </button>
-        
-    </div>
-
+<body class="text-gray-800 font-sans min-h-screen m-0 bg-gray-50">
+<div id="root"></div>
+<script src="/js/db.js"></script>
+<script src="/dist/app.js"></script>
 </body>
+
 </html>

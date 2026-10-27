@@ -5,3 +5,64 @@
   --color-irctc-orange: #fb792b;
   --color-irctc-light: #f4f4f4;
 }
+
+@keyframes pan-background {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.moving-bg {
+    background-size: 200% 200%;
+    animation: pan-background 15s ease infinite;
+}
+
+/* Add this to your main input.css file */
+@keyframes drive-train {
+    0% { transform: translateX(100vw); }
+    100% { transform: translateX(-150px); }
+}
+
+.animate-train {
+    animation: drive-train 12s linear infinite;
+}
+
+.professional-parallax-grid {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: -1;
+    background-color: #f8fafc;
+}
+
+.professional-parallax-grid::before {
+    content: "";
+    position: absolute;
+    top: -100px;
+    left: -100px;
+    width: 120%;
+    height: 120%;
+    background-image:
+        linear-gradient(to right, #e2e8f0 1px, transparent 1px),
+        linear-gradient(to bottom, #e2e8f0 1px, transparent 1px);
+    background-size: 80px 80px;
+    transform: perspective(300px) rotateX(15deg);
+    transform-origin: center top;
+    animation: subtleVerticalScroll 8s linear infinite;
+}
+
+.professional-parallax-grid::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, #f8fafc 0%, #f8fafc 40%, transparent 100%);
+    z-index: 1;
+}
+
+@keyframes subtleVerticalScroll {
+    0% { background-position: 0 0; }
+    100% { background-position: 0 80px; }
+}

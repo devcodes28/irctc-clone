@@ -3,9 +3,12 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-"scripts": {
-  "watch": "npx @tailwindcss/cli -i ./assets/css/global.css -o ./assets/css/output.css --watch"
-},
+  "scripts": {
+    "build": "npm run build:css && esbuild js/main.js --bundle --loader:.js=jsx --outfile=dist/app.js",
+    "build:css": "npx @tailwindcss/cli -i ./assets/css/global.css -o ./assets/css/output.css",
+    "dev": "esbuild js/main.js --bundle --loader:.js=jsx --outfile=dist/app.js --servedir=. --serve=3000 --serve-fallback=./index.html --watch=forever",
+    "watch": "npx @tailwindcss/cli -i ./assets/css/global.css -o ./assets/css/output.css --watch"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/devcodes28/irctc-clone.git"
@@ -20,7 +23,13 @@
   "devDependencies": {
     "@tailwindcss/cli": "^4.3.3",
     "autoprefixer": "^10.5.4",
+    "esbuild": "^0.25.0",
     "postcss": "^8.5.21",
     "tailwindcss": "^4.3.3"
+  },
+  "dependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-router-dom": "^7.18.4"
   }
 }
