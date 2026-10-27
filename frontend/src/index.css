@@ -1,0 +1,140 @@
+@import './assets/css/output.css';
+
+/* =====================================================
+   IRCTC Custom Color Variables
+   Defined here to ensure they work regardless of
+   CRA's @layer CSS support limitations.
+   ===================================================== */
+:root {
+  --color-irctc-blue: #213d77;
+  --color-irctc-orange: #fb792b;
+  --color-irctc-light: #f4f4f4;
+}
+
+/* =====================================================
+   IRCTC Tailwind Utility Overrides
+   These override @layer utilities so CRA PostCSS
+   always applies them correctly.
+   ===================================================== */
+
+/* Background colors */
+.bg-irctc-blue   { background-color: #213d77 !important; }
+.bg-irctc-orange { background-color: #fb792b !important; }
+.bg-irctc-light  { background-color: #f4f4f4 !important; }
+
+/* Text colors */
+.text-irctc-blue   { color: #213d77 !important; }
+.text-irctc-orange { color: #fb792b !important; }
+.text-irctc-light  { color: #f4f4f4 !important; }
+
+/* Border colors */
+.border-irctc-blue   { border-color: #213d77 !important; }
+.border-irctc-orange { border-color: #fb792b !important; }
+
+/* Gradient from/to — Tailwind v4 syntax */
+.from-irctc-blue {
+  --tw-gradient-from: #213d77;
+  --tw-gradient-stops: var(--tw-gradient-via-stops, var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-to) var(--tw-gradient-to-position));
+}
+.from-irctc-orange {
+  --tw-gradient-from: #fb792b;
+  --tw-gradient-stops: var(--tw-gradient-via-stops, var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-to) var(--tw-gradient-to-position));
+}
+.to-irctc-blue {
+  --tw-gradient-to: #213d77;
+  --tw-gradient-stops: var(--tw-gradient-via-stops, var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-to) var(--tw-gradient-to-position));
+}
+.to-irctc-orange {
+  --tw-gradient-to: #fb792b;
+  --tw-gradient-stops: var(--tw-gradient-via-stops, var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-to) var(--tw-gradient-to-position));
+}
+
+/* Hover variants */
+.hover\:bg-irctc-blue:hover   { background-color: #213d77 !important; }
+.hover\:bg-irctc-orange:hover { background-color: #fb792b !important; }
+.hover\:text-irctc-blue:hover   { color: #213d77 !important; }
+.hover\:text-irctc-orange:hover { color: #fb792b !important; }
+.hover\:border-irctc-blue:hover   { border-color: #213d77 !important; }
+.hover\:border-irctc-orange:hover { border-color: #fb792b !important; }
+
+/* Focus variants */
+.focus\:ring-irctc-blue:focus  { --tw-ring-color: #213d77; }
+.focus\:ring-irctc-orange:focus { --tw-ring-color: #fb792b; }
+.focus\:border-irctc-blue:focus   { border-color: #213d77 !important; }
+.focus\:border-irctc-orange:focus { border-color: #fb792b !important; }
+
+/* Group hover variants */
+.group:hover .group-hover\:text-irctc-blue { color: #213d77 !important; }
+
+/* Accent */
+.accent-irctc-blue   { accent-color: #213d77; }
+.accent-irctc-orange { accent-color: #fb792b; }
+
+/* Opacity variant: bg-irctc-orange/20 */
+.bg-irctc-orange\/20 { background-color: rgba(251,121,43,0.2) !important; }
+.bg-irctc-blue\/20   { background-color: rgba(33,61,119,0.2) !important; }
+
+/* Standard Tailwind gradient helpers (also inside @layer in TW v4, override here) */
+.bg-gradient-to-r {
+  background-image: linear-gradient(to right, var(--tw-gradient-stops));
+}
+.from-blue-50 {
+  --tw-gradient-from: #eff6ff;
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgba(239,246,255,0));
+}
+.to-white {
+  --tw-gradient-to: #ffffff;
+}
+.to-blue-800 {
+  --tw-gradient-to: #1e40af;
+}
+
+/* Global resets and typography */
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+/* Custom animation for train on login/signup track */
+@keyframes trackMove {
+  0% { left: 0%; opacity: 1; }
+  95% { left: calc(100% - 16px); opacity: 1; }
+  100% { left: 0%; opacity: 0; }
+}
+
+.track-train-animation {
+  animation: trackMove 60s linear infinite;
+}
+
+/* Responsive overrides */
+@media (min-width: 768px) {
+  .md\:text-left {
+    text-align: left !important;
+  }
+  .md\:justify-start {
+    justify-content: flex-start !important;
+  }
+}
+
+/* Print styles for Electronic Reservation Slip */
+@media print {
+  header, footer, .no-print {
+    display: none !important;
+  }
+  body {
+    background-color: white !important;
+  }
+  .ticket-container {
+    border: none !important;
+    box-shadow: none !important;
+  }
+}
